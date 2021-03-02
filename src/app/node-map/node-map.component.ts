@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 // import * as data from '../../assets/dataExample.json';
 // import { treeBoxes } from '../../../tree_boxes_modules/tree-boxes.js';
 import * as d3 from 'd3';
@@ -157,6 +157,7 @@ const treeData = {
     selector: 'app-node-map',
     templateUrl: './node-map.component.html',
     styleUrls: ['./node-map.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class NodeMapComponent implements OnInit {
     constructor() {
