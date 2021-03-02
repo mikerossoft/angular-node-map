@@ -1,8 +1,157 @@
 import { Component, OnInit } from '@angular/core';
-import * as data from '../../assets/dataExample.json';
-// import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
+// import * as data from '../../assets/dataExample.json';
+// import { treeBoxes } from '../../../tree_boxes_modules/tree-boxes.js';
 import * as d3 from 'd3';
-// declare var TreeBoxes: any;
+declare function treeBoxes(urlService: string, jsonData: any): void;
+declare function sayHello(): void;
+
+const treeData = {
+    tree: {
+        nodeName: 'NODE NAME 1',
+        name: 'NODE NAME 1',
+        type: 'type3',
+        code: 'N1',
+        label: 'Node name 1',
+        version: 'v1.0',
+        link: {
+            name: 'Link NODE NAME 1',
+            nodeName: 'NODE NAME 1',
+            direction: 'ASYN',
+        },
+        children: [
+            {
+                nodeName: 'NODE NAME 2.1',
+                name: 'NODE NAME 2.1',
+                type: 'type1',
+                code: 'N2.1',
+                label: 'Node name 2.1',
+                version: 'v1.0',
+                link: {
+                    name: 'Link node 1 to 2.1',
+                    nodeName: 'NODE NAME 2.1',
+                    direction: 'SYNC',
+                },
+                children: [
+                    {
+                        nodeName: 'NODE NAME 3.1',
+                        name: 'NODE NAME 3.1',
+                        type: 'type2',
+                        code: 'N3.1',
+                        label: 'Node name 3.1',
+                        version: 'v1.0',
+                        link: {
+                            name: 'Link node 2.1 to 3.1',
+                            nodeName: 'NODE NAME 3.1',
+                            direction: 'SYNC',
+                        },
+                        children: [],
+                    },
+                    {
+                        nodeName: 'NODE NAME 3.2',
+                        name: 'NODE NAME 3.2',
+                        type: 'type2',
+                        code: 'N3.2',
+                        label: 'Node name 3.2',
+                        version: 'v1.0',
+                        link: {
+                            name: 'Link node 2.1 to 3.2',
+                            nodeName: 'NODE NAME 3.1',
+                            direction: 'SYNC',
+                        },
+                        children: [],
+                    },
+                ],
+            },
+            {
+                nodeName: 'NODE NAME 2.2',
+                name: 'NODE NAME 2.2',
+                type: 'type1',
+                code: 'N2.2',
+                label: 'Node name 2.2',
+                version: 'v1.0',
+                link: {
+                    name: 'Link node 1 to 2.2',
+                    nodeName: 'NODE NAME 2.2',
+                    direction: 'ASYN',
+                },
+                children: [],
+            },
+            {
+                nodeName: 'NODE NAME 2.3',
+                name: 'NODE NAME 2.3',
+                type: 'type1',
+                code: 'N2.3',
+                label: 'Node name 2.3',
+                version: 'v1.0',
+                link: {
+                    name: 'Link node 1 to 2.3',
+                    nodeName: 'NODE NAME 2.3',
+                    direction: 'ASYN',
+                },
+                children: [
+                    {
+                        nodeName: 'NODE NAME 3.3',
+                        name: 'NODE NAME 3.3',
+                        type: 'type1',
+                        code: 'N3.3',
+                        label: 'Node name 3.3',
+                        version: 'v1.0',
+                        link: {
+                            name: 'Link node 2.3 to 3.3',
+                            nodeName: 'NODE NAME 3.3',
+                            direction: 'ASYN',
+                        },
+                        children: [
+                            {
+                                nodeName: 'NODE NAME 4.1',
+                                name: 'NODE NAME 4.1',
+                                type: 'type4',
+                                code: 'N4.1',
+                                label: 'Node name 4.1',
+                                version: 'v1.0',
+                                link: {
+                                    name: 'Link node 3.3 to 4.1',
+                                    nodeName: 'NODE NAME 4.1',
+                                    direction: 'SYNC',
+                                },
+                                children: [],
+                            },
+                        ],
+                    },
+                    {
+                        nodeName: 'NODE NAME 3.4',
+                        name: 'NODE NAME 3.4',
+                        type: 'type1',
+                        code: 'N3.4',
+                        label: 'Node name 3.4',
+                        version: 'v1.0',
+                        link: {
+                            name: 'Link node 2.3 to 3.4',
+                            nodeName: 'NODE NAME 3.4',
+                            direction: 'ASYN',
+                        },
+                        children: [
+                            {
+                                nodeName: 'NODE NAME 4.2',
+                                name: 'NODE NAME 4.2',
+                                type: 'type4',
+                                code: 'N4.2',
+                                label: 'Node name 4.2',
+                                version: 'v1.0',
+                                link: {
+                                    name: 'Link node 3.4 to 4.2',
+                                    nodeName: 'NODE NAME 4.1',
+                                    direction: 'ASYN',
+                                },
+                                children: [],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+};
 
 @Component({
     selector: 'app-node-map',
@@ -10,279 +159,17 @@ import * as d3 from 'd3';
     styleUrls: ['./node-map.component.scss'],
 })
 export class NodeMapComponent implements OnInit {
-    constructor() {}
+    constructor() {
+        sayHello();
+        d3.json('../../assets/dataExample.json', function (error, json) {
+            console.log('inside d3json');
+            console.log(json);
 
-    ngOnInit(): void {
-        console.log(data);
-        // drawNodeMap();
-        // TreeBoxes.drawNodeMap();
-        this.drawNodeMap();
+            treeBoxes('', json.tree);
+        });
     }
 
-    private drawNodeMap(): void {
-        interface D {
-            id: number;
-        }
-
-        var treeData = {
-            name: 'NODE NAME 1',
-            subname: 'CODE N1',
-            fill: 'orange',
-            children: [
-                {
-                    name: 'NODE NAME 2.1',
-                    subname: 'CODE N1',
-                    fill: 'blue',
-                },
-                { name: 'NODE NAME 2.2', subname: 'CODE N1', fill: 'blue' },
-                {
-                    name: 'NODE NAME 2.3',
-                    subname: 'CODE N1',
-                    fill: 'blue',
-                    children: [
-                        {
-                            name: 'NODE NAME 3.3',
-                            fill: 'blue',
-                            subname: 'CODE N1',
-                            children: [
-                                {
-                                    name: 'NODE NAME 4.1',
-                                    subname: 'CODE N1',
-                                    fill: '#d281d2',
-                                },
-                            ],
-                        },
-                        {
-                            name: 'NODE NAME 3.4',
-                            fill: 'blue',
-                            subname: 'CODE N1',
-                            children: [
-                                {
-                                    name: 'NODE NAME 4.2',
-                                    subname: 'CODE N1',
-                                    fill: '#d281d2',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        };
-
-        // Set the dimensions and margins of the diagram
-        var margin = { top: 20, right: 90, bottom: 30, left: 90 },
-            width = 960 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
-
-        // append the svg object to the body of the page
-        // appends a 'group' element to 'svg'
-        // moves the 'group' element to the top left margin
-        var svg = d3
-            .select('body')
-            .append('svg')
-            .attr('width', width + margin.right + margin.left)
-            .attr('height', height + margin.top + margin.bottom)
-            .append('g')
-            .attr(
-                'transform',
-                'translate(' + margin.left + ',' + margin.top + ')'
-            );
-
-        var i = 0,
-            duration = 750,
-            root;
-
-        // declares a tree layout and assigns the size
-        var treemap = d3.tree().size([height, width]);
-
-        // Assigns parent, children, height, depth
-        root = d3.hierarchy(treeData);
-        root.x0 = height / 2;
-        root.y0 = 0;
-
-        // Collapse after the second level
-        // root.children.forEach(collapse);
-
-        update(root);
-
-        // Collapse the node and all it's children
-        function collapse(d) {
-            if (d.children) {
-                d._children = d.children;
-                d._children.forEach(collapse);
-                d.children = null;
-            }
-        }
-
-        function update(source) {
-            // Assigns the x and y position for the nodes
-            var treeData = treemap(root);
-
-            // Compute the new tree layout.
-            var nodes = treeData.descendants(),
-                links = treeData.descendants().slice(1);
-
-            // Normalize for fixed-depth.
-            nodes.forEach(function (d) {
-                d.y = d.depth * 180;
-            });
-
-            // ****************** Nodes section ***************************
-
-            // Update the nodes...
-            var node = svg.selectAll('g.node').data(nodes, function (d: D) {
-                return d.id || (d.id = ++i);
-            });
-
-            // Enter any new modes at the parent's previous position.
-            var nodeEnter = node
-                .enter()
-                .append('g')
-                .attr('class', 'node')
-                .attr('transform', function (d) {
-                    return 'translate(' + source.y0 + ',' + source.x0 + ')';
-                })
-                .on('click', click);
-
-            var rectHeight = 60,
-                rectWidth = 120;
-
-            nodeEnter
-                .append('rect')
-                .attr('class', 'node')
-                .attr('width', rectWidth)
-                .attr('height', rectHeight)
-                .attr('x', 0)
-                .attr('y', (rectHeight / 2) * -1)
-                .attr('rx', '5')
-                .style('fill', function (d) {
-                    return d.data.fill;
-                });
-
-            // Add labels for the nodes
-            nodeEnter
-                .append('text')
-                .attr('dy', '-.35em')
-                .attr('x', function (d) {
-                    return 13;
-                })
-                .attr('text-anchor', function (d) {
-                    return 'start';
-                })
-                .text(function (d) {
-                    return d.data.name;
-                })
-                .append('tspan')
-                .attr('dy', '1.75em')
-                .attr('x', function (d) {
-                    return 13;
-                })
-                .text(function (d) {
-                    return d.data.subname;
-                });
-
-            // UPDATE
-            var nodeUpdate = nodeEnter.merge(node);
-
-            // Transition to the proper position for the node
-            nodeUpdate
-                .transition()
-                .duration(duration)
-                .attr('transform', function (d) {
-                    return 'translate(' + d.y + ',' + d.x + ')';
-                });
-
-            // Update the node attributes and style
-            nodeUpdate
-                .select('circle.node')
-                .attr('r', 10)
-                .style('fill', function (d) {
-                    return d._children ? 'lightsteelblue' : '#fff';
-                })
-                .attr('cursor', 'pointer');
-
-            // Remove any exiting nodes
-            var nodeExit = node
-                .exit()
-                .transition()
-                .duration(duration)
-                .attr('transform', function (d) {
-                    return 'translate(' + source.y + ',' + source.x + ')';
-                })
-                .remove();
-
-            // On exit reduce the node circles size to 0
-            nodeExit.select('circle').attr('r', 1e-6);
-
-            // On exit reduce the opacity of text labels
-            nodeExit.select('text').style('fill-opacity', 1e-6);
-
-            // ****************** links section ***************************
-
-            // Update the links...
-            var link = svg.selectAll('path.link').data(links, function (d) {
-                return d.id;
-            });
-
-            // Enter any new links at the parent's previous position.
-            var linkEnter = link
-                .enter()
-                .insert('path', 'g')
-                .attr('class', 'link')
-                .attr('d', function (d) {
-                    var o = { x: source.x0, y: source.y0 };
-                    return diagonal(o, o);
-                });
-
-            // UPDATE
-            var linkUpdate = linkEnter.merge(link);
-
-            // Transition back to the parent element position
-            linkUpdate
-                .transition()
-                .duration(duration)
-                .attr('d', function (d) {
-                    return diagonal(d, d.parent);
-                });
-
-            // Remove any exiting links
-            var linkExit = link
-                .exit()
-                .transition()
-                .duration(duration)
-                .attr('d', function (d) {
-                    var o = { x: source.x, y: source.y };
-                    return diagonal(o, o);
-                })
-                .remove();
-
-            // Store the old positions for transition.
-            nodes.forEach(function (d) {
-                d.x0 = d.x;
-                d.y0 = d.y;
-            });
-
-            // Creates a curved (diagonal) path from parent to the child nodes
-            function diagonal(s, d) {
-                let path = `M ${s.y} ${s.x}
-                  C ${(s.y + d.y) / 2} ${s.x},
-                    ${(s.y + d.y) / 2} ${d.x},
-                    ${d.y} ${d.x}`;
-
-                return path;
-            }
-
-            // Toggle children on click.
-            function click(d) {
-                if (d.children) {
-                    d._children = d.children;
-                    d.children = null;
-                } else {
-                    d.children = d._children;
-                    d._children = null;
-                }
-                update(d);
-            }
-        }
+    ngOnInit(): void {
+        // console.log(data);
     }
 }
