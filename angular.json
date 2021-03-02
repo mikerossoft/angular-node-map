@@ -25,7 +25,7 @@
                         "aot": true,
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.scss"],
-                        "scripts": ["tree_boxes_modules/tree-boxes.js"]
+                        "scripts": ["./tree_boxes_modules/tree-boxes.js"]
                     },
                     "configurations": {
                         "production": {

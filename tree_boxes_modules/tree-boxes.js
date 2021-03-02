@@ -1,6 +1,14 @@
-import * as d3 from 'd3';
+('use strict');
 
-function drawNodeMap() {
+console.log('loaded tree-boxes.js script');
+
+function sayHello() {
+    console.log('hello');
+}
+
+function drawNodeMap(d3) {
+    console.log('inspect d3');
+    console.log(d3);
     var treeData = {
         name: 'NODE NAME 1',
         subname: 'CODE N1',
@@ -261,5 +269,3 @@ function drawNodeMap() {
         }
     }
 }
-
-export { drawNodeMap };

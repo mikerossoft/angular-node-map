@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as data from '../../assets/dataExample.json';
-import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
-// import * as d3 from 'd3';
-// declare var TreeBoxes: any;
+// import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
+import * as d3 from 'd3';
+
+declare function drawNodeMap(d3: any): void;
+declare function sayHello(): void;
 
 @Component({
     selector: 'app-node-map',
@@ -10,13 +12,15 @@ import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
     styleUrls: ['./node-map.component.scss'],
 })
 export class NodeMapComponent implements OnInit {
-    constructor() {}
+    constructor() {
+        sayHello();
+    }
 
     ngOnInit(): void {
         console.log(data);
         // drawNodeMap();
         // TreeBoxes.drawNodeMap();
-        drawNodeMap();
+        drawNodeMap(d3);
     }
 
     // private drawNodeMap(): void {
