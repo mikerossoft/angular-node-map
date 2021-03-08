@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import * as data from '../../assets/dataExample.json';
 // import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
 
@@ -16,12 +16,15 @@ import * as d3 from 'd3';
     encapsulation: ViewEncapsulation.None,
 })
 export class NodeMapComponent implements OnInit {
+    @Input() dataSource: object;
+
     constructor() {
         // sayHello();
     }
 
     ngOnInit(): void {
-        console.log(data);
+        console.log(this.dataSource);
+        // console.log(data);
         // drawNodeMap();
         // TreeBoxes.drawNodeMap();
         // drawNodeMap(d3);
@@ -29,51 +32,6 @@ export class NodeMapComponent implements OnInit {
     }
 
     private drawNodeMap(): void {
-        var treeData = {
-            name: 'NODE NAME 1',
-            subname: 'CODE N1',
-            fill: 'orange',
-            children: [
-                {
-                    name: 'NODE NAME 2.1',
-                    subname: 'CODE N1',
-                    fill: 'blue',
-                },
-                { name: 'NODE NAME 2.2', subname: 'CODE N1', fill: 'blue' },
-                {
-                    name: 'NODE NAME 2.3',
-                    subname: 'CODE N1',
-                    fill: 'blue',
-                    children: [
-                        {
-                            name: 'NODE NAME 3.3',
-                            fill: 'blue',
-                            subname: 'CODE N1',
-                            children: [
-                                {
-                                    name: 'NODE NAME 4.1',
-                                    subname: 'CODE N1',
-                                    fill: '#d281d2',
-                                },
-                            ],
-                        },
-                        {
-                            name: 'NODE NAME 3.4',
-                            fill: 'blue',
-                            subname: 'CODE N1',
-                            children: [
-                                {
-                                    name: 'NODE NAME 4.2',
-                                    subname: 'CODE N1',
-                                    fill: '#d281d2',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        };
-
         // Set the dimensions and margins of the diagram
         var margin = { top: 20, right: 90, bottom: 30, left: 90 },
             width = 960 - margin.left - margin.right,
@@ -101,7 +59,7 @@ export class NodeMapComponent implements OnInit {
         var treemap = d3.tree().size([height, width]);
 
         // Assigns parent, children, height, depth
-        root = d3.hierarchy(treeData);
+        root = d3.hierarchy(this.dataSource);
         root.x0 = height / 2;
         root.y0 = 0;
 
