@@ -44,7 +44,9 @@ export class NodeMapComponent implements OnInit {
             .select('body')
             .append('svg')
             .attr('width', width + margin.right + margin.left)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('height', height + margin.top + margin.bottom);
+
+        var g = svg
             .append('g')
             .attr(
                 'transform',
@@ -60,6 +62,9 @@ export class NodeMapComponent implements OnInit {
 
         // Assigns parent, children, height, depth
         root = d3.hierarchy(this.dataSource);
+        console.log('root');
+        console.log(root);
+
         root.x0 = height / 2;
         root.y0 = 0;
 
@@ -93,7 +98,7 @@ export class NodeMapComponent implements OnInit {
             // ****************** Nodes section ***************************
 
             // Update the nodes...
-            var node: any = svg
+            var node: any = g
                 .selectAll('g.node')
                 .data(nodes, function (d: any) {
                     return d.id || (d.id = ++i);
@@ -185,7 +190,7 @@ export class NodeMapComponent implements OnInit {
             // ****************** links section ***************************
 
             // Update the links...
-            var link: any = svg
+            var link: any = g
                 .selectAll('path.link')
                 .data(links, function (d: any) {
                     return d.id;
