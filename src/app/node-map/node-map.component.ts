@@ -16,7 +16,7 @@ import * as d3 from 'd3';
     encapsulation: ViewEncapsulation.None,
 })
 export class NodeMapComponent implements OnInit {
-    @Input() dataSource: object;
+    @Input() dataSource: any;
 
     constructor() {
         // sayHello();
@@ -33,8 +33,9 @@ export class NodeMapComponent implements OnInit {
 
     private drawNodeMap(): void {
         // Set the dimensions and margins of the diagram
-        var margin = { top: 20, right: 90, bottom: 30, left: 90 },
-            width = 960 - margin.left - margin.right,
+        var margin = { top: 20, right: 10, bottom: 30, left: 10 },
+            // width = 960 - margin.left - margin.right,
+            width = document.body.clientWidth - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
@@ -61,7 +62,7 @@ export class NodeMapComponent implements OnInit {
         var treemap = d3.tree().size([height, width]);
 
         // Assigns parent, children, height, depth
-        root = d3.hierarchy(this.dataSource);
+        root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
         console.log('root');
         console.log(root);
 
@@ -126,7 +127,8 @@ export class NodeMapComponent implements OnInit {
                 .attr('y', (rectHeight / 2) * -1)
                 .attr('rx', '5')
                 .style('fill', function (d) {
-                    return d.data.fill;
+                    //if bodyColour is not defined, returns the #303F9F default color
+                    return d.data.bodyColour ? d.data.bodyColour : '#303F9F';
                 });
 
             // Add labels for the nodes
