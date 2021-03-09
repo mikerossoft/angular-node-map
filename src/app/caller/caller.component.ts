@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class CallerComponent implements OnInit {
     dataSourceJson = {};
 
+    public onEditCallback = (url: string, type: any): void => {
+        console.log('onEdit callback!');
+        console.log(`url: ${url}`);
+        console.log(`type: ${type}`);
+    };
+
     treeData: object = {
         name: 'NODE NAME 1',
         subname: 'CODE N1',

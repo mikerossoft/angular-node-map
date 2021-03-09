@@ -17,6 +17,7 @@ import * as d3 from 'd3';
 })
 export class NodeMapComponent implements OnInit {
     @Input() dataSource: any;
+    @Input() public onEdit: (url: string, type: any) => void;
 
     constructor() {
         // sayHello();
@@ -32,6 +33,7 @@ export class NodeMapComponent implements OnInit {
     }
 
     private drawNodeMap(): void {
+        const classScope = this;
         // Set the dimensions and margins of the diagram
         var margin = { top: 20, right: 10, bottom: 30, left: 10 },
             // width = 960 - margin.left - margin.right,
@@ -63,6 +65,7 @@ export class NodeMapComponent implements OnInit {
 
         // Assigns parent, children, height, depth
         root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
+
         console.log('root');
         console.log(root);
 
@@ -113,7 +116,9 @@ export class NodeMapComponent implements OnInit {
                 .attr('transform', function (d) {
                     return 'translate(' + source.y0 + ',' + source.x0 + ')';
                 })
-                .on('click', click);
+                .on('click', function (d) {
+                    click(d);
+                });
 
             var rectHeight = 60,
                 rectWidth = 120;
@@ -150,7 +155,7 @@ export class NodeMapComponent implements OnInit {
                     return 13;
                 })
                 .text(function (d) {
-                    return d.data.subname;
+                    return d.data.type;
                 });
 
             // UPDATE
@@ -248,6 +253,7 @@ export class NodeMapComponent implements OnInit {
 
             // Toggle children on click.
             function click(d) {
+                const selectedObj = d.data;
                 if (d.children) {
                     d._children = d.children;
                     d.children = null;
@@ -255,7 +261,16 @@ export class NodeMapComponent implements OnInit {
                     d.children = d._children;
                     d._children = null;
                 }
+
                 update(d);
+                handleOnEdit(d, selectedObj);
+            }
+
+            function handleOnEdit(d, selectedObj: any) {
+                const name = selectedObj.name ? selectedObj.name : '';
+                const type = selectedObj.type ? selectedObj.type : '';
+                console.log(d);
+                classScope.onEdit(name, type);
             }
         }
     }

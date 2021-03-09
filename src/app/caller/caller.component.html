@@ -1,2 +1,5 @@
 <p>From caller</p>
-<app-node-map [dataSource]="dataSourceJson"></app-node-map>
+<app-node-map
+    [dataSource]="dataSourceJson"
+    [onEdit]="onEditCallback"
+></app-node-map>
