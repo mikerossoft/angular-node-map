@@ -120,8 +120,8 @@ export class NodeMapComponent implements OnInit {
                     click(d);
                 });
 
-            var rectHeight = 60,
-                rectWidth = 120;
+            var rectHeight = 70,
+                rectWidth = 140;
 
             nodeEnter
                 .append('rect')
