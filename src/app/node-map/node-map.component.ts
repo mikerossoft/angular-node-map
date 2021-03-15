@@ -49,6 +49,21 @@ export class NodeMapComponent implements OnInit {
             .attr('width', width + margin.right + margin.left)
             .attr('height', height + margin.top + margin.bottom);
 
+        var asd = d3
+            .select('body')
+            .append('span')
+            .append('text')
+            .attr('x', 15)
+            .attr('y', -17)
+            .attr('fill', 'black')
+            .attr('class', 'fa')
+            .attr('font-size', function (d) {
+                return '20px';
+            })
+            .text(function (d) {
+                return '\uf044';
+            });
+
         var g = svg
             .append('g')
             .attr(
@@ -137,9 +152,21 @@ export class NodeMapComponent implements OnInit {
                 });
 
             // Add labels for the nodes
+            // nodeEnter
+            //     .append('text')
+            //     .attr('x', 15)
+            //     .attr('y', -17)
+            //     .attr('class', 'fa fa-edit icon-edit')
+            //     .attr('font-size', function (d) {
+            //         return '20px';
+            //     })
+            //     .text(function (d) {
+            //         return '\uf044';
+            //     });
             nodeEnter
                 .append('text')
                 .attr('dy', '-.35em')
+                .attr('class', 'node-text')
                 .attr('x', function (d) {
                     return 13;
                 })
@@ -150,12 +177,64 @@ export class NodeMapComponent implements OnInit {
                     return d.data.name;
                 })
                 .append('tspan')
+                .attr('class', 'node-text')
                 .attr('dy', '1.75em')
                 .attr('x', function (d) {
                     return 13;
                 })
                 .text(function (d) {
                     return d.data.type;
+                });
+
+            //Delete icon
+            nodeEnter
+                .append('text')
+                .attr('class', 'fa fa-edit icon-edit')
+                .attr('dy', '-1.1em')
+                .attr('x', function (d) {
+                    console.log('fa-edit d');
+                    console.log(d);
+
+                    return calculateNodeIconX(1.25, 1);
+                })
+                .attr('font-size', function (d) {
+                    return '12px';
+                })
+                .text(function (d) {
+                    return '\uf1f8';
+                });
+            //Edit icon
+            nodeEnter
+                .append('text')
+                .attr('class', 'fa fa-edit icon-edit')
+                .attr('dy', '-1.05em')
+                .attr('x', function (d) {
+                    console.log('fa-edit d');
+                    console.log(d);
+                    return calculateNodeIconX(1.525, 2);
+                })
+                .attr('font-size', function (d) {
+                    return '12px';
+                })
+                .text(function (d) {
+                    return '\uf044';
+                });
+
+            //Add icon
+            nodeEnter
+                .append('text')
+                .attr('class', 'fa fa-edit icon-edit')
+                .attr('dy', '-1.10em')
+                .attr('x', function (d) {
+                    console.log('fa-edit d');
+                    console.log(d);
+                    return calculateNodeIconX(1.6, 3);
+                })
+                .attr('font-size', function (d) {
+                    return '12px';
+                })
+                .text(function (d) {
+                    return '\uf067';
                 });
 
             // UPDATE
@@ -271,6 +350,12 @@ export class NodeMapComponent implements OnInit {
                 const type = selectedObj.type ? selectedObj.type : '';
                 console.log(d);
                 classScope.onEdit(name, type);
+            }
+            function calculateNodeIconX(
+                distance: number,
+                multiplier: number
+            ): number {
+                return rectWidth - (rectWidth / 10) * (distance * multiplier);
             }
         }
     }

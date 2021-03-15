@@ -2,10 +2,10 @@
     stroke-width: 3px;
 }
 
-.node text {
-    font: 12px sans-serif;
-    fill: #fff;
-}
+// .node text {
+// font: 12px sans-serif;
+// fill: #fff;
+// }
 
 .link {
     fill: none;
@@ -22,4 +22,22 @@
         padding: 1em;
         margin-bottom: 2em;
     }
+}
+
+.node-text {
+    font: 12px sans-serif;
+    fill: #fff;
+}
+
+.icon-edit {
+    fill: white;
+}
+
+.relative {
+    position: relative;
+}
+.topright {
+    position: absolute;
+    top: 0 px;
+    right: 0 px;
 }
