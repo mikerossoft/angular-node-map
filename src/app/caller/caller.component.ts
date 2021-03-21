@@ -7,11 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CallerComponent implements OnInit {
     dataSourceJson = {};
-
-    public onEditCallback = (url: string, type: any): void => {
-        console.log('onEdit callback!');
-        console.log(`url: ${url}`);
-        console.log(`type: ${type}`);
+    public onDeleteCallback = (url: string, type: any, error?: Error): void => {
+        console.log(`onDelete - url: ${url} type: ${type} type: ${error}`);
+    };
+    public onEditCallback = (url: string, type: any, error?: Error): void => {
+        console.log(`onEdit - url: ${url} type: ${type} type: ${error}`);
+    };
+    public onAddCallback = (url: string, type: any, error?: Error): void => {
+        console.log(`onAdd - url: ${url} type: ${type} type: ${error}`);
+    };
+    public onSelectCallback = (url: string, type: any, error?: Error): void => {
+        console.log(`onSelect - url: ${url} type: ${type} type: ${error}`);
     };
 
     dataBusData: object = {

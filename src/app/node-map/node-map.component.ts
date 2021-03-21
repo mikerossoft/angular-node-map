@@ -17,14 +17,17 @@ import * as d3 from 'd3';
 })
 export class NodeMapComponent implements OnInit {
     @Input() dataSource: any;
-    @Input() public onEdit: (url: string, type: any) => void;
+    @Input() public onEdit: (url: string, type: any, error?: Error) => void;
+    @Input() public onDelete: (url: string, type: any, error?: Error) => void;
+    @Input() public onAdd: (url: string, type: any, error?: Error) => void;
+    @Input() public onSelect: (url: string, type: any, error?: Error) => void;
 
     constructor() {
         // sayHello();
     }
 
     ngOnInit(): void {
-        console.log(this.dataSource);
+        // console.log(this.dataSource);
         // console.log(data);
         // drawNodeMap();
         // TreeBoxes.drawNodeMap();
@@ -81,8 +84,8 @@ export class NodeMapComponent implements OnInit {
         // Assigns parent, children, height, depth
         root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
 
-        console.log('root');
-        console.log(root);
+        // console.log('root');
+        // console.log(root);
 
         root.x0 = height / 2;
         root.y0 = 0;
@@ -132,7 +135,7 @@ export class NodeMapComponent implements OnInit {
                     return 'translate(' + source.y0 + ',' + source.x0 + ')';
                 })
                 .on('click', function (d) {
-                    click(d);
+                    // click(d);
                 });
 
             var rectHeight = 70,
@@ -192,8 +195,8 @@ export class NodeMapComponent implements OnInit {
                 .attr('class', 'fa fa-edit icon-edit')
                 .attr('dy', '-1.1em')
                 .attr('x', function (d) {
-                    console.log('fa-edit d');
-                    console.log(d);
+                    // console.log('fa-edit d');
+                    // console.log(d);
 
                     return calculateNodeIconX(1.25, 1);
                 })
@@ -202,6 +205,9 @@ export class NodeMapComponent implements OnInit {
                 })
                 .text(function (d) {
                     return '\uf1f8';
+                })
+                .on('click', function (d) {
+                    handleOnDelete(d);
                 });
             //Edit icon
             nodeEnter
@@ -209,8 +215,8 @@ export class NodeMapComponent implements OnInit {
                 .attr('class', 'fa fa-edit icon-edit')
                 .attr('dy', '-1.05em')
                 .attr('x', function (d) {
-                    console.log('fa-edit d');
-                    console.log(d);
+                    // console.log('fa-edit d');
+                    // console.log(d);
                     return calculateNodeIconX(1.525, 2);
                 })
                 .attr('font-size', function (d) {
@@ -218,6 +224,9 @@ export class NodeMapComponent implements OnInit {
                 })
                 .text(function (d) {
                     return '\uf044';
+                })
+                .on('click', function (d) {
+                    handleOnEdit(d);
                 });
 
             //Add icon
@@ -226,8 +235,8 @@ export class NodeMapComponent implements OnInit {
                 .attr('class', 'fa fa-edit icon-edit')
                 .attr('dy', '-1.10em')
                 .attr('x', function (d) {
-                    console.log('fa-edit d');
-                    console.log(d);
+                    // console.log('fa-edit d');
+                    // console.log(d);
                     return calculateNodeIconX(1.6, 3);
                 })
                 .attr('font-size', function (d) {
@@ -235,6 +244,9 @@ export class NodeMapComponent implements OnInit {
                 })
                 .text(function (d) {
                     return '\uf067';
+                })
+                .on('click', function (d) {
+                    handleOnAdd(d);
                 });
 
             // UPDATE
@@ -342,14 +354,38 @@ export class NodeMapComponent implements OnInit {
                 }
 
                 update(d);
-                handleOnEdit(d, selectedObj);
+                handleOnSelect(d, selectedObj);
             }
 
-            function handleOnEdit(d, selectedObj: any) {
+            function handleOnSelect(d, selectedObj: any) {
                 const name = selectedObj.name ? selectedObj.name : '';
                 const type = selectedObj.type ? selectedObj.type : '';
-                console.log(d);
+                // console.log(d);
                 classScope.onEdit(name, type);
+            }
+            function handleOnEdit(d) {
+                const item = d.data.nodes[0];
+                try {
+                    classScope.onEdit(item.uri, item.type, null);
+                } catch (error) {
+                    classScope.onEdit(null, null, error);
+                }
+            }
+            function handleOnDelete(d) {
+                const item = d.data.nodes[0];
+                try {
+                    classScope.onDelete(item.uri, item.type, null);
+                } catch (error) {
+                    classScope.onDelete(null, null, error);
+                }
+            }
+            function handleOnAdd(d) {
+                const item = d.data.nodes[0];
+                try {
+                    classScope.onAdd(item.uri, item.type, null);
+                } catch (error) {
+                    classScope.onAdd(null, null, error);
+                }
             }
             function calculateNodeIconX(
                 distance: number,
