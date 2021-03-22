@@ -19,7 +19,11 @@ export class NodeMapComponent implements OnInit {
     @Input() dataSource: any;
     @Input() public onEdit: (url: string, type: any, error?: Error) => void;
     @Input() public onDelete: (url: string, type: any, error?: Error) => void;
-    @Input() public onAdd: (url: string, type: any, error?: Error) => void;
+    @Input() public onAdd: (
+        parentUrl: string,
+        type: any,
+        error?: Error
+    ) => void;
     @Input() public onSelect: (url: string, type: any, error?: Error) => void;
 
     constructor() {
@@ -133,13 +137,14 @@ export class NodeMapComponent implements OnInit {
                 .attr('class', 'node')
                 .attr('transform', function (d) {
                     return 'translate(' + source.y0 + ',' + source.x0 + ')';
-                })
-                .on('click', function (d) {
-                    // click(d);
                 });
 
             var rectHeight = 70,
                 rectWidth = 140;
+            //setting to differenciate single click and double clicks
+            var prevent = false;
+            const delay = 200;
+            var timer: any;
 
             nodeEnter
                 .append('rect')
@@ -152,6 +157,25 @@ export class NodeMapComponent implements OnInit {
                 .style('fill', function (d) {
                     //if bodyColour is not defined, returns the #303F9F default color
                     return d.data.bodyColour ? d.data.bodyColour : '#303F9F';
+                })
+                .on('click', function (d) {
+                    //set a timer for the single click
+                    //if double click happens, it will prevent the function inside the timer to be called
+                    prevent = false;
+                    timer = setTimeout(() => {
+                        if (!prevent) {
+                            console.log(`timeer prevent: ${prevent}`);
+                            handleOnSelect(d);
+                        }
+                    }, delay);
+                })
+                .on('dblclick', function (d) {
+                    //assign value to prevent the single click from
+                    //calling the timer function
+                    prevent = true;
+                    console.log(`dblclick prevent: ${prevent}`);
+                    clearTimeout(timer);
+                    exapndCollapse(d);
                 });
 
             // Add labels for the nodes
@@ -343,7 +367,7 @@ export class NodeMapComponent implements OnInit {
             }
 
             // Toggle children on click.
-            function click(d) {
+            function exapndCollapse(d) {
                 const selectedObj = d.data;
                 if (d.children) {
                     d._children = d.children;
@@ -354,14 +378,15 @@ export class NodeMapComponent implements OnInit {
                 }
 
                 update(d);
-                handleOnSelect(d, selectedObj);
             }
 
-            function handleOnSelect(d, selectedObj: any) {
-                const name = selectedObj.name ? selectedObj.name : '';
-                const type = selectedObj.type ? selectedObj.type : '';
-                // console.log(d);
-                classScope.onEdit(name, type);
+            function handleOnSelect(d) {
+                const item = d.data.nodes[0];
+                try {
+                    classScope.onSelect(item.uri, item.type, null);
+                } catch (error) {
+                    classScope.onSelect(null, null, error);
+                }
             }
             function handleOnEdit(d) {
                 const item = d.data.nodes[0];
