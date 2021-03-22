@@ -29,6 +29,13 @@
     fill: #fff;
 }
 
+.node_onselect_highlight {
+    // stroke: rgb(26, 179, 148);
+    stroke: lawngreen;
+    stroke-width: 2px;
+    stroke-linejoin: round;
+}
+
 .icon-edit {
     fill: white;
 }

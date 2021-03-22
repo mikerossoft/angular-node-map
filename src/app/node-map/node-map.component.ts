@@ -56,20 +56,20 @@ export class NodeMapComponent implements OnInit {
             .attr('width', width + margin.right + margin.left)
             .attr('height', height + margin.top + margin.bottom);
 
-        var asd = d3
-            .select('body')
-            .append('span')
-            .append('text')
-            .attr('x', 15)
-            .attr('y', -17)
-            .attr('fill', 'black')
-            .attr('class', 'fa')
-            .attr('font-size', function (d) {
-                return '20px';
-            })
-            .text(function (d) {
-                return '\uf044';
-            });
+        // var asd = d3
+        //     .select('body')
+        //     .append('span')
+        //     .append('text')
+        //     .attr('x', 15)
+        //     .attr('y', -17)
+        //     .attr('fill', 'black')
+        //     .attr('class', 'fa')
+        //     .attr('font-size', function (d) {
+        //         return '20px';
+        //     })
+        //     .text(function (d) {
+        //         return '\uf044';
+        //     });
 
         var g = svg
             .append('g')
@@ -159,12 +159,26 @@ export class NodeMapComponent implements OnInit {
                     return d.data.bodyColour ? d.data.bodyColour : '#303F9F';
                 })
                 .on('click', function (d) {
+                    const highlightClassName = 'node_onselect_highlight';
                     //set a timer for the single click
                     //if double click happens, it will prevent the function inside the timer to be called
                     prevent = false;
                     timer = setTimeout(() => {
                         if (!prevent) {
-                            console.log(`timeer prevent: ${prevent}`);
+                            console.log(this);
+                            const highlightedClasses = document.getElementsByClassName(
+                                highlightClassName
+                            );
+
+                            if (highlightedClasses) {
+                                while (highlightedClasses.length) {
+                                    highlightedClasses[0].classList.remove(
+                                        highlightClassName
+                                    );
+                                }
+                            }
+
+                            this.classList.add(highlightClassName);
                             handleOnSelect(d);
                         }
                     }, delay);
