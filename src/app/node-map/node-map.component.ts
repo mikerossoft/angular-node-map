@@ -17,14 +17,10 @@ import * as d3 from 'd3';
 })
 export class NodeMapComponent implements OnInit {
     @Input() dataSource: any;
-    @Input() public onEdit: (url: string, type: any, error?: Error) => void;
-    @Input() public onDelete: (url: string, type: any, error?: Error) => void;
-    @Input() public onAdd: (
-        parentUrl: string,
-        type: any,
-        error?: Error
-    ) => void;
-    @Input() public onSelect: (url: string, type: any, error?: Error) => void;
+    @Input() public onEdit: (item?: any) => void;
+    @Input() public onDelete: (item?: any) => void;
+    @Input() public onAdd: (item?: any) => void;
+    @Input() public onSelect: (item?: any) => void;
 
     constructor() {
         // sayHello();
@@ -395,37 +391,49 @@ export class NodeMapComponent implements OnInit {
             }
 
             function handleOnSelect(d) {
-                const item = d.data.nodes[0];
-                try {
-                    classScope.onSelect(item.uri, item.type, null);
-                } catch (error) {
-                    classScope.onSelect(null, null, error);
+                const item = getItem(d);
+                if (item) {
+                    classScope.onSelect(item);
+                } else {
+                    console.error('handleOnSelect: selected item is null');
                 }
             }
+
             function handleOnEdit(d) {
-                const item = d.data.nodes[0];
-                try {
-                    classScope.onEdit(item.uri, item.type, null);
-                } catch (error) {
-                    classScope.onEdit(null, null, error);
+                const item = getItem(d);
+                if (item) {
+                    classScope.onEdit(item);
+                } else {
+                    console.error('handleOnEdit: selected item is null');
                 }
             }
             function handleOnDelete(d) {
-                const item = d.data.nodes[0];
-                try {
-                    classScope.onDelete(item.uri, item.type, null);
-                } catch (error) {
-                    classScope.onDelete(null, null, error);
+                const item = getItem(d);
+                if (item) {
+                    classScope.onDelete(item);
+                } else {
+                    console.error('handleOnDelete: selected item is null');
                 }
             }
             function handleOnAdd(d) {
-                const item = d.data.nodes[0];
-                try {
-                    classScope.onAdd(item.uri, item.type, null);
-                } catch (error) {
-                    classScope.onAdd(null, null, error);
+                const item = getItem(d);
+                if (item) {
+                    classScope.onAdd(item);
+                } else {
+                    console.error('handleOnAdd: selected item is null');
                 }
             }
+
+            function getItem(d: any): any {
+                let item;
+                try {
+                    item = d.data.nodes[0];
+                } catch (error) {
+                    item = d.data;
+                }
+                return item;
+            }
+
             function calculateNodeIconX(
                 distance: number,
                 multiplier: number
