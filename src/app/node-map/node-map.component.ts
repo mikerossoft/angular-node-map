@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewEncapsulation,
+} from '@angular/core';
 import * as data from '../../assets/dataExample.json';
 // import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
 
@@ -15,7 +22,7 @@ import * as d3 from 'd3';
     styleUrls: ['./node-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class NodeMapComponent implements OnInit {
+export class NodeMapComponent implements OnInit, OnChanges {
     @Input() dataSource: any;
     @Input() public onEdit: (item?: any) => void;
     @Input() public onDelete: (item?: any) => void;
@@ -25,17 +32,27 @@ export class NodeMapComponent implements OnInit {
     constructor() {
         // sayHello();
     }
-
-    ngOnInit(): void {
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('ngOnChanges');
         // console.log(this.dataSource);
-        // console.log(data);
-        // drawNodeMap();
-        // TreeBoxes.drawNodeMap();
-        // drawNodeMap(d3);
+        console.log(document.querySelectorAll('.node-map'));
+        if (document.querySelectorAll('.node-map').length > 0) {
+            this.cleanUp();
+        }
         this.drawNodeMap();
     }
 
+    private cleanUp(): void {
+        document.querySelectorAll('.node-map').forEach(function (element) {
+            element.remove();
+        });
+    }
+
+    ngOnInit(): void {}
+
     private drawNodeMap(): void {
+        console.log(this.dataSource);
+
         const classScope = this;
         // Set the dimensions and margins of the diagram
         var margin = { top: 20, right: 10, bottom: 30, left: 10 },
@@ -49,23 +66,9 @@ export class NodeMapComponent implements OnInit {
         var svg = d3
             .select('body')
             .append('svg')
+            .attr('class', 'node-map')
             .attr('width', width + margin.right + margin.left)
             .attr('height', height + margin.top + margin.bottom);
-
-        // var asd = d3
-        //     .select('body')
-        //     .append('span')
-        //     .append('text')
-        //     .attr('x', 15)
-        //     .attr('y', -17)
-        //     .attr('fill', 'black')
-        //     .attr('class', 'fa')
-        //     .attr('font-size', function (d) {
-        //         return '20px';
-        //     })
-        //     .text(function (d) {
-        //         return '\uf044';
-        //     });
 
         var g = svg
             .append('g')
@@ -75,7 +78,7 @@ export class NodeMapComponent implements OnInit {
             );
 
         var i = 0,
-            duration = 750,
+            duration = 1000,
             root;
 
         // declares a tree layout and assigns the size
@@ -185,7 +188,7 @@ export class NodeMapComponent implements OnInit {
                     prevent = true;
                     console.log(`dblclick prevent: ${prevent}`);
                     clearTimeout(timer);
-                    exapndCollapse(d);
+                    expandCollapse(d);
                 });
 
             // Add labels for the nodes
@@ -377,8 +380,10 @@ export class NodeMapComponent implements OnInit {
             }
 
             // Toggle children on click.
-            function exapndCollapse(d) {
+            function expandCollapse(d) {
                 const selectedObj = d.data;
+                console.log(d);
+
                 if (d.children) {
                     d._children = d.children;
                     d.children = null;
