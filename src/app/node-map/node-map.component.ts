@@ -55,20 +55,33 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
         const classScope = this;
         // Set the dimensions and margins of the diagram
-        var margin = { top: 20, right: 10, bottom: 30, left: 10 },
+        var margin = { top: 8, right: 8, bottom: 8, left: 8 },
             // width = 960 - margin.left - margin.right,
             width = document.body.clientWidth - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+            // height = 500 - margin.top - margin.bottom;
+            //max depth -1 ?
+            height = 140 * 4 - margin.top - margin.bottom;
+
+        console.log('width');
+        console.log(document.body.clientWidth);
+
+        console.log('height');
+        console.log(document.body.clientHeight);
+
+        const nodeMap = document.querySelector('#node-map');
+        console.log('nodeMap');
+        console.log(nodeMap);
+        console.log(nodeMap.clientHeight);
+        console.log(nodeMap.clientWidth);
 
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
         // moves the 'group' element to the top left margin
         var svg = d3
-            .select('body')
+            .select('div#node-map')
             .append('svg')
             .attr('class', 'node-map')
-            .attr('width', width + margin.right + margin.left)
-            .attr('height', height + margin.top + margin.bottom);
+            .attr('viewBox', `0 0 ${width} ${height}`);
 
         var g = svg
             .append('g')
@@ -98,7 +111,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
         update(root);
 
-        // Collapse the node and all it's children
+        // Collapse the node and all their children
         function collapse(d) {
             if (d.children) {
                 d._children = d.children;
@@ -115,9 +128,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
             var nodes = treeData.descendants(),
                 links = treeData.descendants().slice(1);
 
-            // Normalize for fixed-depth.
+            //calculate the distance between each node item
             nodes.forEach(function (d) {
-                d.y = d.depth * 180;
+                d.y = d.depth * 160;
             });
 
             // ****************** Nodes section ***************************
@@ -145,6 +158,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
             const delay = 200;
             var timer: any;
 
+            console.log('rectHeight');
+            console.log(rectHeight);
+            console.log(rectHeight / 2);
+            console.log((rectHeight / 2) * -1);
+
             nodeEnter
                 .append('rect')
                 .attr('class', 'node')
@@ -152,6 +170,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('height', rectHeight)
                 .attr('x', 0)
                 .attr('y', (rectHeight / 2) * -1)
+                // .attr('y', 0)
+                // .attr('y', rectHeight * -1)
+                //add the radius to the node border's edges
                 .attr('rx', '5')
                 .style('fill', function (d) {
                     //if bodyColour is not defined, returns the #303F9F default color
