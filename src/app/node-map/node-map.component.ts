@@ -28,7 +28,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public onDelete: (item?: any) => void;
     @Input() public onAdd: (item?: any) => void;
     @Input() public onSelect: (item?: any) => void;
-
     constructor() {
         // sayHello();
     }
@@ -51,25 +50,32 @@ export class NodeMapComponent implements OnInit, OnChanges {
     ngOnInit(): void {}
 
     private drawNodeMap(): void {
+        const nodesLength: number[] = [];
+
         const classScope = this;
 
-        const maxArrayLength = getMaxArrayLengthFromSource(this.dataSource);
-        console.log('maxArrayLength');
-        console.log(maxArrayLength);
+        const nodeMapRoot = this.dataSource as NodeMapRoot;
+        const nodes = nodeMapRoot.root.nodes;
+        getMaxArrayLengthFromSource(nodes);
+
+        const maxArrayLength = Math.max(...nodesLength);
+        //using this variable to calculate the height of the drawing
+        //3 general fits for most of the case, so the default number will be 3
+        const heightMultiplier = maxArrayLength < 3 ? 3 : maxArrayLength - 1;
 
         // Set the dimensions and margins of the diagram
         var margin = { top: 8, right: 8, bottom: 8, left: 8 },
             // width = 960 - margin.left - margin.right,
             width = document.body.clientWidth - margin.left - margin.right,
             // height = 500 - margin.top - margin.bottom;
-            //max depth -1 ?
-            height = 140 * (maxArrayLength - 1) - margin.top - margin.bottom;
+            //140 is the size of the current retangle
+            height = 140 * heightMultiplier - margin.top - margin.bottom;
 
         console.log('width');
         console.log(document.body.clientWidth);
 
         console.log('height');
-        console.log(document.body.clientHeight);
+        console.log(height);
 
         const nodeMap = document.querySelector('#node-map');
 
@@ -119,10 +125,13 @@ export class NodeMapComponent implements OnInit, OnChanges {
             }
         }
 
-        function getMaxArrayLengthFromSource(dataSource: any): number {
-            const nodeMapRoot = dataSource as NodeMapRoot;
-            const nodeMap = nodeMapRoot.root.nodes;
-            return Math.max(...nodeMap.map((item) => item.nodes.length));
+        function getMaxArrayLengthFromSource(nodeMap: any): void {
+            for (var i = 0; i < nodeMap.length; i++) {
+                if (Array.isArray(nodeMap[i].nodes)) {
+                    nodesLength.push(nodeMap[i].nodes.length);
+                    getMaxArrayLengthFromSource(nodeMap[i].nodes);
+                }
+            }
         }
 
         function update(source) {
