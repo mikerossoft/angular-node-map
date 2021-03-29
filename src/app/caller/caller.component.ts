@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NodeMapComponent } from '../node-map/node-map.component';
+import { NodeMapRoot } from '../node-map/node-map-interface';
 
 @Component({
     selector: 'app-caller',

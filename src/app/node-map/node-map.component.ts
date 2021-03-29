@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import * as data from '../../assets/dataExample.json';
 // import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
-
+import { NodeMapRoot } from '../node-map/node-map-interface';
 import * as d3 from 'd3';
 // import * as d3hierarchy from 'd3-hierarchy';
 // import * as d3selection from 'd3-selection';
@@ -51,16 +51,19 @@ export class NodeMapComponent implements OnInit, OnChanges {
     ngOnInit(): void {}
 
     private drawNodeMap(): void {
-        console.log(this.dataSource);
-
         const classScope = this;
+
+        const maxArrayLength = getMaxArrayLengthFromSource(this.dataSource);
+        console.log('maxArrayLength');
+        console.log(maxArrayLength);
+
         // Set the dimensions and margins of the diagram
         var margin = { top: 8, right: 8, bottom: 8, left: 8 },
             // width = 960 - margin.left - margin.right,
             width = document.body.clientWidth - margin.left - margin.right,
             // height = 500 - margin.top - margin.bottom;
             //max depth -1 ?
-            height = 140 * 4 - margin.top - margin.bottom;
+            height = 140 * (maxArrayLength - 1) - margin.top - margin.bottom;
 
         console.log('width');
         console.log(document.body.clientWidth);
@@ -69,10 +72,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
         console.log(document.body.clientHeight);
 
         const nodeMap = document.querySelector('#node-map');
-        console.log('nodeMap');
-        console.log(nodeMap);
-        console.log(nodeMap.clientHeight);
-        console.log(nodeMap.clientWidth);
 
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
@@ -100,8 +99,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
         // Assigns parent, children, height, depth
         root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
 
-        // console.log('root');
-        // console.log(root);
+        console.log('root');
+        console.log(root);
 
         root.x0 = height / 2;
         root.y0 = 0;
@@ -118,6 +117,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 d._children.forEach(collapse);
                 d.children = null;
             }
+        }
+
+        function getMaxArrayLengthFromSource(dataSource: any): number {
+            const nodeMapRoot = dataSource as NodeMapRoot;
+            const nodeMap = nodeMapRoot.root.nodes;
+            return Math.max(...nodeMap.map((item) => item.nodes.length));
         }
 
         function update(source) {
@@ -157,11 +162,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
             var prevent = false;
             const delay = 200;
             var timer: any;
-
-            console.log('rectHeight');
-            console.log(rectHeight);
-            console.log(rectHeight / 2);
-            console.log((rectHeight / 2) * -1);
 
             nodeEnter
                 .append('rect')
