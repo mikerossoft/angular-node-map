@@ -23,6 +23,14 @@ export class CallerComponent implements OnInit {
         console.log(`onSelect - item: ${item} uri:${item.uri}`);
     };
 
+    COL_LEV_1 = '#1976D2';
+    COL_LEV_2 = '#00BCD4';
+    COL_LEV_3 = '#4CAF50';
+    COL_LEV_4 = '#FFC107';
+    COL_LEV_5 = '#FF5722';
+    COL_LEV_6 = '#ff1744';
+    COL_LEV_7 = '#f50057';
+
     dataBusData: object = {
         root: {
             name: 'DataBus',
@@ -74,6 +82,80 @@ export class CallerComponent implements OnInit {
                                                     bodyColour: '#FF5722',
                                                     borderColour: '#AAA',
                                                     canEdit: false,
+                                                    nodes: [
+                                                        {
+                                                            uri: 'id-1-1-1-1-1',
+                                                            name:
+                                                                'Azure Storage',
+                                                            description:
+                                                                'Stuff',
+                                                            plugin:
+                                                                'Azure Storage',
+                                                            type: 'Output',
+                                                            bodyColour:
+                                                                '#FF5722',
+                                                            borderColour:
+                                                                '#AAA',
+                                                            canEdit: false,
+                                                            nodes: [
+                                                                {
+                                                                    uri:
+                                                                        'id-1-1-1-1-1',
+                                                                    name:
+                                                                        'Azure Storage',
+                                                                    description:
+                                                                        'Stuff',
+                                                                    plugin:
+                                                                        'Azure Storage',
+                                                                    type:
+                                                                        'Output',
+                                                                    bodyColour:
+                                                                        '#FF5722',
+                                                                    borderColour:
+                                                                        '#AAA',
+                                                                    canEdit: false,
+                                                                    nodes: [
+                                                                        {
+                                                                            uri:
+                                                                                'id-1-1-1-1-1',
+                                                                            name:
+                                                                                'Azure Storage',
+                                                                            description:
+                                                                                'Stuff',
+                                                                            plugin:
+                                                                                'Azure Storage',
+                                                                            type:
+                                                                                'Output',
+                                                                            bodyColour:
+                                                                                '#FF5722',
+                                                                            borderColour:
+                                                                                '#AAA',
+                                                                            canEdit: false,
+                                                                            nodes: [
+                                                                                {
+                                                                                    uri:
+                                                                                        'id-1-1-1-1-1',
+                                                                                    name:
+                                                                                        'Azure Storage',
+                                                                                    description:
+                                                                                        'Stuff',
+                                                                                    plugin:
+                                                                                        'Azure Storage',
+                                                                                    type:
+                                                                                        'Output',
+                                                                                    bodyColour:
+                                                                                        '#FF5722',
+                                                                                    borderColour:
+                                                                                        '#AAA',
+                                                                                    canEdit: false,
+                                                                                },
+                                                                            ],
+                                                                        },
+                                                                    ],
+                                                                },
+                                                            ],
+                                                        },
+                                                    ],
                                                 },
                                                 {
                                                     uri: 'id-1-1-1-1-2',
@@ -97,6 +179,285 @@ export class CallerComponent implements OnInit {
         },
     };
 
+    dataBusScadaData: object = {
+        root: {
+            uri: 'id-1',
+            name: 'SCADA',
+            description: 'Stuff',
+            plugin: 'OPC HDA',
+            type: 'Connector',
+            bodyColour: this.COL_LEV_1,
+            borderColour: '#FFF',
+            canEdit: false,
+            nodes: [
+                {
+                    uri: 'id-1-1',
+                    name: 'POWER',
+                    description: 'Stuff',
+                    type: 'Input',
+                    bodyColour: this.COL_LEV_2,
+                    borderColour: '#EEE',
+                    canEdit: false,
+                    nodes: [
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'AZURE',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    nodes: [
+                                        {
+                                            uri: 'id-1-1-1',
+                                            name: 'STUFF',
+                                            description: 'Stuff',
+                                            type: 'Subscription',
+                                            bodyColour: this.COL_LEV_5,
+                                            borderColour: '#CCC',
+                                            canEdit: false,
+                                            nodes: [
+                                                {
+                                                    uri: 'id-1-1-1',
+                                                    name: 'STUFF',
+                                                    description: 'Stuff',
+                                                    type: 'Subscription',
+                                                    bodyColour: this.COL_LEV_6,
+                                                    borderColour: '#CCC',
+                                                    canEdit: false,
+                                                    nodes: [
+                                                        {
+                                                            uri: 'id-1-1-1',
+                                                            name: 'STUFF',
+                                                            description:
+                                                                'Stuff',
+                                                            type:
+                                                                'Subscription',
+                                                            bodyColour: this
+                                                                .COL_LEV_7,
+                                                            borderColour:
+                                                                '#CCC',
+                                                            canEdit: false,
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'LOCAL',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'AWS',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'GCP',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'DIGITAL OCEAN',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    };
+
+    dataBusIoTData: object = {
+        root: {
+            uri: 'id-1',
+            name: 'LORA',
+            description: 'Stuff',
+            plugin: 'OPC HDA',
+            type: 'Connector',
+            bodyColour: this.COL_LEV_1,
+            borderColour: '#FFF',
+            canEdit: false,
+            nodes: [
+                {
+                    uri: 'id-1-1',
+                    name: 'W01',
+                    description: 'Stuff',
+                    type: 'Input',
+                    bodyColour: this.COL_LEV_2,
+                    borderColour: '#EEE',
+                    canEdit: false,
+                    nodes: [
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'STUFF',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'LOCAL',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    nodes: [
+                                        {
+                                            uri: 'id-1-1-1',
+                                            name: 'STUFF',
+                                            description: 'Stuff',
+                                            type: 'Subscription',
+                                            bodyColour: this.COL_LEV_5,
+                                            borderColour: '#CCC',
+                                            canEdit: false,
+                                        },
+                                    ],
+                                },
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                },
+
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    nodes: [
+                                        {
+                                            uri: 'id-1-1-1',
+                                            name: 'STUFF',
+                                            description: 'Stuff',
+                                            type: 'Subscription',
+                                            bodyColour: this.COL_LEV_5,
+                                            borderColour: '#CCC',
+                                            canEdit: false,
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    };
+
     constructor() {}
 
     ngOnInit(): void {
@@ -104,7 +465,7 @@ export class CallerComponent implements OnInit {
     }
 
     private getDataBusJson(): object {
-        return this.dataBusData;
+        return this.dataBusScadaData;
     }
 
     public onBtnClick() {
