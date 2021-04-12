@@ -6,6 +6,10 @@
 // font: 12px sans-serif;
 // fill: #fff;
 // }
+svg:not(:root) {
+    width: 100%;
+    height: auto;
+}
 
 .link {
     fill: none;

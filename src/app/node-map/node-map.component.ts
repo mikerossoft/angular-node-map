@@ -29,7 +29,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public onAdd: (item?: any) => void;
     @Input() public onSelect: (item?: any) => void;
     constructor() {
-        // sayHello();
     }
     ngOnChanges(changes: SimpleChanges): void {
         console.log('ngOnChanges');
@@ -38,6 +37,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
         if (document.querySelectorAll('.node-map').length > 0) {
             this.cleanUp();
         }
+
         this.drawNodeMap();
     }
 
@@ -50,26 +50,29 @@ export class NodeMapComponent implements OnInit, OnChanges {
     ngOnInit(): void {}
 
     private drawNodeMap(): void {
-        const nodesLength: number[] = [];
-
         const classScope = this;
 
         const nodeMapRoot = this.dataSource as NodeMapRoot;
         const nodes = nodeMapRoot.root.nodes;
+        //using recursive function to get the verticle node level
+        const nodesLength: number[] = [];
         getMaxArrayLengthFromSource(nodes);
-
         const maxArrayLength = Math.max(...nodesLength);
         //using this variable to calculate the height of the drawing
         //3 general fits for most of the case, so the default number will be 3
-        const heightMultiplier = maxArrayLength < 3 ? 3 : maxArrayLength - 1;
+        const heightMultiplier = maxArrayLength < 3 ? 3 : maxArrayLength;
 
         // Set the dimensions and margins of the diagram
-        var margin = { top: 8, right: 8, bottom: 8, left: 8 },
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
             // width = 960 - margin.left - margin.right,
-            width = document.body.clientWidth - margin.left - margin.right,
+            // width = document.body.clientWidth,
+            width = 1180,
+            // width = 500,
             // height = 500 - margin.top - margin.bottom;
             //140 is the size of the current retangle
-            height = 140 * heightMultiplier - margin.top - margin.bottom;
+            // height = 140 * heightMultiplier;
+            height = 70 * 2 * heightMultiplier;
+        console.log(`heightMultiplier: ${heightMultiplier}`);
 
         console.log('width');
         console.log(document.body.clientWidth);
@@ -78,6 +81,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
         console.log(height);
 
         const nodeMap = document.querySelector('#node-map');
+        console.log(`this.parentWidth: ${this.parentWidth}`);
+        //set nodeMap container width, height and overflow attributes
+        // nodeMap.setAttribute('style', `width:${width}px;`);
+        // nodeMap.setAttribute('style', `width:800px;`);
+        // nodeMap.style.height = '700px';
+        // nodeMap.style.overflow = 'scroll';
 
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
@@ -134,7 +143,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             }
         }
 
-        function update(source) {
+        function update(source: any) {
             // Assigns the x and y position for the nodes
             var treeData = treemap(root);
 
@@ -165,13 +174,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return 'translate(' + source.y0 + ',' + source.x0 + ')';
                 });
 
-            var rectHeight = 70,
-                rectWidth = 140;
             //setting to differenciate single click and double clicks
             var prevent = false;
             const delay = 200;
             var timer: any;
-
+            let rectWidth = 120,
+                rectHeight = 65;
             nodeEnter
                 .append('rect')
                 .attr('class', 'node')
@@ -235,7 +243,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             //     });
             nodeEnter
                 .append('text')
-                .attr('dy', '-.35em')
+                .attr('dy', '.25em')
                 .attr('class', 'node-text')
                 .attr('x', function (d) {
                     return 13;
@@ -248,7 +256,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 })
                 .append('tspan')
                 .attr('class', 'node-text')
-                .attr('dy', '1.75em')
+                .attr('dy', '1.50em')
                 .attr('x', function (d) {
                     return 13;
                 })

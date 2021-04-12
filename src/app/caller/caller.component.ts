@@ -9,7 +9,6 @@ import { NodeMapRoot } from '../node-map/node-map-interface';
 })
 export class CallerComponent implements OnInit {
     @ViewChild(NodeMapComponent) nodeMap: NodeMapComponent;
-
     dataSourceJson = {};
     public onDeleteCallback = (item?: any): void => {
         console.log(`onDelete - item: ${item} uri:${item.uri}`);
@@ -183,7 +182,7 @@ export class CallerComponent implements OnInit {
     dataBusScadaData: object = {
         root: {
             uri: 'id-1',
-            name: 'SCADA',
+            name: 'SCADASCADASC..',
             description: 'Stuff',
             plugin: 'OPC HDA',
             type: 'Connector',
@@ -476,7 +475,7 @@ export class CallerComponent implements OnInit {
     }
 
     private getDataBus2Json(): object {
-        return this.dataBusData2;
+        return this.dataBusIoTData;
     }
 
     dataBusData2: object = {
