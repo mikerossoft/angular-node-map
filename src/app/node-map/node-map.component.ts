@@ -28,7 +28,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public onDelete: (item?: any) => void;
     @Input() public onAdd: (item?: any) => void;
     @Input() public onSelect: (item?: any) => void;
+    rectHeight: number = 0;
+    rectWidth: number = 0;
+
     constructor() {
+        this.rectHeight = 65;
+        this.rectWidth = 120;
     }
     ngOnChanges(changes: SimpleChanges): void {
         console.log('ngOnChanges');
@@ -54,6 +59,21 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
         const nodeMapRoot = this.dataSource as NodeMapRoot;
         const nodes = nodeMapRoot.root.nodes;
+
+        // Assigns parent, children, height, depth
+        root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
+        const depthestLevelHorizontal = getMaxLevelHorizontally(root);
+        console.log(`depthestLevelHorizontal:${depthestLevelHorizontal}`);
+
+        const depthestLevelHorizontalVal = Number.isFinite(
+            depthestLevelHorizontal
+        )
+            ? depthestLevelHorizontal
+            : 0;
+        const nodesHorizontalGapSpaceEstimator = Math.round(
+            depthestLevelHorizontalVal / 3
+        );
+
         //using recursive function to get the verticle node level
         const nodesLength: number[] = [];
         getMaxArrayLengthFromSource(nodes);
@@ -62,31 +82,23 @@ export class NodeMapComponent implements OnInit, OnChanges {
         //3 general fits for most of the case, so the default number will be 3
         const heightMultiplier = maxArrayLength < 3 ? 3 : maxArrayLength;
 
+        const nodesVerticalGapSpaceEstimator = Math.round(maxArrayLength / 3);
+        // const rectWidth = 120,
+        // rectHeight = 65;
         // Set the dimensions and margins of the diagram
         var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-            // width = 960 - margin.left - margin.right,
-            // width = document.body.clientWidth,
-            width = 1180,
-            // width = 500,
-            // height = 500 - margin.top - margin.bottom;
-            //140 is the size of the current retangle
-            // height = 140 * heightMultiplier;
-            height = 70 * 2 * heightMultiplier;
+            width =
+                140 * depthestLevelHorizontalVal +
+                nodesHorizontalGapSpaceEstimator * 140,
+            height =
+                70 * nodesVerticalGapSpaceEstimator + 140 * heightMultiplier;
         console.log(`heightMultiplier: ${heightMultiplier}`);
 
         console.log('width');
-        console.log(document.body.clientWidth);
+        console.log(width);
 
         console.log('height');
         console.log(height);
-
-        const nodeMap = document.querySelector('#node-map');
-        console.log(`this.parentWidth: ${this.parentWidth}`);
-        //set nodeMap container width, height and overflow attributes
-        // nodeMap.setAttribute('style', `width:${width}px;`);
-        // nodeMap.setAttribute('style', `width:800px;`);
-        // nodeMap.style.height = '700px';
-        // nodeMap.style.overflow = 'scroll';
 
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
@@ -110,9 +122,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
         // declares a tree layout and assigns the size
         var treemap = d3.tree().size([height, width]);
-
-        // Assigns parent, children, height, depth
-        root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
 
         console.log('root');
         console.log(root);
@@ -141,6 +150,17 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     getMaxArrayLengthFromSource(nodeMap[i].nodes);
                 }
             }
+        }
+        function getMaxLevelHorizontally(root: any): number {
+            let returnVal =
+                d3.max(
+                    root.descendants().map(function (d) {
+                        return d.depth;
+                    })
+                ) + 1;
+            //plus the root level;
+
+            return +returnVal;
         }
 
         function update(source: any) {
@@ -178,15 +198,15 @@ export class NodeMapComponent implements OnInit, OnChanges {
             var prevent = false;
             const delay = 200;
             var timer: any;
-            let rectWidth = 120,
-                rectHeight = 65;
+            // let rectWidth = 120,
+            //     rectHeight = 65;
             nodeEnter
                 .append('rect')
                 .attr('class', 'node')
-                .attr('width', rectWidth)
-                .attr('height', rectHeight)
+                .attr('width', classScope.rectWidth)
+                .attr('height', classScope.rectHeight)
                 .attr('x', 0)
-                .attr('y', (rectHeight / 2) * -1)
+                .attr('y', (classScope.rectHeight / 2) * -1)
                 // .attr('y', 0)
                 // .attr('y', rectHeight * -1)
                 //add the radius to the node border's edges
@@ -252,7 +272,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return 'start';
                 })
                 .text(function (d) {
-                    return d.data.name;
+                    return formatTitleText(d.data.name);
                 })
                 .append('tspan')
                 .attr('class', 'node-text')
@@ -261,7 +281,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return 13;
                 })
                 .text(function (d) {
-                    return d.data.type;
+                    return formatTypeText(d.data.type);
                 });
 
             //Delete icon
@@ -481,7 +501,28 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 distance: number,
                 multiplier: number
             ): number {
-                return rectWidth - (rectWidth / 10) * (distance * multiplier);
+                return (
+                    classScope.rectWidth -
+                    (classScope.rectWidth / 10) * (distance * multiplier)
+                );
+            }
+
+            function formatTitleText(display: string): any {
+                const longTextSymbol = '..';
+                if (display.length > 10) {
+                    return display.substr(0, 10) + longTextSymbol;
+                } else {
+                    return display;
+                }
+            }
+
+            function formatTypeText(display: string): any {
+                const longTextSymbol = '..';
+                if (display.length > 16) {
+                    return display.substr(0, 16) + longTextSymbol;
+                } else {
+                    return display;
+                }
             }
         }
     }
