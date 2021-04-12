@@ -182,7 +182,7 @@ export class CallerComponent implements OnInit {
     dataBusScadaData: object = {
         root: {
             uri: 'id-1',
-            name: 'SCADASCADASC..',
+            name: 'SCADASCADASCADA',
             description: 'Stuff',
             plugin: 'OPC HDA',
             type: 'Connector',
@@ -192,7 +192,7 @@ export class CallerComponent implements OnInit {
             nodes: [
                 {
                     uri: 'id-1-1',
-                    name: 'POWER',
+                    name: 'POWERPOWERPOWER',
                     description: 'Stuff',
                     type: 'Input',
                     bodyColour: this.COL_LEV_2,
@@ -203,7 +203,7 @@ export class CallerComponent implements OnInit {
                             uri: 'id-1-1-1',
                             name: 'AZURE',
                             description: 'Stuff',
-                            type: 'Subscription',
+                            type: 'SubscriptionSubscription',
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
