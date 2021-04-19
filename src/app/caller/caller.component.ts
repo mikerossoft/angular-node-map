@@ -189,12 +189,11 @@ export class CallerComponent implements OnInit {
             bodyColour: this.COL_LEV_1,
             borderColour: '#FFF',
             canEdit: true,
-            canAdd: true,
             canDelete: true,
             nodes: [
                 {
                     uri: 'id-1-1',
-                    name: 'POWERPOWERPOWER',
+                    name: 'POWER',
                     description: 'Stuff',
                     type: 'Input',
                     bodyColour: this.COL_LEV_2,
@@ -222,7 +221,7 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
-                                    canAdd: false,
+                                    canAdd: true,
                                     canDelete: true,
                                     nodes: [
                                         {
@@ -277,8 +276,8 @@ export class CallerComponent implements OnInit {
                             type: 'Subscription',
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
-                            canEdit: false,
-                            canAdd: false,
+                            canEdit: true,
+                            canAdd: true,
                             canDelete: false,
                             nodes: [
                                 {
@@ -303,7 +302,7 @@ export class CallerComponent implements OnInit {
                             borderColour: '#CCC',
                             canEdit: false,
                             canAdd: false,
-                            canDelete: false,
+                            canDelete: true,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',

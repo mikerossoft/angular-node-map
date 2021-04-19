@@ -16,6 +16,12 @@ import * as d3 from 'd3';
 // declare function drawNodeMap(d3: any): void;
 // declare function sayHello(): void;
 
+enum IconType {
+    Add,
+    Edit,
+    Delete,
+}
+
 @Component({
     selector: 'app-node-map',
     templateUrl: './node-map.component.html',
@@ -295,10 +301,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canDeleteIconShow(d))
                 .attr('dy', '-1.1em')
                 .attr('x', function (d) {
-                    // console.log('fa-edit d');
-                    // console.log(d);
-
-                    return calculateNodeIconX(1.25, 1);
+                    return getIconPos(d, IconType.Delete);
                 })
                 .attr('font-size', function (d) {
                     return '12px';
@@ -315,9 +318,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canEditIconShow(d))
                 .attr('dy', '-1.05em')
                 .attr('x', function (d) {
-                    // console.log('fa-edit d');
-                    // console.log(d);
-                    return calculateNodeIconX(1.525, 2);
+                    return getIconPos(d, IconType.Edit);
                 })
                 .attr('font-size', function (d) {
                     return '12px';
@@ -335,9 +336,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canAddIconShow(d))
                 .attr('dy', '-1.10em')
                 .attr('x', function (d) {
-                    // console.log('fa-edit d');
-                    // console.log(d);
-                    return calculateNodeIconX(1.6, 3);
+                    return getIconPos(d, IconType.Add);
                 })
                 .attr('font-size', function (d) {
                     return '12px';
@@ -533,6 +532,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
             function canAddIconShow(d): any {
                 const canAdd = d?.data?.canAdd;
+
                 if (canAdd) return classScope.fontAwesomeClass;
                 else return classScope.hideIconClass;
             }
@@ -561,6 +561,95 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 const canDelete = d?.data?.canDelete;
                 if (canDelete) return handleOnDelete(d);
                 else return handleNothing;
+            }
+
+            function getIconPos(d, iconType: IconType) {
+                const canAdd =
+                    typeof d?.data?.canAdd !== 'undefined'
+                        ? d?.data?.canAdd
+                        : false;
+
+                const canEdit =
+                    typeof d?.data?.canEdit !== 'undefined'
+                        ? d?.data?.canEdit
+                        : false;
+
+                const canDelete =
+                    typeof d?.data?.canDelete !== 'undefined'
+                        ? d?.data?.canDelete
+                        : false;
+
+                const iconFlagList = [canAdd, canEdit, canDelete];
+                const numberOfDisplayIcons = iconFlagList.filter(Boolean)
+                    .length;
+
+                const iconMeasurer = {
+                    numberOfIcons: numberOfDisplayIcons,
+                    canAddPos: 0.0,
+                    canEditPos: 0.0,
+                    canDeletePos: 0.0,
+                };
+                //show all icons
+                if (iconMeasurer.numberOfIcons === 3) {
+                    iconMeasurer.canAddPos = calculateNodeIconX(1.6, 3);
+                    iconMeasurer.canEditPos = calculateNodeIconX(1.525, 2);
+                    iconMeasurer.canDeletePos = calculateNodeIconX(1.25, 1);
+                } else {
+                    //show 2 icons
+                    if (iconMeasurer.numberOfIcons === 2) {
+                        if (canAdd && canEdit) {
+                            iconMeasurer.canAddPos = calculateNodeIconX(
+                                1.525,
+                                2
+                            );
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        } else if (canAdd && canDelete) {
+                            iconMeasurer.canAddPos = calculateNodeIconX(1.4, 2);
+                            iconMeasurer.canDeletePos = calculateNodeIconX(
+                                1.25,
+                                1
+                            );
+                        } else if (canEdit && canDelete) {
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.525,
+                                2
+                            );
+                            iconMeasurer.canDeletePos = calculateNodeIconX(
+                                1.25,
+                                1
+                            );
+                        }
+                    } else {
+                        //show only 1 icon
+                        if (canAdd) {
+                            iconMeasurer.canAddPos = calculateNodeIconX(1.5, 1);
+                        } else if (canEdit) {
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        } else {
+                            iconMeasurer.canDeletePos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        }
+                    }
+                }
+
+                switch (iconType) {
+                    case IconType.Add:
+                        return iconMeasurer.canAddPos;
+                    case IconType.Edit:
+                        return iconMeasurer.canEditPos;
+                    case IconType.Delete:
+                        return iconMeasurer.canDeletePos;
+                    default:
+                        return 0.0;
+                }
             }
         }
     }
