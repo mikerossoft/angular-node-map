@@ -30,6 +30,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public onSelect: (item?: any) => void;
     rectHeight: number = 0;
     rectWidth: number = 0;
+    fontAwesomeClass = 'fa fa-edit icon-edit';
+    hideIconClass = 'hide-icon';
 
     constructor() {
         this.rectHeight = 65;
@@ -123,9 +125,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
         // declares a tree layout and assigns the size
         var treemap = d3.tree().size([height, width]);
 
-        console.log('root');
-        console.log(root);
-
         root.x0 = height / 2;
         root.y0 = 0;
 
@@ -204,7 +203,13 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .append('rect')
                 .attr('class', 'node')
                 .attr('width', classScope.rectWidth)
-                .attr('height', classScope.rectHeight)
+                .attr(
+                    'height',
+
+                    function (d) {
+                        return classScope.rectHeight;
+                    }
+                )
                 .attr('x', 0)
                 .attr('y', (classScope.rectHeight / 2) * -1)
                 // .attr('y', 0)
@@ -287,7 +292,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             //Delete icon
             nodeEnter
                 .append('text')
-                .attr('class', 'fa fa-edit icon-edit')
+                .attr('class', (d) => canDeleteIconShow(d))
                 .attr('dy', '-1.1em')
                 .attr('x', function (d) {
                     // console.log('fa-edit d');
@@ -302,12 +307,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return '\uf1f8';
                 })
                 .on('click', function (d) {
-                    handleOnDelete(d);
+                    configureDeleteIconOnClick(d);
                 });
             //Edit icon
             nodeEnter
                 .append('text')
-                .attr('class', 'fa fa-edit icon-edit')
+                .attr('class', (d) => canEditIconShow(d))
                 .attr('dy', '-1.05em')
                 .attr('x', function (d) {
                     // console.log('fa-edit d');
@@ -321,13 +326,13 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return '\uf044';
                 })
                 .on('click', function (d) {
-                    handleOnEdit(d);
+                    configureEditIconOnClick(d);
                 });
 
             //Add icon
             nodeEnter
                 .append('text')
-                .attr('class', 'fa fa-edit icon-edit')
+                .attr('class', (d) => canAddIconShow(d))
                 .attr('dy', '-1.10em')
                 .attr('x', function (d) {
                     // console.log('fa-edit d');
@@ -341,7 +346,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return '\uf067';
                 })
                 .on('click', function (d) {
-                    handleOnAdd(d);
+                    configureAddIconOnClick(d);
                 });
 
             // UPDATE
@@ -486,6 +491,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     console.error('handleOnAdd: selected item is null');
                 }
             }
+            function handleNothing() {}
 
             function getItem(d: any): any {
                 let item;
@@ -523,6 +529,38 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 } else {
                     return display;
                 }
+            }
+
+            function canAddIconShow(d): any {
+                const canAdd = d?.data?.canAdd;
+                if (canAdd) return classScope.fontAwesomeClass;
+                else return classScope.hideIconClass;
+            }
+            function configureAddIconOnClick(d) {
+                const canAdd = d?.data?.canAdd;
+                if (canAdd) return handleOnAdd(d);
+                else return handleNothing;
+            }
+
+            function canEditIconShow(d): any {
+                const canEdit = d?.data?.canEdit;
+                if (canEdit) return classScope.fontAwesomeClass;
+                else return classScope.hideIconClass;
+            }
+            function configureEditIconOnClick(d) {
+                const canEdit = d?.data?.canEdit;
+                if (canEdit) return handleOnEdit(d);
+                else return handleNothing;
+            }
+            function canDeleteIconShow(d): any {
+                const canDelete = d?.data?.canDelete;
+                if (canDelete) return classScope.fontAwesomeClass;
+                else return classScope.hideIconClass;
+            }
+            function configureDeleteIconOnClick(d) {
+                const canDelete = d?.data?.canDelete;
+                if (canDelete) return handleOnDelete(d);
+                else return handleNothing;
             }
         }
     }

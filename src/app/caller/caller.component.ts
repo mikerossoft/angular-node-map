@@ -188,7 +188,9 @@ export class CallerComponent implements OnInit {
             type: 'Connector',
             bodyColour: this.COL_LEV_1,
             borderColour: '#FFF',
-            canEdit: false,
+            canEdit: true,
+            canAdd: true,
+            canDelete: true,
             nodes: [
                 {
                     uri: 'id-1-1',
@@ -197,7 +199,9 @@ export class CallerComponent implements OnInit {
                     type: 'Input',
                     bodyColour: this.COL_LEV_2,
                     borderColour: '#EEE',
-                    canEdit: false,
+                    canEdit: true,
+                    canAdd: false,
+                    canDelete: false,
                     nodes: [
                         {
                             uri: 'id-1-1-1',
@@ -207,6 +211,8 @@ export class CallerComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
+                            canAdd: true,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',
@@ -216,6 +222,8 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
+                                    canAdd: false,
+                                    canDelete: true,
                                     nodes: [
                                         {
                                             uri: 'id-1-1-1',
@@ -224,7 +232,9 @@ export class CallerComponent implements OnInit {
                                             type: 'Subscription',
                                             bodyColour: this.COL_LEV_5,
                                             borderColour: '#CCC',
-                                            canEdit: false,
+                                            canEdit: true,
+                                            canAdd: false,
+                                            canDelete: true,
                                             nodes: [
                                                 {
                                                     uri: 'id-1-1-1',
@@ -234,6 +244,8 @@ export class CallerComponent implements OnInit {
                                                     bodyColour: this.COL_LEV_6,
                                                     borderColour: '#CCC',
                                                     canEdit: false,
+                                                    canAdd: false,
+                                                    canDelete: false,
                                                     nodes: [
                                                         {
                                                             uri: 'id-1-1-1',
@@ -247,6 +259,8 @@ export class CallerComponent implements OnInit {
                                                             borderColour:
                                                                 '#CCC',
                                                             canEdit: false,
+                                                            canAdd: false,
+                                                            canDelete: false,
                                                         },
                                                     ],
                                                 },
@@ -264,6 +278,8 @@ export class CallerComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',
@@ -273,6 +289,8 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
                                 },
                             ],
                         },
@@ -284,6 +302,8 @@ export class CallerComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',
@@ -293,6 +313,8 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
                                 },
                             ],
                         },
@@ -304,6 +326,8 @@ export class CallerComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',
@@ -313,6 +337,8 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
                                 },
                             ],
                         },
@@ -324,6 +350,8 @@ export class CallerComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: '#CCC',
                             canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'id-1-1-1',
@@ -333,6 +361,8 @@ export class CallerComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: '#CCC',
                                     canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
                                 },
                             ],
                         },
