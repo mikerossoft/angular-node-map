@@ -6,9 +6,8 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import * as data from '../../assets/dataExample.json';
 // import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
-import { NodeMapRoot } from '../node-map/node-map-interface';
+import { NodeMapRoot } from './node-map-interface';
 import * as d3 from 'd3';
 // import * as d3hierarchy from 'd3-hierarchy';
 // import * as d3selection from 'd3-selection';
@@ -434,9 +433,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
             // Creates a curved (diagonal) path from parent to the child nodes
             function diagonal(s, d) {
                 let path = `M ${s.y} ${s.x}
-                  C ${(s.y + d.y) / 2} ${s.x},
-                    ${(s.y + d.y) / 2} ${d.x},
-                    ${d.y} ${d.x}`;
+                C ${(s.y + d.y) / 2} ${s.x},
+                  ${(s.y + d.y) / 2} ${d.x},
+                  ${d.y} ${d.x}`;
 
                 return path;
             }
