@@ -7,7 +7,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 // import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
-import { NodeMapRoot } from './node-map-interface';
+import { NodeMapRoot } from './ng-node-map-interface';
 import * as d3 from 'd3';
 // import * as d3hierarchy from 'd3-hierarchy';
 // import * as d3selection from 'd3-selection';
@@ -23,8 +23,8 @@ enum IconType {
 
 @Component({
     selector: 'app-node-map',
-    templateUrl: './node-map.component.html',
-    styleUrls: ['./node-map.component.scss'],
+    templateUrl: './ng-node-map.component.html',
+    styleUrls: ['./ng-node-map.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class NodeMapComponent implements OnInit, OnChanges {

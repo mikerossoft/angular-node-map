@@ -1,1 +1,1 @@
-export * from './src/app/modules/node-map/node-map.module';
+export * from './src/app/modules/ng-node-map/ng-node-map.module';

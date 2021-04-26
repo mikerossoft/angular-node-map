@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { NodeMapComponent } from './node-map/node-map.component';
-import { NodeMapModule } from './modules/node-map/node-map.module';
+import { NodeMapModule } from './modules/ng-node-map/ng-node-map.module';
 
 @Component({
     selector: 'app-root',
