@@ -6,14 +6,8 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-// import { drawNodeMap } from '../../../tree_boxes_modules/tree-boxes.js';
 import { NodeMapRoot } from './ng-node-map-interface';
 import * as d3 from 'd3';
-// import * as d3hierarchy from 'd3-hierarchy';
-// import * as d3selection from 'd3-selection';
-
-// declare function drawNodeMap(d3: any): void;
-// declare function sayHello(): void;
 
 enum IconType {
     Add,
