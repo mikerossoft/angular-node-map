@@ -1,4 +1,7 @@
-# Ng Node Map
+### Ng Node Map
+
+[Demo project repo](https://github.com/seksky333/angular-node-map-demo)
+<img src="images/ng-node-map.gif" width="250" height="400">
 
 # Prerequisite
 
