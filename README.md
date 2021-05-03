@@ -1,20 +1,89 @@
 # AngularNodeMap
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
+#Prerequisite
+##Install font-awesome
+npm i font-awesome@4.x
 
-#Importing module
-Under your project .module.ts file, do the follwoing:
+#Usage
+##Import `NodeMapModule` to your module list:
+`npm i font-awesome@^4.7.0`
+
+##Configure Font Awesome in your Angular project
+Under the angular.json file, add the font-awesome css file into the styles list
+
+```javascript
+"styles": [
+    "src/styles.scss",
+    "./node_modules/font-awesome/css/font-awesome.css"
+],
+```
+
+```javascript
 import { NodeMapModule } from 'ng-node-map';
 
-Add NodeMapModule in the imports array
-Your NgModule should look like below:
 @NgModule({
 declarations: [AppComponent],
 imports: [BrowserModule, NodeMapModule],
 providers: [],
 bootstrap: [AppComponent],
 })
+```
 
-## Development server
+##Setup in your HTML file
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```html
+<app-node-map
+    [dataSource]="dataSourceJson"
+    [onEdit]="onEditCallback"
+    [onDelete]="onDeleteCallback"
+    [onAdd]="onAddCallback"
+    [onSelect]="onSelectCallback"
+></app-node-map>
+```
+
+##Setup in your component ts file
+
+```javascript
+import { NodeMapModule } from 'ng-node-map';
+...
+export class AppComponent implements OnInit {
+    @ViewChild(NodeMapModule) nodeMap: NodeMapModule;
+    dataSourceJson = {};
+        public onDeleteCallback = (item?: any): void => {
+        console.log(`onDelete - item: ${item} uri:${item.uri}`);
+    };
+    public onEditCallback = (item?: any): void => {
+        console.log(`onEdit - item: ${item} uri:${item.uri}`);
+    };
+    public onAddCallback = (item?: any): void => {
+        console.log(`onAdd - item: ${item} uri:${item.uri}`);
+    };
+    public onSelectCallback = (item?: any): void => {
+        console.log(`onSelect - item: ${item} uri:${item.uri}`);
+    };
+    //your JSON data for generating the Node Map e.g.
+        dataBusData: object = {
+            root: {
+                name:'DataBus',
+                nodes: [
+                    {
+                        uri: 'id-1',
+                        name: 'SCADA',
+                        description: 'Stuff',
+                        plugin: 'OPC HDA',
+                        type: 'Connector',
+                        bodyColour: '#1976D2',
+                        borderColour: '#FFF',
+                        canAdd: false,
+                        canEdit: true,
+                        canDelete: true,
+                        ...
+                    }
+                ]
+            }
+        }
+    ngOnInit(): void {
+        this.dataSourceJson = dataBusData;
+    }
+}
+```
