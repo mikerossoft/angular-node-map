@@ -1,14 +1,19 @@
-# AngularNodeMap
+# Ng Node Map
 
-#Prerequisite
-##Install font-awesome
-npm i font-awesome@4.x
+# Prerequisite
 
-#Usage
-##Import `NodeMapModule` to your module list:
+## Install font-awesome
+
+`npm i font-awesome@4.x`
+
+# Usage
+
+## Import `NodeMapModule` to your module list:
+
 `npm i font-awesome@^4.7.0`
 
-##Configure Font Awesome in your Angular project
+## Configure Font Awesome in your Angular project
+
 Under the angular.json file, add the font-awesome css file into the styles list
 
 ```javascript
@@ -29,7 +34,7 @@ bootstrap: [AppComponent],
 })
 ```
 
-##Setup in your HTML file
+## Setup in your HTML file
 
 ```html
 <app-node-map
@@ -41,7 +46,7 @@ bootstrap: [AppComponent],
 ></app-node-map>
 ```
 
-##Setup in your component ts file
+## Setup in your component ts file
 
 ```javascript
 import { NodeMapModule } from 'ng-node-map';
@@ -87,3 +92,7 @@ export class AppComponent implements OnInit {
     }
 }
 ```
+
+## Execute your project
+
+`ng serve -o`
