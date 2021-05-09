@@ -32,6 +32,10 @@ jobs:
               run: ng --version
 
             # Install dependencies
-            # - name: Install dependencies
-            #   run: |
-            #       npm i
+            - name: Install dependencies
+              run: |
+                  npm i
+
+            # Build
+            - name: Build
+              run: ng build
