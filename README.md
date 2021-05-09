@@ -2,7 +2,7 @@
 
 [Demo project repo](https://github.com/seksky333/angular-node-map-demo)
 
-<img src="images/ng-node-map.gif" width="480" height="320">
+<img src="https://raw.githubusercontent.com/mikerossoft/angular-node-map/main/images/ng-node-map.gif" width="480" height="320">
 
 # Prerequisite
 
