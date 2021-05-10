@@ -51,9 +51,9 @@ jobs:
                     npm i tslib@^2.0.0
                     npm i zone.js@~0.10.2
 
-            # Install workaround d3 package again
-            - name: Install workaround d3 package again
-              run: npm i d3
+            # # Install workaround d3 package again
+            # - name: Install workaround d3 package again
+            #   run: npm i d3
 
             # Install module required dependencies
             - name: Install module required dependencies
