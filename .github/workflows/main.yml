@@ -59,6 +59,10 @@ jobs:
             - name: Install module required dependencies
               run: npm i
 
+            # Fix packages vulnerabilities
+            - name: Fix packages vulnerabilities
+              run: npm audit fix
+
     # This workflow contains a single job called "build"
     build:
         needs: init
@@ -85,4 +89,4 @@ jobs:
 
             # Build
             - name: Build
-              run: ng build --prod
+              run: ng build
