@@ -16,6 +16,7 @@ jobs:
     init:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
+        container: seksky333/ngnodemap:v1.0.0
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,19 +31,44 @@ jobs:
                       ${{ runner.os }}-node-
                       ${{ runner.os }}-
 
+            # Verify if Angular CLI is installed
+            - name: Verify if Angular CLI is installed
+              run: ng --version
+
+            # Install peer dependencies
+            - name: Install peer dependencies
+              run: |
+                  npm i @angular/animations@~10.2.4
+                    npm i @angular/common@~10.2.4
+                    npm i @angular/compiler@~10.2.4
+                    npm i @angular/core@~10.2.4
+                    npm i @angular/forms@~10.2.4
+                    npm i @angular/platform-browser@~10.2.4
+                    npm i @angular/platform-browser-dynamic@~10.2.4
+                    npm i @angular/router@~10.2.4
+                    npm i font-awesome@^4.7.0
+                    npm i rxjs@~6.6.0
+                    npm i tslib@^2.0.0
+                    npm i zone.js@~0.10.2
+
+            # Install workaround d3 package again
+            - name: Install workaround d3 package again
+              run: npm i d3
+
             # Install module required dependencies
             - name: Install module required dependencies
               run: npm i
 
-            # Check packages
-            - name: Check packages
-              run: ls node_modules
+            # Fix packages vulnerabilities
+            - name: Fix packages vulnerabilities
+              run: npm audit fix
 
     # This workflow contains a single job called "build"
     build:
         needs: init
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
+        container: seksky333/ngnodemap:v1.0.0
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -60,3 +86,7 @@ jobs:
             # Check packages
             - name: Check packages
               run: ls node_modules
+
+            # Build
+            - name: Build
+              run: ng build
