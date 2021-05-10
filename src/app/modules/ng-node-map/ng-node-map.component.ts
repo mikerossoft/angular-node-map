@@ -23,10 +23,10 @@ enum IconType {
 })
 export class NodeMapComponent implements OnInit, OnChanges {
     @Input() dataSource: any;
-    @Input() public onEdit: (item?: any) => void;
-    @Input() public onDelete: (item?: any) => void;
-    @Input() public onAdd: (item?: any) => void;
-    @Input() public onSelect: (item?: any) => void;
+    @Input() public editCallback: (item?: any) => void;
+    @Input() public deleteCallback: (item?: any) => void;
+    @Input() public addCallback: (item?: any) => void;
+    @Input() public selectCallback: (item?: any) => void;
     rectHeight: number = 0;
     rectWidth: number = 0;
     fontAwesomeClass = 'fa fa-edit icon-edit';
@@ -453,7 +453,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function handleOnSelect(d) {
                 const item = getItem(d);
                 if (item) {
-                    classScope.onSelect(item);
+                    classScope.selectCallback(item);
                 } else {
                     console.error('handleOnSelect: selected item is null');
                 }
@@ -462,7 +462,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function handleOnEdit(d) {
                 const item = getItem(d);
                 if (item) {
-                    classScope.onEdit(item);
+                    classScope.editCallback(item);
                 } else {
                     console.error('handleOnEdit: selected item is null');
                 }
@@ -470,7 +470,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function handleOnDelete(d) {
                 const item = getItem(d);
                 if (item) {
-                    classScope.onDelete(item);
+                    classScope.deleteCallback(item);
                 } else {
                     console.error('handleOnDelete: selected item is null');
                 }
@@ -478,7 +478,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function handleOnAdd(d) {
                 const item = getItem(d);
                 if (item) {
-                    classScope.onAdd(item);
+                    classScope.addCallback(item);
                 } else {
                     console.error('handleOnAdd: selected item is null');
                 }
