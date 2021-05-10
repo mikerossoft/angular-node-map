@@ -63,9 +63,9 @@ jobs:
             # - name: Install workaround d3 package again
             #   run: npm i d3
 
-            # # Install module required dependencies
-            # - name: Install module required dependencies
-            #   run: npm i
+            # Install module required dependencies
+            - name: Install module required dependencies
+              run: npm i
 
     # This workflow contains a single job called "build"
     build:
