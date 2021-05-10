@@ -40,7 +40,7 @@ jobs:
             - name: copy
               run: |
                   mkdir ~/.ng
-                  sudo cp -r /usr/local/lib/node_modules/@angular ~/.ng
+                  sudo cp -r /usr/local/lib/node_modules/@angular ~/.ng/
 
             # Checking
             - name: Checking
