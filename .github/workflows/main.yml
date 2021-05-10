@@ -58,7 +58,8 @@ jobs:
             # check installed node modules
             - name: check installed node modules
               run: |
-                  npm ls
+                  cd node_modules
+                  ls
 
             # Build
             - name: Build
