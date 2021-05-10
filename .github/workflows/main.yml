@@ -39,6 +39,7 @@ jobs:
             # Checking
             - name: copy
               run: |
+                  ls ~/
                   sudo cp -r /usr/local/lib/node_modules/@angular ~/.ng
 
             # Checking
