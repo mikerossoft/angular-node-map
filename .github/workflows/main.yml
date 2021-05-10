@@ -32,11 +32,8 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      node_modules
+                      ~/node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-                      ${{ runner.os }}-
 
     # This workflow contains a single job called "build"
     build:
@@ -51,7 +48,7 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      node_modules
+                      ~/node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
