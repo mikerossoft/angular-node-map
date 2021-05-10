@@ -25,28 +25,11 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      ~/.ng
+                      ~/node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
                       ${{ runner.os }}-
-
-            # Install Angular CLI
-            # - name: Install Angular CLI
-            #   run: sudo npm install -g @angular/cli
-            # run: sudo npm install -g @angular/cli
-
-            # # Checking
-            # - name: copy
-            #   run: |
-            #       ls ~/
-            #       sudo cp -r /usr/local/lib/node_modules/@angular ~/.ng
-
-            # # Checking
-            # - name: Checking
-            #   run: |
-            #       cd ~/.ng
-            #       ls
 
             # Verify if Angular CLI is installed
             - name: Verify if Angular CLI is installed
@@ -68,20 +51,20 @@ jobs:
                     npm i tslib@^2.0.0
                     npm i zone.js@~0.10.2
 
-            # # Install workaround d3 package again
-            # - name: Install workaround d3 package again
-            #   run: npm i d3
+            # Install workaround d3 package again
+            - name: Install workaround d3 package again
+              run: npm i d3
 
-            # # Install module required dependencies
-            # - name: Install module required dependencies
-            #   run: npm i
+            # Install module required dependencies
+            - name: Install module required dependencies
+              run: npm i
 
     # This workflow contains a single job called "build"
     build:
         needs: init
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
-
+        container: seksky333/ngnodemap:v1.0.0
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -90,35 +73,16 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      ~/.ng
+                      ~/node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
                       ${{ runner.os }}-
-            # Checking
-            - name: Checking
-              run: |
-                  cd ~/.ng
-                  ls
-                  cd ng
-                  ls
-
-            # # Checking
-            # - name: Checking
-            #   run: |
-            #       cd /usr/local/lib/node_modules
-            #       ls
 
             # Verify if Angular CLI is installed
             - name: Verify if Angular CLI is installed
               run: ng --version
 
-            # # check installed node modules
-            # - name: check installed node modules
-            #   run: |
-            #       cd node_modules
-            #       ls
-
-            # # Build
-            # - name: Build
-            #   run: ng build --prod
+            # Build
+            - name: Build
+              run: ng build --prod
