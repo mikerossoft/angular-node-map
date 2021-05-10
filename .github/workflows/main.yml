@@ -27,6 +27,12 @@ jobs:
               run: sudo npm install -g @angular/cli
               # run: sudo npm install -g @angular/cli
 
+            # Checking
+            - name: Checking
+              run: |
+                  cd /usr/local/lib/node_modules
+                  ls
+
             # Verify if Angular CLI is installed
             - name: Verify if Angular CLI is installed
               run: ng --version
@@ -82,13 +88,6 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-node-
                       ${{ runner.os }}-
-
-            - uses: actions/cache@v2
-              with:
-                  path: '/usr/local/lib/node_modules'
-                  key: ${{ runner.os }}-node-global-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-global-
 
             # check installed node modules
             - name: check installed node modules
