@@ -21,6 +21,12 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
+            - uses: actions/cache@v2
+              with:
+                  path: |
+                      node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
             # Install module required dependencies
             - name: Install module required dependencies
               run: npm i
@@ -28,12 +34,6 @@ jobs:
             # Check packages
             - name: Check packages
               run: ls node_modules
-
-            - uses: actions/cache@v2
-              with:
-                  path: |
-                      ~/node_modules
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
     # This workflow contains a single job called "build"
     build:
@@ -48,7 +48,7 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      ~/node_modules
+                      node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
