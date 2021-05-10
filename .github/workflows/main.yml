@@ -46,7 +46,10 @@ jobs:
                     npm i rxjs@~6.6.0
                     npm i tslib@^2.0.0
                     npm i zone.js@~0.10.2
-                    npm i d3
+
+            # # Install workaround d3 package again
+            # - name: Install workaround d3 package again
+            #   run: npm i d3
 
             # Install module required dependencies
             - name: Install module required dependencies
@@ -55,9 +58,8 @@ jobs:
             # check installed node modules
             - name: check installed node modules
               run: |
-                  cd node_modules
-                  ls
+                  npm ls
 
             # Build
             - name: Build
-              run: ng build
+              run: ng build --prod
