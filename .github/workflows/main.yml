@@ -46,6 +46,7 @@ jobs:
                     npm i rxjs@~6.6.0
                     npm i tslib@^2.0.0
                     npm i zone.js@~0.10.2
+                    npm i d3
 
             # Install module required dependencies
             - name: Install module required dependencies
