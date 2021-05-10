@@ -23,34 +23,38 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-            # Install Angular CLI
-            - name: Install Angular CLI
-              run: sudo npm install -g @angular/cli
+            # # Install Angular CLI
+            # - name: Install Angular CLI
+            #   run: sudo npm install -g @angular/cli
 
-            # Verify if Angular CLI is installed
-            - name: Verify if Angular CLI is installed
-              run: ng --version
+            # # Verify if Angular CLI is installed
+            # - name: Verify if Angular CLI is installed
+            #   run: ng --version
 
-            # Install dependencies
-            - name: Install dependencies
+            # Install module required dependencies
+            - name: Install module required dependencies
               run: npm i
 
-            # Install peer dependencies
-            - name: Install peer dependencies
-              run: |
-                  npm i @angular/animations@~10.2.4
-                  npm i @angular/common@~10.2.4
-                  npm i @angular/compiler@~10.2.4
-                  npm i @angular/core@~10.2.4
-                  npm i @angular/forms@~10.2.4
-                  npm i @angular/platform-browser@~10.2.4
-                  npm i @angular/platform-browser-dynamic@~10.2.4
-                  npm i @angular/router@~10.2.4
-                  npm i font-awesome@^4.7.0
-                  npm i rxjs@~6.6.0
-                  npm i tslib@^2.0.0
-                  npm i zone.js@~0.10.2
+            # test
+            - name: test
+              run: ls
 
-            # Build
-            - name: Build
-              run: ng build
+            # # Install peer dependencies
+            # - name: Install peer dependencies
+            #   run: |
+            #       npm i @angular/animations@~10.2.4
+            #       npm i @angular/common@~10.2.4
+            #       npm i @angular/compiler@~10.2.4
+            #       npm i @angular/core@~10.2.4
+            #       npm i @angular/forms@~10.2.4
+            #       npm i @angular/platform-browser@~10.2.4
+            #       npm i @angular/platform-browser-dynamic@~10.2.4
+            #       npm i @angular/router@~10.2.4
+            #       npm i font-awesome@^4.7.0
+            #       npm i rxjs@~6.6.0
+            #       npm i tslib@^2.0.0
+            #       npm i zone.js@~0.10.2
+
+            # # Build
+            # - name: Build
+            #   run: ng build
