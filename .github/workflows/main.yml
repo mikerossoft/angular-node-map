@@ -22,6 +22,13 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
+            - uses: actions/cache@v2
+              with:
+                  path: |
+                      './node_modules'
+                      '/usr/local/lib/node_modules'
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
             # Install Angular CLI
             - name: Install Angular CLI
               run: sudo npm install -g @angular/cli
@@ -60,13 +67,6 @@ jobs:
             # # Install module required dependencies
             # - name: Install module required dependencies
             #   run: npm i
-
-            - uses: actions/cache@v2
-              with:
-                  path: |
-                      './node_modules'
-                      '/usr/local/lib/node_modules'
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
     # This workflow contains a single job called "build"
     build:
