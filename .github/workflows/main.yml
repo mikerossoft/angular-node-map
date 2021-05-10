@@ -26,6 +26,9 @@ jobs:
                   path: |
                       node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+                      ${{ runner.os }}-
 
             # Install module required dependencies
             - name: Install module required dependencies
