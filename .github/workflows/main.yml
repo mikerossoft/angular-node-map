@@ -33,8 +33,23 @@ jobs:
 
             # Install dependencies
             - name: Install dependencies
+              run: npm i
+
+            # Install peer dependencies
+            - name: Install peer dependencies
               run: |
-                  npm i
+                  npm i @angular/animations@~10.2.4
+                  npm i @angular/common@~10.2.4
+                  npm i @angular/compiler@~10.2.4
+                  npm i @angular/core@~10.2.4
+                  npm i @angular/forms@~10.2.4
+                  npm i @angular/platform-browser@~10.2.4
+                  npm i @angular/platform-browser-dynamic@~10.2.4
+                  npm i @angular/router@~10.2.4
+                  npm i font-awesome@^4.7.0
+                  npm i rxjs@~6.6.0
+                  npm i tslib@^2.0.0
+                  npm i zone.js@~0.10.2
 
             # Build
             - name: Build
