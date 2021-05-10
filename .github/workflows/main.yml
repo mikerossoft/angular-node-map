@@ -24,7 +24,8 @@ jobs:
 
             # Install Angular CLI
             - name: Install Angular CLI
-              run: sudo npm install -g @angular/cli
+              run: npm install @angular/cli
+              # run: sudo npm install -g @angular/cli
 
             # Verify if Angular CLI is installed
             - name: Verify if Angular CLI is installed
