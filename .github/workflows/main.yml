@@ -37,12 +37,14 @@ jobs:
 
             # test
             - name: test
-              run: ls
+              run: |
+                  cd node_modules
+                  ls
 
             # # Install peer dependencies
             # - name: Install peer dependencies
-            #   run: |
-            #       npm i @angular/animations@~10.2.4
+            # run: |
+            #     npm i @angular/animations@~10.2.4
             #       npm i @angular/common@~10.2.4
             #       npm i @angular/compiler@~10.2.4
             #       npm i @angular/core@~10.2.4
