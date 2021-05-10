@@ -16,20 +16,10 @@ jobs:
     init:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
-        container: seksky333/ngnodemap:v1.0.0
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
-
-            - uses: actions/cache@v2
-              with:
-                  path: |
-                      ~/node_modules
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-                      ${{ runner.os }}-
 
             # Install module required dependencies
             - name: Install module required dependencies
@@ -38,12 +28,21 @@ jobs:
             # Check packages
             - name: Check packages
               run: ls node_modules
+
+            - uses: actions/cache@v2
+              with:
+                  path: |
+                      node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+                      ${{ runner.os }}-
+
     # This workflow contains a single job called "build"
     build:
         needs: init
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
-        container: seksky333/ngnodemap:v1.0.0
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -52,7 +51,7 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: |
-                      ~/node_modules
+                      node_modules
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
