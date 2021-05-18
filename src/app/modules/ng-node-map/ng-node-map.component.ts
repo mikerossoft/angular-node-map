@@ -487,11 +487,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
             function getItem(d: any): any {
                 let item;
-                try {
-                    item = d.data.nodes[0];
-                } catch (error) {
-                    item = d.data;
-                }
+                item = d.data;
                 return item;
             }
 
