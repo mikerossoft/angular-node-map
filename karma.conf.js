@@ -36,14 +36,11 @@ module.exports = function (config) {
         autoWatch: true,
         browsers: ['ChromeHeadless'],
         customLaunchers: {
-            Headless:{
-                base:'ChromeHeadless',
-                flags: [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox'
-                ]
-            }
-        }
+            Headless: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox', '--disable-setuid-sandbox'],
+            },
+        },
         singleRun: true,
         restartOnFileChange: true,
     });
