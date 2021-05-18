@@ -85,12 +85,10 @@ export class AppComponent implements OnInit {
                                                     nodes: [
                                                         {
                                                             uri: 'id-1-1-1-1-1',
-                                                            name:
-                                                                'Azure Storage',
+                                                            name: 'Azure Storage',
                                                             description:
                                                                 'Stuff',
-                                                            plugin:
-                                                                'Azure Storage',
+                                                            plugin: 'Azure Storage',
                                                             type: 'Output',
                                                             bodyColour:
                                                                 '#FF5722',
@@ -99,55 +97,46 @@ export class AppComponent implements OnInit {
                                                             canEdit: false,
                                                             nodes: [
                                                                 {
-                                                                    uri:
-                                                                        'id-1-1-1-1-1',
-                                                                    name:
-                                                                        'Azure Storage',
+                                                                    uri: 'id-1-1-1-1-1',
+                                                                    name: 'Azure Storage',
                                                                     description:
                                                                         'Stuff',
-                                                                    plugin:
-                                                                        'Azure Storage',
-                                                                    type:
-                                                                        'Output',
+                                                                    plugin: 'Azure Storage',
+                                                                    type: 'Output',
                                                                     bodyColour:
                                                                         '#FF5722',
                                                                     borderColour:
                                                                         '#AAA',
-                                                                    canEdit: false,
+                                                                    canEdit:
+                                                                        false,
                                                                     nodes: [
                                                                         {
-                                                                            uri:
-                                                                                'id-1-1-1-1-1',
-                                                                            name:
-                                                                                'Azure Storage',
+                                                                            uri: 'id-1-1-1-1-1',
+                                                                            name: 'Azure Storage',
                                                                             description:
                                                                                 'Stuff',
-                                                                            plugin:
-                                                                                'Azure Storage',
-                                                                            type:
-                                                                                'Output',
+                                                                            plugin: 'Azure Storage',
+                                                                            type: 'Output',
                                                                             bodyColour:
                                                                                 '#FF5722',
                                                                             borderColour:
                                                                                 '#AAA',
-                                                                            canEdit: false,
+                                                                            canEdit:
+                                                                                false,
                                                                             nodes: [
                                                                                 {
-                                                                                    uri:
-                                                                                        'id-1-1-1-1-1',
-                                                                                    name:
-                                                                                        'Azure Storage',
+                                                                                    uri: 'id-1-1-1-1-1',
+                                                                                    name: 'Azure Storage',
                                                                                     description:
                                                                                         'Stuff',
-                                                                                    plugin:
-                                                                                        'Azure Storage',
-                                                                                    type:
-                                                                                        'Output',
+                                                                                    plugin: 'Azure Storage',
+                                                                                    type: 'Output',
                                                                                     bodyColour:
                                                                                         '#FF5722',
                                                                                     borderColour:
                                                                                         '#AAA',
-                                                                                    canEdit: false,
+                                                                                    canEdit:
+                                                                                        false,
                                                                                 },
                                                                             ],
                                                                         },
@@ -190,6 +179,7 @@ export class AppComponent implements OnInit {
             borderColour: '#FFF',
             canEdit: true,
             canDelete: true,
+            canAdd: false,
             nodes: [
                 {
                     uri: 'id-1-1',
@@ -251,10 +241,9 @@ export class AppComponent implements OnInit {
                                                             name: 'STUFF',
                                                             description:
                                                                 'Stuff',
-                                                            type:
-                                                                'Subscription',
-                                                            bodyColour: this
-                                                                .COL_LEV_7,
+                                                            type: 'Subscription',
+                                                            bodyColour:
+                                                                this.COL_LEV_7,
                                                             borderColour:
                                                                 '#CCC',
                                                             canEdit: false,
@@ -380,7 +369,7 @@ export class AppComponent implements OnInit {
             type: 'Connector',
             bodyColour: this.COL_LEV_1,
             borderColour: '#FFF',
-            canEdit: false,
+            canEdit: true,
             nodes: [
                 {
                     uri: 'id-1-1',
@@ -389,7 +378,7 @@ export class AppComponent implements OnInit {
                     type: 'Input',
                     bodyColour: this.COL_LEV_2,
                     borderColour: '#EEE',
-                    canEdit: false,
+                    canEdit: true,
                     nodes: [
                         {
                             uri: 'id-1-1-1',
@@ -560,12 +549,10 @@ export class AppComponent implements OnInit {
                                                     nodes: [
                                                         {
                                                             uri: 'id-1-1-1-1-1',
-                                                            name:
-                                                                'Azure Storage',
+                                                            name: 'Azure Storage',
                                                             description:
                                                                 'Stuff',
-                                                            plugin:
-                                                                'Azure Storage',
+                                                            plugin: 'Azure Storage',
                                                             type: 'Output',
                                                             bodyColour:
                                                                 '#FF5722',
@@ -575,8 +562,7 @@ export class AppComponent implements OnInit {
                                                         },
                                                         {
                                                             uri: 'id-1-1-1-1-2',
-                                                            name:
-                                                                'SQL Database',
+                                                            name: 'SQL Database',
                                                             plugin: 'MS SQL',
                                                             description:
                                                                 'Stuff',
