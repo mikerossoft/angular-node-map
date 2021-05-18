@@ -11,6 +11,7 @@
                 "bodyColour": "#FFF",
                 "borderColour": "#FFF",
                 "canEdit": false,
+                "canDelete": true,
                 "nodes": [
                     {
                         "uri": "id-1-1",
@@ -19,7 +20,9 @@
                         "type": "Input",
                         "bodyColour": "#EEE",
                         "borderColour": "#EEE",
-                        "canEdit": false,
+                        "canEdit": true,
+                        "canAdd": false,
+                        "canDelete": false,
                         "nodes": [
                             {
                                 "uri": "id-1-1-1",
@@ -29,6 +32,8 @@
                                 "bodyColour": "#CCC",
                                 "borderColour": "#CCC",
                                 "canEdit": false,
+                                "canAdd": true,
+                                "canDelete": false,
                                 "nodes": [
                                     {
                                         "uri": "id-1-1-1-1",
@@ -39,6 +44,8 @@
                                         "bodyColour": "#BBB",
                                         "borderColour": "#BBB",
                                         "canEdit": false,
+                                        "canAdd": true,
+                                        "canDelete": true,
                                         "nodes": [
                                             {
                                                 "uri": "id-1-1-1-1-1",
@@ -48,7 +55,9 @@
                                                 "type": "Output",
                                                 "bodyColour": "#AAA",
                                                 "borderColour": "#AAA",
-                                                "canEdit": false
+                                                "canEdit": true,
+                                                "canAdd": false,
+                                                "canDelete": true
                                             },
                                             {
                                                 "uri": "id-1-1-1-1-2",
@@ -58,7 +67,9 @@
                                                 "type": "Output",
                                                 "bodyColour": "#AAA",
                                                 "borderColour": "#AAA",
-                                                "canEdit": false
+                                                "canEdit": false,
+                                                "canAdd": false,
+                                                "canDelete": false
                                             }
                                         ]
                                     }
