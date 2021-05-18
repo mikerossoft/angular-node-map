@@ -41,10 +41,10 @@ bootstrap: [AppComponent],
 ```html
 <app-node-map
     [dataSource]="dataSourceJson"
-    [onEdit]="onEditCallback"
-    [onDelete]="onDeleteCallback"
-    [onAdd]="onAddCallback"
-    [onSelect]="onSelectCallback"
+    [editCallback]="onEditCallback"
+    [deleteCallback]="onDeleteCallback"
+    [addCallback]="onAddCallback"
+    [selectCallback]="onSelectCallback"
 ></app-node-map>
 ```
 
