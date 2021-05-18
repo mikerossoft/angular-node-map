@@ -37,14 +37,12 @@ export class NodeMapComponent implements OnInit, OnChanges {
         this.rectWidth = 120;
     }
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngOnChanges');
-        // console.log(this.dataSource);
         console.log(document.querySelectorAll('.node-map'));
         if (document.querySelectorAll('.node-map').length > 0) {
             this.cleanUp();
         }
 
-        this.drawNodeMap();
+        this.nodeMapInit(this.dataSource);
     }
 
     private cleanUp(): void {
@@ -55,14 +53,28 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {}
 
-    private drawNodeMap(): void {
+    public isJson(param) {
+        if (typeof param === 'object') {
+            return true;
+        }
+        return false;
+    }
+    public nodeMapInit(data: any): void {
+        if (this.isJson(data)) {
+            this.drawNodeMap(data);
+        } else {
+            throw new Error('InvalidJSON');
+        }
+    }
+
+    private drawNodeMap(data: any): void {
         const classScope = this;
 
-        const nodeMapRoot = this.dataSource as NodeMapRoot;
+        const nodeMapRoot = data as NodeMapRoot;
         const nodes = nodeMapRoot.root.nodes;
 
         // Assigns parent, children, height, depth
-        root = d3.hierarchy(this.dataSource.root, (d: any) => d.nodes);
+        root = d3.hierarchy(nodeMapRoot.root, (d: any) => d.nodes);
         const depthestLevelHorizontal = getMaxLevelHorizontally(root);
         console.log(`depthestLevelHorizontal:${depthestLevelHorizontal}`);
 
@@ -227,9 +239,10 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     timer = setTimeout(() => {
                         if (!prevent) {
                             console.log(this);
-                            const highlightedClasses = document.getElementsByClassName(
-                                highlightClassName
-                            );
+                            const highlightedClasses =
+                                document.getElementsByClassName(
+                                    highlightClassName
+                                );
 
                             if (highlightedClasses) {
                                 while (highlightedClasses.length) {
@@ -569,8 +582,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
                         : false;
 
                 const iconFlagList = [canAdd, canEdit, canDelete];
-                const numberOfDisplayIcons = iconFlagList.filter(Boolean)
-                    .length;
+                const numberOfDisplayIcons =
+                    iconFlagList.filter(Boolean).length;
 
                 const iconMeasurer = {
                     numberOfIcons: numberOfDisplayIcons,
