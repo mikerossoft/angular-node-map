@@ -31,152 +31,15 @@ export class AppComponent implements OnInit {
     COL_LEV_6 = '#ff1744';
     COL_LEV_7 = '#f50057';
 
-    dataBusData: object = {
-        root: {
-            name: 'DataBus',
-            nodes: [
-                {
-                    uri: 'id-1',
-                    name: 'SCADA',
-                    description: 'Stuff',
-                    plugin: 'OPC HDA',
-                    type: 'Connector',
-                    bodyColour: '#1976D2',
-                    borderColour: '#FFF',
-                    canEdit: false,
-                    nodes: [
-                        {
-                            uri: 'id-1-1',
-                            name: 'Tank Level',
-                            description: 'Stuff',
-                            type: 'Input',
-                            bodyColour: '#00BCD4',
-                            borderColour: '#EEE',
-                            canEdit: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'Archive',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: '#4CAF50',
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    nodes: [
-                                        {
-                                            uri: 'id-1-1-1-1',
-                                            name: 'Transform',
-                                            description: 'Stuff',
-                                            plugin: 'Iron Python',
-                                            type: 'Output',
-                                            bodyColour: '#FFC107',
-                                            borderColour: '#BBB',
-                                            canEdit: false,
-                                            nodes: [
-                                                {
-                                                    uri: 'id-1-1-1-1-1',
-                                                    name: 'Azure Storage',
-                                                    description: 'Stuff',
-                                                    plugin: 'Azure Storage',
-                                                    type: 'Output',
-                                                    bodyColour: '#FF5722',
-                                                    borderColour: '#AAA',
-                                                    canEdit: false,
-                                                    nodes: [
-                                                        {
-                                                            uri: 'id-1-1-1-1-1',
-                                                            name: 'Azure Storage',
-                                                            description:
-                                                                'Stuff',
-                                                            plugin: 'Azure Storage',
-                                                            type: 'Output',
-                                                            bodyColour:
-                                                                '#FF5722',
-                                                            borderColour:
-                                                                '#AAA',
-                                                            canEdit: false,
-                                                            nodes: [
-                                                                {
-                                                                    uri: 'id-1-1-1-1-1',
-                                                                    name: 'Azure Storage',
-                                                                    description:
-                                                                        'Stuff',
-                                                                    plugin: 'Azure Storage',
-                                                                    type: 'Output',
-                                                                    bodyColour:
-                                                                        '#FF5722',
-                                                                    borderColour:
-                                                                        '#AAA',
-                                                                    canEdit:
-                                                                        false,
-                                                                    nodes: [
-                                                                        {
-                                                                            uri: 'id-1-1-1-1-1',
-                                                                            name: 'Azure Storage',
-                                                                            description:
-                                                                                'Stuff',
-                                                                            plugin: 'Azure Storage',
-                                                                            type: 'Output',
-                                                                            bodyColour:
-                                                                                '#FF5722',
-                                                                            borderColour:
-                                                                                '#AAA',
-                                                                            canEdit:
-                                                                                false,
-                                                                            nodes: [
-                                                                                {
-                                                                                    uri: 'id-1-1-1-1-1',
-                                                                                    name: 'Azure Storage',
-                                                                                    description:
-                                                                                        'Stuff',
-                                                                                    plugin: 'Azure Storage',
-                                                                                    type: 'Output',
-                                                                                    bodyColour:
-                                                                                        '#FF5722',
-                                                                                    borderColour:
-                                                                                        '#AAA',
-                                                                                    canEdit:
-                                                                                        false,
-                                                                                },
-                                                                            ],
-                                                                        },
-                                                                    ],
-                                                                },
-                                                            ],
-                                                        },
-                                                    ],
-                                                },
-                                                {
-                                                    uri: 'id-1-1-1-1-2',
-                                                    name: 'SQL Database',
-                                                    plugin: 'MS SQL',
-                                                    description: 'Stuff',
-                                                    type: 'Output',
-                                                    bodyColour: '#FF5722',
-                                                    borderColour: '#AAA',
-                                                    canEdit: false,
-                                                },
-                                            ],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    };
-
     dataBusScadaData: object = {
         root: {
             uri: 'id-1',
-            name: 'SCADASCADASCADA',
+            name: 'SCADA Items Connector SCADA Items Connector SCADA Items Connector',
             description: 'Stuff',
             plugin: 'OPC HDA',
             type: 'Connector',
             bodyColour: this.COL_LEV_1,
-            borderColour: '#FFF',
+            borderColour: this.COL_LEV_2,
             canEdit: true,
             canDelete: true,
             canAdd: false,
@@ -187,7 +50,7 @@ export class AppComponent implements OnInit {
                     description: 'Stuff',
                     type: 'Input',
                     bodyColour: this.COL_LEV_2,
-                    borderColour: '#EEE',
+                    borderColour: this.COL_LEV_3,
                     canEdit: true,
                     canAdd: false,
                     canDelete: false,
@@ -198,7 +61,7 @@ export class AppComponent implements OnInit {
                             description: 'Stuff',
                             type: 'SubscriptionSubscription',
                             bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
+                            borderColour: this.COL_LEV_4,
                             canEdit: false,
                             canAdd: true,
                             canDelete: false,
@@ -209,7 +72,7 @@ export class AppComponent implements OnInit {
                                     description: 'Stuff',
                                     type: 'Subscription',
                                     bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
+                                    borderColour: this.COL_LEV_4,
                                     canEdit: false,
                                     canAdd: true,
                                     canDelete: true,
@@ -220,7 +83,7 @@ export class AppComponent implements OnInit {
                                             description: 'Stuff',
                                             type: 'Subscription',
                                             bodyColour: this.COL_LEV_5,
-                                            borderColour: '#CCC',
+                                            borderColour: this.COL_LEV_6,
                                             canEdit: true,
                                             canAdd: false,
                                             canDelete: true,
@@ -231,7 +94,8 @@ export class AppComponent implements OnInit {
                                                     description: 'Stuff',
                                                     type: 'Subscription',
                                                     bodyColour: this.COL_LEV_6,
-                                                    borderColour: '#CCC',
+                                                    borderColour:
+                                                        this.COL_LEV_7,
                                                     canEdit: false,
                                                     canAdd: false,
                                                     canDelete: false,
@@ -245,7 +109,7 @@ export class AppComponent implements OnInit {
                                                             bodyColour:
                                                                 this.COL_LEV_7,
                                                             borderColour:
-                                                                '#CCC',
+                                                                this.COL_LEV_1,
                                                             canEdit: false,
                                                             canAdd: false,
                                                             canDelete: false,
@@ -264,7 +128,7 @@ export class AppComponent implements OnInit {
                             description: 'Stuff',
                             type: 'Subscription',
                             bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
+                            borderColour: this.COL_LEV_4,
                             canEdit: true,
                             canAdd: true,
                             canDelete: false,
@@ -275,7 +139,7 @@ export class AppComponent implements OnInit {
                                     description: 'Stuff',
                                     type: 'Subscription',
                                     bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
+                                    borderColour: this.COL_LEV_5,
                                     canEdit: false,
                                     canAdd: false,
                                     canDelete: false,
@@ -288,7 +152,7 @@ export class AppComponent implements OnInit {
                             description: 'Stuff',
                             type: 'Subscription',
                             bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
+                            borderColour: this.COL_LEV_4,
                             canEdit: false,
                             canAdd: false,
                             canDelete: true,
@@ -299,7 +163,7 @@ export class AppComponent implements OnInit {
                                     description: 'Stuff',
                                     type: 'Subscription',
                                     bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
+                                    borderColour: this.COL_LEV_5,
                                     canEdit: false,
                                     canAdd: false,
                                     canDelete: false,
@@ -312,7 +176,7 @@ export class AppComponent implements OnInit {
                             description: 'Stuff',
                             type: 'Subscription',
                             bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
+                            borderColour: this.COL_LEV_4,
                             canEdit: false,
                             canAdd: false,
                             canDelete: false,
@@ -323,7 +187,7 @@ export class AppComponent implements OnInit {
                                     description: 'Stuff',
                                     type: 'Subscription',
                                     bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
+                                    borderColour: this.COL_LEV_5,
                                     canEdit: false,
                                     canAdd: false,
                                     canDelete: false,
@@ -336,7 +200,7 @@ export class AppComponent implements OnInit {
                             description: 'Stuff',
                             type: 'Subscription',
                             bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
+                            borderColour: this.COL_LEV_4,
                             canEdit: false,
                             canAdd: false,
                             canDelete: false,
@@ -347,7 +211,7 @@ export class AppComponent implements OnInit {
                                     description: 'Stuff',
                                     type: 'Subscription',
                                     bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
+                                    borderColour: this.COL_LEV_5,
                                     canEdit: false,
                                     canAdd: false,
                                     canDelete: false,
@@ -476,102 +340,136 @@ export class AppComponent implements OnInit {
         },
     };
 
-    constructor() {}
-
-    ngOnInit(): void {
-        this.dataSourceJson = this.getDataBusJson();
-    }
-
-    private getDataBusJson(): object {
-        return this.dataBusScadaData;
-    }
-
-    public onBtnClick() {
-        console.log('button on click');
-        this.dataSourceJson = this.getDataBus2Json();
-        // this.nodeMap.drawNodeMap();
-    }
-
-    private getDataBus2Json(): object {
-        return this.dataBusIoTData;
-    }
-
-    dataBusData2: object = {
+    dataWithIssue: Object = {
         root: {
-            name: 'DataBus',
+            uri: 'in-random-random',
+            name: 'Random',
+            plugin: 'Indicium.DataBus.Plugins.DataSources.RandomPlugin',
+            type: 'Connector',
+            typeIcon: '',
+            bodyColour: '#1976D2',
+            borderColour: '#FFF',
+            canAdd: false,
+            canEdit: false,
+            canDelete: false,
             nodes: [
                 {
-                    uri: 'id-1',
-                    name: 'SCADA',
-                    description: 'Stuff',
-                    plugin: 'OPC HDA',
-                    type: 'Connector',
-                    bodyColour: '#1976D2',
+                    uri: 'in-random-random-template',
+                    name: 'Template',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
                     borderColour: '#FFF',
+                    canAdd: false,
                     canEdit: false,
+                    canDelete: false,
                     nodes: [
                         {
-                            uri: 'id-1a',
-                            name: 'SCADA B',
-                            description: 'Stuff',
-                            type: 'Input',
-                            bodyColour: '#1010F2',
-                            borderColour: '#EEE',
+                            uri: 'in-random-random-template-test',
+                            name: 'Test',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
                             canEdit: false,
+                            canDelete: false,
                             nodes: [
                                 {
-                                    uri: 'id-1-1',
-                                    name: 'Tank Level',
-                                    description: 'Stuff',
-                                    type: 'Input',
-                                    bodyColour: '#00BCD4',
-                                    borderColour: '#EEE',
+                                    uri: 'in-random-random-template-test-loggingpipelineplugin-0',
+                                    name: 'LoggingPipelinePlugin',
+                                    description: 'Subscription Item',
+                                    type: 'Subscription Item',
+                                    typeIcon: '',
+                                    bodyColour: '#FFC107',
+                                    borderColour: '#FFF',
+                                    canAdd: false,
                                     canEdit: false,
+                                    canDelete: false,
+                                    nodes: [],
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    uri: 'in-random-random-test1',
+                    name: 'Test 1',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
+                    borderColour: '#FFF',
+                    canAdd: false,
+                    canEdit: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'in-random-random-test1-testimage',
+                            name: 'Test Image',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'in-random-random-test1-testimage-pythonplugin-0',
+                                    name: 'PythonPlugin',
+                                    description: 'Subscription Item',
+                                    type: 'Subscription Item',
+                                    typeIcon: '',
+                                    bodyColour: '#FFC107',
+                                    borderColour: '#FFF',
+                                    canAdd: false,
+                                    canEdit: false,
+                                    canDelete: false,
                                     nodes: [
                                         {
-                                            uri: 'id-1-1-1',
-                                            name: 'Archive',
-                                            description: 'Stuff',
-                                            type: 'Subscription',
-                                            bodyColour: '#4CAF50',
-                                            borderColour: '#CCC',
+                                            uri: 'in-random-random-test1-testimage-loggingpipelineplugin-0',
+                                            name: 'LoggingPipelinePlugin',
+                                            description: 'Subscription Item',
+                                            type: 'Subscription Item',
+                                            typeIcon: '',
+                                            bodyColour: '#FFC107',
+                                            borderColour: '#FFF',
+                                            canAdd: false,
                                             canEdit: false,
+                                            canDelete: false,
                                             nodes: [
                                                 {
-                                                    uri: 'id-1-1-1-1',
-                                                    name: 'Transform',
-                                                    description: 'Stuff',
-                                                    plugin: 'Iron Python',
-                                                    type: 'Output',
+                                                    uri: 'in-random-random-test1-testimage-azurecomputervisionplugin-0',
+                                                    name: 'Azure Computer Vision Plugin',
+                                                    description:
+                                                        'Subscription Item',
+                                                    type: 'Subscription Item',
+                                                    typeIcon: '',
                                                     bodyColour: '#FFC107',
-                                                    borderColour: '#BBB',
+                                                    borderColour: '#FFF',
+                                                    canAdd: false,
                                                     canEdit: false,
+                                                    canDelete: false,
                                                     nodes: [
                                                         {
-                                                            uri: 'id-1-1-1-1-1',
-                                                            name: 'Azure Storage',
+                                                            uri: 'in-random-random-test1-testimage-localdbplugin-0',
+                                                            name: 'LocalDbPlugin',
                                                             description:
-                                                                'Stuff',
-                                                            plugin: 'Azure Storage',
-                                                            type: 'Output',
+                                                                'Subscription Item',
+                                                            type: 'Subscription Item',
+                                                            typeIcon: '',
                                                             bodyColour:
-                                                                '#FF5722',
+                                                                '#FFC107',
                                                             borderColour:
-                                                                '#AAA',
+                                                                '#FFF',
+                                                            canAdd: false,
                                                             canEdit: false,
-                                                        },
-                                                        {
-                                                            uri: 'id-1-1-1-1-2',
-                                                            name: 'SQL Database',
-                                                            plugin: 'MS SQL',
-                                                            description:
-                                                                'Stuff',
-                                                            type: 'Output',
-                                                            bodyColour:
-                                                                '#FF5722',
-                                                            borderColour:
-                                                                '#AAA',
-                                                            canEdit: false,
+                                                            canDelete: false,
+                                                            nodes: [],
                                                         },
                                                     ],
                                                 },
@@ -583,7 +481,230 @@ export class AppComponent implements OnInit {
                         },
                     ],
                 },
+                {
+                    uri: 'in-random-random-test2',
+                    name: 'Test 2',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
+                    borderColour: '#FFF',
+                    canAdd: false,
+                    canEdit: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'in-random-random-test3-test',
+                            name: 'Test',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'in-random-random-test2-test-consolepipelineplugin-0',
+                                    name: 'ConsolePipelinePlugin',
+                                    description: 'Subscription Item',
+                                    type: 'Subscription Item',
+                                    typeIcon: '',
+                                    bodyColour: '#FFC107',
+                                    borderColour: '#FFF',
+                                    canAdd: false,
+                                    canEdit: false,
+                                    canDelete: false,
+                                    nodes: [
+                                        {
+                                            uri: 'in-random-random-test2-test-tablestorageplugin-0',
+                                            name: 'TableStoragePlugin',
+                                            description: 'Subscription Item',
+                                            type: 'Subscription Item',
+                                            typeIcon: '',
+                                            bodyColour: '#FFC107',
+                                            borderColour: '#FFF',
+                                            canAdd: false,
+                                            canEdit: false,
+                                            canDelete: false,
+                                            nodes: [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'in-random-random-test3-test2',
+                            name: 'TEST2',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [],
+                        },
+                    ],
+                },
+                {
+                    uri: 'in-random-random-test3',
+                    name: 'Test 3',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
+                    borderColour: '#FFF',
+                    canAdd: false,
+                    canEdit: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'in-random-random-test3-test',
+                            name: 'Test',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'in-random-random-test3-test-consolepipelineplugin-0',
+                                    name: 'ConsolePipelinePlugin',
+                                    description: 'Subscription Item',
+                                    type: 'Subscription Item',
+                                    typeIcon: '',
+                                    bodyColour: '#FFC107',
+                                    borderColour: '#FFF',
+                                    canAdd: false,
+                                    canEdit: false,
+                                    canDelete: false,
+                                    nodes: [
+                                        {
+                                            uri: 'in-random-random-test3-test-tablestorageplugin-0',
+                                            name: 'TableStoragePlugin',
+                                            description: 'Subscription Item',
+                                            type: 'Subscription Item',
+                                            typeIcon: '',
+                                            bodyColour: '#FFC107',
+                                            borderColour: '#FFF',
+                                            canAdd: false,
+                                            canEdit: false,
+                                            canDelete: false,
+                                            nodes: [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'in-random-random-test3-test2',
+                            name: 'TEST2',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [],
+                        },
+                    ],
+                },
+                {
+                    uri: 'in-random-random-test4',
+                    name: 'Test 4',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
+                    borderColour: '#FFF',
+                    canAdd: false,
+                    canEdit: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'in-random-random-test4-logger',
+                            name: 'Logger',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [],
+                        },
+                    ],
+                },
+                {
+                    uri: 'in-random-random-test5',
+                    name: 'Test 5',
+                    description: 'Input',
+                    type: 'Input',
+                    typeIcon: '',
+                    bodyColour: '#00BCD4',
+                    borderColour: '#FFF',
+                    canAdd: false,
+                    canEdit: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'in-random-random-test5-logger',
+                            name: 'Logger',
+                            description: 'Subscription',
+                            type: 'Subscription',
+                            typeIcon: '',
+                            bodyColour: '#4CAF50',
+                            borderColour: '#FFF',
+                            canAdd: false,
+                            canEdit: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'in-random-random-test5-logger-loggingpipelineplugin-0',
+                                    name: 'LoggingPipelinePlugin',
+                                    description: 'Subscription Item',
+                                    type: 'Subscription Item',
+                                    typeIcon: '',
+                                    bodyColour: '#FFC107',
+                                    borderColour: '#FFF',
+                                    canAdd: false,
+                                    canEdit: false,
+                                    canDelete: false,
+                                    nodes: [],
+                                },
+                            ],
+                        },
+                    ],
+                },
             ],
         },
     };
+
+    constructor() {}
+
+    ngOnInit(): void {
+        this.dataSourceJson = this.getDataBusJson();
+    }
+
+    private getDataBusJson(): object {
+        return this.dataWithIssue;
+    }
+
+    public onBtnClick() {
+        console.log('button on click');
+        this.dataSourceJson = this.getDataBus2Json();
+    }
+
+    private getDataBus2Json(): object {
+        return this.dataBusIoTData;
+    }
 }

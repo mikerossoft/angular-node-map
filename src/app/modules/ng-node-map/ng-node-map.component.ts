@@ -37,7 +37,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
         this.rectWidth = 120;
     }
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(document.querySelectorAll('.node-map'));
         if (document.querySelectorAll('.node-map').length > 0) {
             this.cleanUp();
         }
@@ -76,7 +75,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
         // Assigns parent, children, height, depth
         root = d3.hierarchy(nodeMapRoot.root, (d: any) => d.nodes);
         const depthestLevelHorizontal = getMaxLevelHorizontally(root);
-        console.log(`depthestLevelHorizontal:${depthestLevelHorizontal}`);
 
         const depthestLevelHorizontalVal = Number.isFinite(
             depthestLevelHorizontal
@@ -87,31 +85,28 @@ export class NodeMapComponent implements OnInit, OnChanges {
             depthestLevelHorizontalVal / 3
         );
 
-        //using recursive function to get the verticle node level
-        const nodesLength: number[] = [];
-        getMaxArrayLengthFromSource(nodes);
-        const maxArrayLength = Math.max(...nodesLength);
+        const maxSubscription = getMaxLevelSubscription(nodes);
         //using this variable to calculate the height of the drawing
         //3 general fits for most of the case, so the default number will be 3
-        const heightMultiplier = maxArrayLength < 3 ? 3 : maxArrayLength;
+        const heightMultiplier = maxSubscription < 3 ? 3 : maxSubscription + 1;
 
-        const nodesVerticalGapSpaceEstimator = Math.round(maxArrayLength / 3);
-        // const rectWidth = 120,
-        // rectHeight = 65;
-        // Set the dimensions and margins of the diagram
+        /*
+        Calculating the drawing's display area
+        */
         var margin = { top: 0, right: 0, bottom: 0, left: 0 },
             width =
                 140 * depthestLevelHorizontalVal +
                 nodesHorizontalGapSpaceEstimator * 140,
-            height =
-                70 * nodesVerticalGapSpaceEstimator + 140 * heightMultiplier;
-        console.log(`heightMultiplier: ${heightMultiplier}`);
+            height = this.rectHeight * 2 * heightMultiplier;
 
-        console.log('width');
-        console.log(width);
-
-        console.log('height');
-        console.log(height);
+        /*
+        Diagram window size debugging 
+        */
+        // console.log(`heightMultiplier: ${heightMultiplier}`);
+        // console.log('width');
+        // console.log(width);
+        // console.log('height');
+        // console.log(height);
 
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
@@ -153,13 +148,15 @@ export class NodeMapComponent implements OnInit, OnChanges {
             }
         }
 
-        function getMaxArrayLengthFromSource(nodeMap: any): void {
-            for (var i = 0; i < nodeMap.length; i++) {
-                if (Array.isArray(nodeMap[i].nodes)) {
-                    nodesLength.push(nodeMap[i].nodes.length);
-                    getMaxArrayLengthFromSource(nodeMap[i].nodes);
+        function getMaxLevelSubscription(nodeMap: any): number {
+            let subCounter: number = 0;
+            for (let i = 0; i < nodeMap.length; i++) {
+                const itemNode = nodeMap[i].nodes;
+                for (let j = 0; j < itemNode.length; j++) {
+                    subCounter++;
                 }
             }
+            return subCounter;
         }
         function getMaxLevelHorizontally(root: any): number {
             let returnVal =
@@ -238,7 +235,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     prevent = false;
                     timer = setTimeout(() => {
                         if (!prevent) {
-                            console.log(this);
                             const highlightedClasses =
                                 document.getElementsByClassName(
                                     highlightClassName
@@ -261,7 +257,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     //assign value to prevent the single click from
                     //calling the timer function
                     prevent = true;
-                    console.log(`dblclick prevent: ${prevent}`);
                     clearTimeout(timer);
                     expandCollapse(d);
                 });
@@ -289,17 +284,18 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return 'start';
                 })
                 .text(function (d) {
-                    return formatTitleText(d.data.name);
+                    return d.data.name;
                 })
-                .append('tspan')
-                .attr('class', 'node-text')
-                .attr('dy', '1.50em')
-                .attr('x', function (d) {
-                    return 13;
-                })
-                .text(function (d) {
-                    return formatTypeText(d.data.type);
-                });
+                .call(wrap, 120);
+            // .append('tspan')
+            // .attr('class', 'node-text')
+            // .attr('dy', '1.50em')
+            // .attr('x', function (d) {
+            //     return 13;
+            // })
+            // .text(function (d) {
+            //     return formatTypeText(d.data.type);
+            // });
 
             //Delete icon
             nodeEnter
@@ -450,7 +446,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
             // Toggle children on click.
             function expandCollapse(d) {
                 const selectedObj = d.data;
-                console.log(d);
 
                 if (d.children) {
                     d._children = d.children;
@@ -531,7 +526,42 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return display;
                 }
             }
-
+            function wrap(text, width) {
+                text.each(function () {
+                    var text = d3.select(this),
+                        words = text.text().split(/\s+/).reverse(),
+                        word,
+                        line = [],
+                        lineNumber = 0,
+                        lineHeight = 1, // ems
+                        x = text.attr('x'),
+                        y = text.attr('y'),
+                        dy = 0, //parseFloat(text.attr("dy")),
+                        tspan = text
+                            .text(null)
+                            .append('tspan')
+                            .attr('x', x)
+                            .attr('y', y)
+                            .attr('dy', dy + 'em');
+                    while ((word = words.pop())) {
+                        line.push(word);
+                        tspan.text(line.join(' '));
+                        if (tspan.node().getComputedTextLength() > width) {
+                            line.pop();
+                            tspan.text(line.join(' '));
+                            line = [word];
+                            tspan = text
+                                .append('tspan')
+                                .attr('x', x)
+                                .attr('y', y)
+                                .attr('dy', '1em')
+                                .text(word);
+                            lineNumber++;
+                        }
+                        if (lineNumber > 1) break;
+                    }
+                });
+            }
             function canAddIconShow(d): any {
                 const canAdd = d?.data?.canAdd;
 
