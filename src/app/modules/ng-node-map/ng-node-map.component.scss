@@ -34,13 +34,11 @@ svg:not(:root) {
 }
 
 .node_onselect_highlight {
-    // stroke: rgb(26, 179, 148);
-    stroke: lawngreen;
     stroke-width: 2px;
     stroke-linejoin: round;
 }
 
-.icon-edit {
+.icon-white {
     fill: white;
     cursor: pointer;
 }

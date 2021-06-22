@@ -29,8 +29,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public selectCallback: (item?: any) => void;
     rectHeight: number = 0;
     rectWidth: number = 0;
-    fontAwesomeClass = 'fa fa-edit icon-edit';
+    fontAwesomeClass = 'fa icon-white';
     hideIconClass = 'hide-icon';
+    indiciumPrimaryColor = '#1ab394';
+    defaultHightLightColor = this.indiciumPrimaryColor;
+    defaultNodeBgColor = '#303F9F';
 
     constructor() {
         this.rectHeight = 65;
@@ -226,7 +229,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('rx', '5')
                 .style('fill', function (d) {
                     //if bodyColour is not defined, returns the #303F9F default color
-                    return d.data.bodyColour ? d.data.bodyColour : '#303F9F';
+                    return d.data.bodyColour
+                        ? d.data.bodyColour
+                        : classScope.defaultNodeBgColor;
                 })
                 .on('click', function (d) {
                     const highlightClassName = 'node_onselect_highlight';
@@ -235,20 +240,36 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     prevent = false;
                     timer = setTimeout(() => {
                         if (!prevent) {
-                            const highlightedClasses =
+                            const borderColour = getItem(d).borderColour
+                                ? getItem(d).borderColour
+                                : classScope.defaultHightLightColor;
+
+                            console.log(borderColour);
+
+                            //this block is used for applying a highlight color to the code
+                            this.style.stroke = borderColour;
+
+                            //find the node where it was highlighted previously
+                            const highlightedElements: HTMLCollectionOf<Element> =
                                 document.getElementsByClassName(
                                     highlightClassName
                                 );
-
-                            if (highlightedClasses) {
-                                while (highlightedClasses.length) {
-                                    highlightedClasses[0].classList.remove(
+                            //remove the hightlight styling class for the previous selected node
+                            if (highlightedElements) {
+                                for (
+                                    let i = 0;
+                                    i < highlightedElements.length;
+                                    i++
+                                ) {
+                                    const element = highlightedElements[i];
+                                    element.classList.remove(
                                         highlightClassName
                                     );
+                                    element.style.stroke = '';
                                 }
                             }
-
                             this.classList.add(highlightClassName);
+                            //handleOnSelect callback
                             handleOnSelect(d);
                         }
                     }, delay);
@@ -512,7 +533,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 return result;
             }
             function splitTextAndNumber(text: string) {
-                return text.match(/[A-Z][a-z]+|[0-9]+/g).join(' ');
+                return text.match(/[A-Z][a-z]+|[0-9]+|[A-Z][A-Z]+/g).join(' ');
             }
 
             function wrap(text, width) {
