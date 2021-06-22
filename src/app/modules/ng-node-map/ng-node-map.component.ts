@@ -236,6 +236,14 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 //add the radius to the node border's edges
                 .attr('rx', '5')
                 .style('fill', function (d) {
+                    const item = getItem(d);
+                    //if the item is not enabled, invert style will
+                    //apply for the backgroudn color of the node
+                    if (item.enabled !== undefined && !item.enabled) {
+                        this.style.filter = 'invert(35%)';
+                    }
+
+                    //get the reference of the node container for later use
                     //if bodyColour is not defined, returns the #303F9F default color
                     return d.data.bodyColour
                         ? d.data.bodyColour
@@ -372,16 +380,39 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return getIconPosInterim(d, IconType.Toggle);
                 })
                 .text(function (d) {
-                    return '\uf204';
+                    const item = getItem(d);
+
+                    return item.enabled
+                        ? classScope.toggleEnableIcon
+                        : classScope.toggleDisableIcon;
                 })
                 .on('click', function (d) {
-                    console.log(this);
-                    const toggleIcon =
-                        this.innerHTML == classScope.toggleEnableIcon
-                            ? classScope.toggleDisableIcon
-                            : classScope.toggleEnableIcon;
-                    this.innerHTML = toggleIcon;
+                    const curToggle = this.innerHTML;
+                    const nodeContainer =
+                        this.parentNode.querySelector('rect.node');
+
+                    if (curToggle == classScope.toggleEnableIcon) {
+                        this.innerHTML = classScope.toggleDisableIcon;
+                        nodeContainer.style.filter = 'invert(35%)';
+                    } else {
+                        this.innerHTML = classScope.toggleEnableIcon;
+                        nodeContainer.style.filter = 'invert(0%)';
+                    }
                     configureToggleIconOnClick(d);
+                });
+            //Show Latest Data icon
+            nodeEnter
+                .append('text')
+                .attr('class', (d) => canShowLatestIconShow(d))
+                .attr('dy', '-1.18em')
+                .attr('x', function (d) {
+                    return getIconPosInterim(d, IconType.ShowLatest);
+                })
+                .text(function (d) {
+                    return '\uf080';
+                })
+                .on('click', function (d) {
+                    configureCanShowLatestIconOnClick(d);
                 });
             //Node type icon
             nodeEnter
@@ -645,6 +676,19 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 });
             }
 
+            function canShowLatestIconShow(d): any {
+                const canShowLatest = d?.data?.canShowLatest;
+
+                if (canShowLatest) return classScope.fontAwesomeClass;
+                else return classScope.hideIconClass;
+            }
+
+            function configureCanShowLatestIconOnClick(d) {
+                const canShowLatest = d?.data?.canShowLatest;
+                if (canShowLatest) return handleOnShowLatestData(d);
+                else return handleNothing;
+            }
+
             function canToggleIconShow(d): any {
                 const canToggle = d?.data?.canToggle;
 
@@ -725,7 +769,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 if (iconMeasurer.numberOfIcons === 3) {
                     iconMeasurer.canTogglePos = calculateNodeIconX(1.6, 3);
                     iconMeasurer.canEditPos = calculateNodeIconX(1.525, 2);
-                    iconMeasurer.canShowLatestPos = calculateNodeIconX(1.25, 1);
+                    iconMeasurer.canShowLatestPos = calculateNodeIconX(1.4, 1);
                 } else {
                     //show 2 icons
                     if (iconMeasurer.numberOfIcons === 2) {
