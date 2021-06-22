@@ -23,6 +23,13 @@ export class AppComponent implements OnInit {
         console.log(`onSelect - item: ${item} uri:${item.uri}`);
     };
 
+    public onToggleCallback = (item?: any): void => {
+        console.log(`onToggleCallback - item: ${item} uri:${item.uri}`);
+    };
+    public onShowLatestDataCallack = (item?: any): void => {
+        console.log(`onShowLatestDataCallack - item: ${item} uri:${item.uri}`);
+    };
+
     COL_LEV_1 = '#1976D2';
     COL_LEV_2 = '#00BCD4';
     COL_LEV_3 = '#4CAF50';
@@ -63,7 +70,8 @@ export class AppComponent implements OnInit {
                             bodyColour: this.COL_LEV_3,
                             borderColour: this.COL_LEV_4,
                             canEdit: false,
-                            canAdd: true,
+                            canAdd: false,
+                            canToggle: true,
                             canDelete: false,
                             nodes: [
                                 {
@@ -74,7 +82,8 @@ export class AppComponent implements OnInit {
                                     bodyColour: this.COL_LEV_4,
                                     borderColour: this.COL_LEV_4,
                                     canEdit: false,
-                                    canAdd: true,
+                                    canAdd: false,
+                                    canToggle: true,
                                     canDelete: true,
                                     nodes: [
                                         {
@@ -360,9 +369,10 @@ export class AppComponent implements OnInit {
                     type: 'Input',
                     typeIcon: '',
                     borderColour: 'red',
-                    canAdd: true,
+                    canAdd: false,
+                    canToggle: true,
                     canEdit: true,
-                    canDelete: true,
+                    canDelete: false,
                     nodes: [
                         {
                             uri: 'in-random-random-template-test',
@@ -370,9 +380,10 @@ export class AppComponent implements OnInit {
                             description: 'Subscription',
                             type: 'Subscription',
                             typeIcon: '',
-                            canAdd: true,
+                            canAdd: false,
+                            canToggle: true,
                             canEdit: true,
-                            canDelete: true,
+                            canDelete: false,
                             nodes: [
                                 {
                                     uri: 'in-random-random-template-test-loggingpipelineplugin-0',
@@ -701,6 +712,6 @@ export class AppComponent implements OnInit {
     }
 
     private getDataBus2Json(): object {
-        return this.dataBusIoTData;
+        return this.dataBusScadaData;
     }
 }

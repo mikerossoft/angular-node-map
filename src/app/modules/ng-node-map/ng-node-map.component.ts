@@ -13,6 +13,8 @@ enum IconType {
     Add,
     Edit,
     Delete,
+    Toggle,
+    ShowLatest,
 }
 
 @Component({
@@ -27,6 +29,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public deleteCallback: (item?: any) => void;
     @Input() public addCallback: (item?: any) => void;
     @Input() public selectCallback: (item?: any) => void;
+    @Input() public toggleCallback: (item?: any) => void;
+    @Input() public showLatestDataCallback: (item?: any) => void;
+
     rectHeight: number = 0;
     rectWidth: number = 0;
     fontAwesomeClass = 'fa icon-white';
@@ -35,6 +40,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
     defaultHightLightColor = this.indiciumPrimaryColor;
     defaultNodeBgColor = '#303F9F';
     typeIconClass = 'fa icon-white not-clickable type-icon';
+    toggleEnableIcon = '\uf204';
+    toggleDisableIcon = '\uf205';
 
     constructor() {
         this.rectHeight = 65;
@@ -245,8 +252,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
                                 ? getItem(d).borderColour
                                 : classScope.defaultHightLightColor;
 
-                            console.log(borderColour);
-
                             //this block is used for applying a highlight color to the code
                             this.style.stroke = borderColour;
 
@@ -316,7 +321,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canDeleteIconShow(d))
                 .attr('dy', '-1.20em')
                 .attr('x', function (d) {
-                    return getIconPos(d, IconType.Delete);
+                    return getIconPosInterim(d, IconType.Delete);
                 })
                 .attr('font-size', function (d) {
                     return '12px';
@@ -333,7 +338,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canEditIconShow(d))
                 .attr('dy', '-1.15em')
                 .attr('x', function (d) {
-                    return getIconPos(d, IconType.Edit);
+                    return getIconPosInterim(d, IconType.Edit);
                 })
                 .attr('font-size', function (d) {
                     return '12px';
@@ -350,13 +355,33 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('class', (d) => canAddIconShow(d))
                 .attr('dy', '-1.18em')
                 .attr('x', function (d) {
-                    return getIconPos(d, IconType.Add);
+                    return getIconPosInterim(d, IconType.Add);
                 })
                 .text(function (d) {
                     return '\uf067';
                 })
                 .on('click', function (d) {
                     configureAddIconOnClick(d);
+                });
+            //Toggle icon
+            nodeEnter
+                .append('text')
+                .attr('class', (d) => canToggleIconShow(d))
+                .attr('dy', '-1.18em')
+                .attr('x', function (d) {
+                    return getIconPosInterim(d, IconType.Toggle);
+                })
+                .text(function (d) {
+                    return '\uf204';
+                })
+                .on('click', function (d) {
+                    console.log(this);
+                    const toggleIcon =
+                        this.innerHTML == classScope.toggleEnableIcon
+                            ? classScope.toggleDisableIcon
+                            : classScope.toggleEnableIcon;
+                    this.innerHTML = toggleIcon;
+                    configureToggleIconOnClick(d);
                 });
             //Node type icon
             nodeEnter
@@ -481,7 +506,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function getTypeIcon(d) {
                 const item = getItem(d);
                 if (item) {
-                    console.log(item.type);
                     switch (item.type) {
                         case 'Connector':
                             return '\uf1e6';
@@ -529,6 +553,26 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     classScope.addCallback(item);
                 } else {
                     console.error('handleOnAdd: selected item is null');
+                }
+            }
+
+            function handleOnToggle(d) {
+                const item = getItem(d);
+                if (item) {
+                    classScope.toggleCallback(item);
+                } else {
+                    console.error('handleOnToogle: selected item is null');
+                }
+            }
+
+            function handleOnShowLatestData(d) {
+                const item = getItem(d);
+                if (item) {
+                    classScope.showLatestDataCallback(item);
+                } else {
+                    console.error(
+                        'handleOnShowLatestData: selected item is null'
+                    );
                 }
             }
             function handleNothing() {}
@@ -600,6 +644,20 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     }
                 });
             }
+
+            function canToggleIconShow(d): any {
+                const canToggle = d?.data?.canToggle;
+
+                if (canToggle) return classScope.fontAwesomeClass;
+                else return classScope.hideIconClass;
+            }
+
+            function configureToggleIconOnClick(d) {
+                const canToggle = d?.data?.canToggle;
+                if (canToggle) return handleOnToggle(d);
+                else return handleNothing;
+            }
+
             function canAddIconShow(d): any {
                 const canAdd = d?.data?.canAdd;
 
@@ -632,7 +690,106 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 if (canDelete) return handleOnDelete(d);
                 else return handleNothing;
             }
+            //It can handle all five buttons's positions
+            //to do - in later release
+            function getAllIconPos(d, iconType: IconType) {}
 
+            //only can handle toggle, edit and showLatestData buttons' positions
+            function getIconPosInterim(d, iconType: IconType) {
+                const canToggle =
+                    typeof d?.data?.canToggle !== 'undefined'
+                        ? d?.data?.canToggle
+                        : false;
+
+                const canEdit =
+                    typeof d?.data?.canEdit !== 'undefined'
+                        ? d?.data?.canEdit
+                        : false;
+
+                const canShowLatest =
+                    typeof d?.data?.canShowLatest !== 'undefined'
+                        ? d?.data?.canShowLatest
+                        : false;
+
+                const iconFlagList = [canToggle, canEdit, canShowLatest];
+                const numberOfDisplayIcons =
+                    iconFlagList.filter(Boolean).length;
+
+                const iconMeasurer = {
+                    numberOfIcons: numberOfDisplayIcons,
+                    canTogglePos: 0.0,
+                    canEditPos: 0.0,
+                    canShowLatestPos: 0.0,
+                };
+                //show all icons
+                if (iconMeasurer.numberOfIcons === 3) {
+                    iconMeasurer.canTogglePos = calculateNodeIconX(1.6, 3);
+                    iconMeasurer.canEditPos = calculateNodeIconX(1.525, 2);
+                    iconMeasurer.canShowLatestPos = calculateNodeIconX(1.25, 1);
+                } else {
+                    //show 2 icons
+                    if (iconMeasurer.numberOfIcons === 2) {
+                        if (canToggle && canEdit) {
+                            iconMeasurer.canTogglePos = calculateNodeIconX(
+                                1.525,
+                                2
+                            );
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        } else if (canToggle && canShowLatest) {
+                            iconMeasurer.canTogglePos = calculateNodeIconX(
+                                1.4,
+                                2
+                            );
+                            iconMeasurer.canShowLatestPos = calculateNodeIconX(
+                                1.25,
+                                1
+                            );
+                        } else if (canEdit && canShowLatest) {
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.525,
+                                2
+                            );
+                            iconMeasurer.canShowLatestPos = calculateNodeIconX(
+                                1.25,
+                                1
+                            );
+                        }
+                    } else {
+                        //show only 1 icon
+                        if (canToggle) {
+                            iconMeasurer.canTogglePos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        } else if (canEdit) {
+                            iconMeasurer.canEditPos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        } else {
+                            iconMeasurer.canShowLatestPos = calculateNodeIconX(
+                                1.5,
+                                1
+                            );
+                        }
+                    }
+                }
+                switch (iconType) {
+                    case IconType.Toggle:
+                        return iconMeasurer.canTogglePos;
+                    case IconType.Edit:
+                        return iconMeasurer.canEditPos;
+                    case IconType.ShowLatest:
+                        return iconMeasurer.canShowLatestPos;
+                    default:
+                        return 0.0;
+                }
+            }
+
+            //only can handle add, edit and delete buttons' positions
             function getIconPos(d, iconType: IconType) {
                 const canAdd =
                     typeof d?.data?.canAdd !== 'undefined'
