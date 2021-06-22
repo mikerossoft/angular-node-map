@@ -284,18 +284,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return 'start';
                 })
                 .text(function (d) {
-                    return d.data.name;
+                    return formatText(d.data.name);
                 })
-                .call(wrap, 120);
-            // .append('tspan')
-            // .attr('class', 'node-text')
-            // .attr('dy', '1.50em')
-            // .attr('x', function (d) {
-            //     return 13;
-            // })
-            // .text(function (d) {
-            //     return formatTypeText(d.data.type);
-            // });
+                .call(wrap, 110);
 
             //Delete icon
             nodeEnter
@@ -509,23 +500,21 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 );
             }
 
-            function formatTitleText(display: string): any {
-                const longTextSymbol = '..';
-                if (display.length > 10) {
-                    return display.substr(0, 10) + longTextSymbol;
-                } else {
-                    return display;
+            function formatText(text: string): string {
+                if (checkIfSingleWord(text)) {
+                    return splitTextAndNumber(text);
                 }
+                return text;
             }
 
-            function formatTypeText(display: string): any {
-                const longTextSymbol = '..';
-                if (display.length > 16) {
-                    return display.substr(0, 16) + longTextSymbol;
-                } else {
-                    return display;
-                }
+            function checkIfSingleWord(text: string): boolean {
+                var result = text.trim().indexOf(' ') === -1 ? true : false;
+                return result;
             }
+            function splitTextAndNumber(text: string) {
+                return text.match(/[A-Z][a-z]+|[0-9]+/g).join(' ');
+            }
+
             function wrap(text, width) {
                 text.each(function () {
                     var text = d3.select(this),
