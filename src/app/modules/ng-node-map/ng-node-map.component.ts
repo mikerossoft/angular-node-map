@@ -34,6 +34,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
     indiciumPrimaryColor = '#1ab394';
     defaultHightLightColor = this.indiciumPrimaryColor;
     defaultNodeBgColor = '#303F9F';
+    typeIconClass = 'fa icon-white not-clickable type-icon';
 
     constructor() {
         this.rectHeight = 65;
@@ -313,7 +314,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             nodeEnter
                 .append('text')
                 .attr('class', (d) => canDeleteIconShow(d))
-                .attr('dy', '-1.1em')
+                .attr('dy', '-1.20em')
                 .attr('x', function (d) {
                     return getIconPos(d, IconType.Delete);
                 })
@@ -330,7 +331,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
             nodeEnter
                 .append('text')
                 .attr('class', (d) => canEditIconShow(d))
-                .attr('dy', '-1.05em')
+                .attr('dy', '-1.15em')
                 .attr('x', function (d) {
                     return getIconPos(d, IconType.Edit);
                 })
@@ -343,23 +344,30 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .on('click', function (d) {
                     configureEditIconOnClick(d);
                 });
-
             //Add icon
             nodeEnter
                 .append('text')
                 .attr('class', (d) => canAddIconShow(d))
-                .attr('dy', '-1.10em')
+                .attr('dy', '-1.18em')
                 .attr('x', function (d) {
                     return getIconPos(d, IconType.Add);
-                })
-                .attr('font-size', function (d) {
-                    return '12px';
                 })
                 .text(function (d) {
                     return '\uf067';
                 })
                 .on('click', function (d) {
                     configureAddIconOnClick(d);
+                });
+            //Node type icon
+            nodeEnter
+                .append('text')
+                .attr('class', classScope.typeIconClass)
+                .attr('dy', '-1.05em')
+                .attr('x', function (d) {
+                    return '.20em';
+                })
+                .text(function (d) {
+                    return getTypeIcon(d);
                 });
 
             // UPDATE
@@ -468,6 +476,26 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 }
 
                 update(d);
+            }
+
+            function getTypeIcon(d) {
+                const item = getItem(d);
+                if (item) {
+                    console.log(item.type);
+                    switch (item.type) {
+                        case 'Connector':
+                            return '\uf1e6';
+                        case 'Input':
+                            return '\uf090';
+                        case 'Subscription':
+                            return '\uf0ca';
+                        case 'Subscription Item':
+                            return '\uf08b';
+                    }
+                } else {
+                    console.error("getTypeIcon: Type's icon cannot be found");
+                }
+                return '';
             }
 
             function handleOnSelect(d) {

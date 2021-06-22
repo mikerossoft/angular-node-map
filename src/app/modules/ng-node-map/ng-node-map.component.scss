@@ -41,6 +41,7 @@ svg:not(:root) {
 .icon-white {
     fill: white;
     cursor: pointer;
+    font-size: small;
 }
 
 .relative {
@@ -54,4 +55,16 @@ svg:not(:root) {
 
 .hide-icon {
     font-size: 0 !important;
+}
+
+.not-clickable {
+    pointer-events: none;
+}
+.underline {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+}
+
+.type-icon {
+    font-size: medium;
 }

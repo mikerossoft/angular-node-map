@@ -370,9 +370,9 @@ export class AppComponent implements OnInit {
                             description: 'Subscription',
                             type: 'Subscription',
                             typeIcon: '',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
+                            canAdd: true,
+                            canEdit: true,
+                            canDelete: true,
                             nodes: [
                                 {
                                     uri: 'in-random-random-template-test-loggingpipelineplugin-0',
