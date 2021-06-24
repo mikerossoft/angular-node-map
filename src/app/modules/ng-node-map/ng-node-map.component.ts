@@ -539,15 +539,21 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
             function getTypeIcon(d) {
                 const item = getItem(d);
+                console.log(item);
+
                 if (item) {
                     switch (item.type) {
                         case 'Connector':
+                            if (item.typeIcon) return item.typeIcon;
                             return '\uf1e6';
                         case 'Input':
+                            if (item.typeIcon) return item.typeIcon;
                             return '\uf090';
                         case 'Subscription':
+                            if (item.typeIcon) return item.typeIcon;
                             return '\uf0ca';
                         case 'Subscription Item':
+                            if (item.typeIcon) return item.typeIcon;
                             return '\uf08b';
                     }
                 } else {

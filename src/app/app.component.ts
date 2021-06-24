@@ -9,6 +9,7 @@ import { NodeMapModule } from './modules/ng-node-map/ng-node-map.module';
 })
 export class AppComponent implements OnInit {
     @ViewChild(NodeMapModule) nodeMap: NodeMapModule;
+
     dataSourceJson = {};
     public onDeleteCallback = (item?: any): void => {
         console.log(`onDelete - item: ${item} uri:${item.uri}`);
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
             description: 'Stuff',
             plugin: 'OPC HDA',
             type: 'Connector',
+            typeIcon: '\uf2cd',
             bodyColour: this.COL_LEV_1,
             borderColour: '#FFF',
             canEdit: true,
