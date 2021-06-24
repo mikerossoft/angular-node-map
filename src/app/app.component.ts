@@ -64,6 +64,8 @@ export class AppComponent implements OnInit {
                     canEdit: true,
                     canAdd: false,
                     canDelete: false,
+                    canToggle: false,
+                    canShowLatest: true,
                     nodes: [
                         {
                             uri: 'id-1-1-1',

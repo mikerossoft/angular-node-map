@@ -633,7 +633,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     try {
                         returnText = splitTextAndNumber(text);
                     } catch (error) {
-                        console.error(error);
                         returnText = text;
                     }
                     return returnText;
@@ -648,9 +647,14 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 return result;
             }
             function splitTextAndNumber(text: string) {
-                return text
-                    .match(/[A-Z][a-z]+|[0-9]+|[A-Z][A-Z]+|[a-z][A-Z]+/g)
-                    .join(' ');
+                let splitText = text.match(
+                    /[A-Z][a-z]+|[0-9]+|[A-Z][A-Z]+|[a-z][A-Z]+/g
+                );
+                if (splitText) {
+                    return splitText.join(' ');
+                } else {
+                    return text;
+                }
             }
 
             function wrap(text, width) {
@@ -811,7 +815,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                                 2
                             );
                             iconMeasurer.canShowLatestPos = calculateNodeIconX(
-                                1.25,
+                                1.5,
                                 1
                             );
                         }
