@@ -38,6 +38,201 @@ export class AppComponent implements OnInit {
     COL_LEV_6 = '#ff1744';
     COL_LEV_7 = '#f50057';
 
+    dataBusScadaDataIssue: object = {
+        root: {
+            uri: 'id-1',
+            name: 'SCADASCADASCADA',
+            description: 'Stuff',
+            plugin: 'OPC HDA',
+            type: 'Connector',
+            bodyColour: this.COL_LEV_1,
+            borderColour: '#FFF',
+            canEdit: true,
+            canDelete: true,
+            enabled: true,
+            canAdd: true,
+            canToggle: true,
+            canShowLatest: false,
+            nodes: [
+                {
+                    uri: 'id-1-1',
+                    name: 'POWER',
+                    description: 'Stuff',
+                    type: 'Input',
+                    bodyColour: this.COL_LEV_2,
+                    borderColour: '#EEE',
+                    canEdit: true,
+                    canAdd: false,
+                    canDelete: false,
+                    nodes: [
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'AZURE',
+                            description: 'Stuff',
+                            type: 'SubscriptionSubscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            canAdd: true,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    canAdd: true,
+                                    canDelete: true,
+                                    nodes: [
+                                        {
+                                            uri: 'id-1-1-1',
+                                            name: 'STUFF',
+                                            description: 'Stuff',
+                                            type: 'Subscription',
+                                            bodyColour: this.COL_LEV_5,
+                                            borderColour: '#CCC',
+                                            canEdit: true,
+                                            canAdd: false,
+                                            canDelete: true,
+                                            nodes: [
+                                                {
+                                                    uri: 'id-1-1-1',
+                                                    name: 'STUFF',
+                                                    description: 'Stuff',
+                                                    type: 'Subscription',
+                                                    bodyColour: this.COL_LEV_6,
+                                                    borderColour: '#CCC',
+                                                    canEdit: false,
+                                                    canAdd: false,
+                                                    canDelete: false,
+                                                    nodes: [
+                                                        {
+                                                            uri: 'id-1-1-1',
+                                                            name: 'STUFF',
+                                                            description:
+                                                                'Stuff',
+                                                            type: 'Subscription',
+                                                            bodyColour:
+                                                                this.COL_LEV_7,
+                                                            borderColour:
+                                                                '#CCC',
+                                                            canEdit: false,
+                                                            canAdd: false,
+                                                            canDelete: false,
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'LOCAL',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: true,
+                            canAdd: true,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'AWS',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            canAdd: false,
+                            canDelete: true,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'GCP',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
+                                },
+                            ],
+                        },
+                        {
+                            uri: 'id-1-1-1',
+                            name: 'DIGITAL OCEAN',
+                            description: 'Stuff',
+                            type: 'Subscription',
+                            bodyColour: this.COL_LEV_3,
+                            borderColour: '#CCC',
+                            canEdit: false,
+                            canAdd: false,
+                            canDelete: false,
+                            nodes: [
+                                {
+                                    uri: 'id-1-1-1',
+                                    name: 'STUFF',
+                                    description: 'Stuff',
+                                    type: 'Subscription',
+                                    bodyColour: this.COL_LEV_4,
+                                    borderColour: '#CCC',
+                                    canEdit: false,
+                                    canAdd: false,
+                                    canDelete: false,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    };
+
     dataBusScadaData: object = {
         root: {
             uri: 'id-1',
@@ -709,7 +904,7 @@ export class AppComponent implements OnInit {
     }
 
     private getDataBusJson(): object {
-        return this.dataWithIssue;
+        return this.dataBusScadaDataIssue;
     }
 
     public onBtnClick() {

@@ -275,7 +275,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                                     i < highlightedElements.length;
                                     i++
                                 ) {
-                                    const element = highlightedElements[i];
+                                    const element: any = highlightedElements[i];
                                     element.classList.remove(
                                         highlightClassName
                                     );
@@ -322,8 +322,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     return formatText(d.data.name);
                 })
                 .call(wrap, 110);
-
-            //Delete icon
+            /*
+            Delete icon
             nodeEnter
                 .append('text')
                 .attr('class', (d) => canDeleteIconShow(d))
@@ -340,6 +340,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .on('click', function (d) {
                     configureDeleteIconOnClick(d);
                 });
+            */
             //Edit icon
             nodeEnter
                 .append('text')
@@ -357,7 +358,8 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .on('click', function (d) {
                     configureEditIconOnClick(d);
                 });
-            //Add icon
+            /*
+                Add icon
             nodeEnter
                 .append('text')
                 .attr('class', (d) => canAddIconShow(d))
@@ -371,6 +373,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .on('click', function (d) {
                     configureAddIconOnClick(d);
                 });
+            */
             //Toggle icon
             nodeEnter
                 .append('text')
