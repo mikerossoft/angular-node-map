@@ -628,10 +628,19 @@ export class NodeMapComponent implements OnInit, OnChanges {
             }
 
             function formatText(text: string): string {
+                let returnText: string;
                 if (checkIfSingleWord(text)) {
-                    return splitTextAndNumber(text);
+                    try {
+                        returnText = splitTextAndNumber(text);
+                    } catch (error) {
+                        console.error(error);
+                        returnText = text;
+                    }
+                    return returnText;
                 }
-                return text;
+                //if not single word
+                returnText = text;
+                return returnText;
             }
 
             function checkIfSingleWord(text: string): boolean {
@@ -639,7 +648,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 return result;
             }
             function splitTextAndNumber(text: string) {
-                return text.match(/[A-Z][a-z]+|[0-9]+|[A-Z][A-Z]+/g).join(' ');
+                return text
+                    .match(/[A-Z][a-z]+|[0-9]+|[A-Z][A-Z]+|[a-z][A-Z]+/g)
+                    .join(' ');
             }
 
             function wrap(text, width) {
