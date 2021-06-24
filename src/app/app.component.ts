@@ -24,9 +24,10 @@ export class AppComponent implements OnInit {
         console.log(`onSelect - item: ${item} uri:${item.uri}`);
     };
 
-    public onToggleCallback = (item?: any): void => {
-        console.log(`onToggleCallback - item: ${item} uri:${item.uri}`);
+    public onToggleCallback = (item?: any, enabled?: boolean): void => {
+        console.log(`onToggleCallback - item: ${item} enabled: ${enabled}}`);
     };
+
     public onShowLatestDataCallack = (item?: any): void => {
         console.log(`onShowLatestDataCallack - item: ${item} uri:${item.uri}`);
     };

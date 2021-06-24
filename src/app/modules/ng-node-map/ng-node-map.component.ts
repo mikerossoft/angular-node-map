@@ -29,7 +29,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
     @Input() public deleteCallback: (item?: any) => void;
     @Input() public addCallback: (item?: any) => void;
     @Input() public selectCallback: (item?: any) => void;
-    @Input() public toggleCallback: (item?: any) => void;
+    @Input() public toggleCallback: (item?: any, enabled?: boolean) => void;
     @Input() public showLatestDataCallback: (item?: any) => void;
 
     rectHeight: number = 0;
@@ -391,17 +391,20 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 })
                 .on('click', function (d) {
                     const curToggle = this.innerHTML;
+                    let isEnabled = false;
                     const nodeContainer =
                         this.parentNode.querySelector('rect.node');
 
                     if (curToggle == classScope.toggleEnableIcon) {
                         this.innerHTML = classScope.toggleDisableIcon;
                         nodeContainer.style.filter = 'invert(35%)';
+                        isEnabled = false;
                     } else {
                         this.innerHTML = classScope.toggleEnableIcon;
                         nodeContainer.style.filter = 'invert(0%)';
+                        isEnabled = true;
                     }
-                    configureToggleIconOnClick(d);
+                    configureToggleIconOnClick(d, isEnabled);
                 });
             //Show Latest Data icon
             nodeEnter
@@ -596,10 +599,10 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 }
             }
 
-            function handleOnToggle(d) {
+            function handleOnToggle(d, enabled) {
                 const item = getItem(d);
                 if (item) {
-                    classScope.toggleCallback(item);
+                    classScope.toggleCallback(item, enabled);
                 } else {
                     console.error('handleOnToogle: selected item is null');
                 }
@@ -720,9 +723,9 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 else return classScope.hideIconClass;
             }
 
-            function configureToggleIconOnClick(d) {
+            function configureToggleIconOnClick(d, enabled) {
                 const canToggle = d?.data?.canToggle;
-                if (canToggle) return handleOnToggle(d);
+                if (canToggle) return handleOnToggle(d, enabled);
                 else return handleNothing;
             }
 
