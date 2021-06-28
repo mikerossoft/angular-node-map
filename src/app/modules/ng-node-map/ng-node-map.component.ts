@@ -34,12 +34,14 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
     rectHeight: number = 0;
     rectWidth: number = 0;
-    fontAwesomeClass = 'fa icon-white';
+    fontAwesomeClass = 'fa node-icon';
     hideIconClass = 'hide-icon';
     indiciumPrimaryColor = '#1ab394';
     defaultHightLightColor = this.indiciumPrimaryColor;
     defaultNodeBgColor = '#303F9F';
     defaultTextColor = '#FFF';
+    defaultIconColor = '#FFF';
+    defaultDisabledColor = 'grey';
     typeIconClass = 'fa icon-white not-clickable type-icon';
     toggleEnableIcon = '\uf204';
     toggleDisableIcon = '\uf205';
@@ -255,17 +257,18 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('rx', '5')
                 .style('fill', function (d) {
                     const item = getItem(d);
-                    //if the item is not enabled, invert style will
-                    //apply for the backgroudn color of the node
+                    let returnColor;
                     if (item.enabled !== undefined && !item.enabled) {
-                        this.style.filter = 'invert(35%)';
+                        //if the item is not enabled, invert style will
+                        //apply for the backgroudn color of the node
+                        // this.style.filter = 'invert(35%)';
+                        returnColor = classScope.defaultDisabledColor;
+                    } else {
+                        returnColor = d.data.bodyColour
+                            ? d.data.bodyColour
+                            : classScope.defaultNodeBgColor;
                     }
-
-                    //get the reference of the node container for later use
-                    //if bodyColour is not defined, returns the #303F9F default color
-                    return d.data.bodyColour
-                        ? d.data.bodyColour
-                        : classScope.defaultNodeBgColor;
+                    return returnColor;
                 })
                 .on('click', function (d) {
                     const highlightClassName = 'node_onselect_highlight';
@@ -375,6 +378,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('font-size', function (d) {
                     return '12px';
                 })
+                .style('fill', function (d) {
+                    return d.data.iconColor
+                        ? d.data.iconColor
+                        : classScope.defaultIconColor;
+                })
                 .text(function (d) {
                     return '\uf044';
                 })
@@ -405,6 +413,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('x', function (d) {
                     return getIconPosInterim(d, IconType.Toggle);
                 })
+                .style('fill', function (d) {
+                    return d.data.iconColor
+                        ? d.data.iconColor
+                        : classScope.defaultIconColor;
+                })
                 .text(function (d) {
                     const item = getItem(d);
 
@@ -420,11 +433,16 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
                     if (curToggle == classScope.toggleEnableIcon) {
                         this.innerHTML = classScope.toggleDisableIcon;
-                        nodeContainer.style.filter = 'invert(35%)';
+                        // nodeContainer.style.filter = 'invert(35%)';
+                        nodeContainer.style.fill =
+                            classScope.defaultDisabledColor;
                         isEnabled = false;
                     } else {
                         this.innerHTML = classScope.toggleEnableIcon;
-                        nodeContainer.style.filter = 'invert(0%)';
+                        // nodeContainer.style.filter = 'invert(0%)';
+                        nodeContainer.style.fill = d.data.bodyColour
+                            ? d.data.bodyColour
+                            : classScope.defaultNodeBgColor;
                         isEnabled = true;
                     }
                     configureToggleIconOnClick(d, isEnabled);
@@ -436,6 +454,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('dy', '-1.18em')
                 .attr('x', function (d) {
                     return getIconPosInterim(d, IconType.ShowLatest);
+                })
+                .style('fill', function (d) {
+                    return d.data.iconColor
+                        ? d.data.iconColor
+                        : classScope.defaultIconColor;
                 })
                 .text(function (d) {
                     return '\uf080';
@@ -450,6 +473,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .attr('dy', '-1.05em')
                 .attr('x', function (d) {
                     return '.20em';
+                })
+                .style('fill', function (d) {
+                    return d.data.iconColor
+                        ? d.data.iconColor
+                        : classScope.defaultIconColor;
                 })
                 .text(function (d) {
                     return getTypeIcon(d);

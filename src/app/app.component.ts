@@ -32,13 +32,17 @@ export class AppComponent implements OnInit {
         console.log(`onShowLatestDataCallack - item: ${item} uri:${item.uri}`);
     };
 
-    COL_LEV_1 = '#1976D2';
-    COL_LEV_2 = '#00BCD4';
-    COL_LEV_3 = '#4CAF50';
-    COL_LEV_4 = '#FFC107';
+    COL_LEV_1 = '#1ab394';
+    COL_LEV_2 = '#1c84c6';
+    COL_LEV_3 = '#f8ac59';
+    COL_LEV_4 = '#ED5565';
     COL_LEV_5 = '#FF5722';
     COL_LEV_6 = '#ff1744';
     COL_LEV_7 = '#f50057';
+
+    
+
+
 
     dataBusScadaDataIssue: object = {
         root: {
@@ -443,6 +447,7 @@ export class AppComponent implements OnInit {
             bodyColour: '#1976D2',
             borderColour: 'red',
             textColor: '#4CAF50',
+            iconColor: '#4CAF50',
             canAdd: false,
             canEdit: false,
             canDelete: false,
@@ -467,6 +472,10 @@ export class AppComponent implements OnInit {
                             description: 'Subscription',
                             type: 'Subscription',
                             typeIcon: '',
+                            bodyColour: '#fff3cd',
+                            borderColour: '#856404',
+                            textColor: '#856404',
+                            iconColor: '#856404',                            
                             enabled: false,
                             canAdd: false,
                             canToggle: true,
