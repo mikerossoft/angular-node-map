@@ -433,122 +433,6 @@ export class AppComponent implements OnInit {
         },
     };
 
-    dataBusIoTData: object = {
-        root: {
-            uri: 'id-1',
-            name: 'LORA',
-            description: 'Stuff',
-            plugin: 'OPC HDA',
-            type: 'Connector',
-            bodyColour: this.COL_LEV_1,
-            borderColour: 'red',
-            canEdit: true,
-            nodes: [
-                {
-                    uri: 'id-1-1',
-                    name: 'W01',
-                    description: 'Stuff',
-                    type: 'Input',
-                    bodyColour: this.COL_LEV_2,
-                    borderColour: '#EEE',
-                    canEdit: true,
-                    nodes: [
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'STUFF',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'LOCAL',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    nodes: [
-                                        {
-                                            uri: 'id-1-1-1',
-                                            name: 'STUFF',
-                                            description: 'Stuff',
-                                            type: 'Subscription',
-                                            bodyColour: this.COL_LEV_5,
-                                            borderColour: '#CCC',
-                                            canEdit: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                },
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                },
-
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    nodes: [
-                                        {
-                                            uri: 'id-1-1-1',
-                                            name: 'STUFF',
-                                            description: 'Stuff',
-                                            type: 'Subscription',
-                                            bodyColour: this.COL_LEV_5,
-                                            borderColour: '#CCC',
-                                            canEdit: false,
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    };
-
     dataWithIssue: Object = {
         root: {
             uri: 'in-random-random',
@@ -558,6 +442,7 @@ export class AppComponent implements OnInit {
             typeIcon: '',
             bodyColour: '#1976D2',
             borderColour: 'red',
+            textColor: '#4CAF50',
             canAdd: false,
             canEdit: false,
             canDelete: false,
@@ -5491,7 +5376,7 @@ export class AppComponent implements OnInit {
     }
 
     private getDataBusJson(): object {
-        return this.largeJson;
+        return this.dataWithIssue;
     }
 
     public onBtnClick() {

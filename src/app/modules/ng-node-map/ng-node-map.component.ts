@@ -39,6 +39,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
     indiciumPrimaryColor = '#1ab394';
     defaultHightLightColor = this.indiciumPrimaryColor;
     defaultNodeBgColor = '#303F9F';
+    defaultTextColor = '#FFF';
     typeIconClass = 'fa icon-white not-clickable type-icon';
     toggleEnableIcon = '\uf204';
     toggleDisableIcon = '\uf205';
@@ -334,6 +335,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 })
                 .attr('text-anchor', function (d) {
                     return 'start';
+                })
+                .style('fill', function (d) {
+                    return d.data.textColor
+                        ? d.data.textColor
+                        : classScope.defaultTextColor;
                 })
                 .text(function (d) {
                     return formatText(d.data.name);
