@@ -1,8 +1,8 @@
 import {
     Component,
     Input,
-    OnChanges,
     OnInit,
+    OnChanges,
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
@@ -104,24 +104,41 @@ export class NodeMapComponent implements OnInit, OnChanges {
         /*
         Calculating the drawing's display area
         */
-        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-            width =
-                140 * depthestLevelHorizontalVal +
-                nodesHorizontalGapSpaceEstimator * 140,
-            height = this.rectHeight * 2 * heightMultiplier;
+        const calculatedHeight = calculateViewHeight(
+            this.rectHeight,
+            heightMultiplier
+        );
+        const calculatedWidth = calculateViewWidth(
+            depthestLevelHorizontalVal,
+            nodesHorizontalGapSpaceEstimator
+        );
+
+        const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+        //if calculatedWidth < calculatedHeight
+        //which means there are a lot of input nodes
+        //use browserHeight instead
+        const width =
+            calculatedWidth < calculatedHeight
+                ? getBrowserWidth()
+                : calculatedWidth;
+        const height = this.rectHeight * 2 * heightMultiplier;
 
         /*
         Diagram window size debugging 
         */
         // console.log(`heightMultiplier: ${heightMultiplier}`);
-        // console.log('width');
-        // console.log(width);
-        // console.log('height');
-        // console.log(height);
+        // console.log(`browserWidth: ${getBrowserWidth()}`);
+        // console.log(`browserHeight: ${getBrowserHeight()}`);
+        // console.log(`calculatedWidth: ${calculatedWidth}`);
+        // console.log(`calculatedHeight: ${calculatedHeight}`);
+        // console.log(`height: ${height}`);
+        // console.log(`width: ${width}`);
 
-        // append the svg object to the body of the page
-        // appends a 'group' element to 'svg'
-        // moves the 'group' element to the top left margin
+        /*
+        append the svg object to the body of the page
+        appends a 'group' element to 'svg'
+        moves the 'group' element to the top left margin
+        */
         var svg = d3
             .select('div#node-map')
             .append('svg')
@@ -542,7 +559,6 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
             function getTypeIcon(d) {
                 const item = getItem(d);
-                console.log(item);
 
                 if (item) {
                     switch (item.type) {
@@ -949,6 +965,40 @@ export class NodeMapComponent implements OnInit, OnChanges {
                         return 0.0;
                 }
             }
+        }
+        //calculateViewWidth
+        function calculateViewWidth(
+            depthestLevelHorizontalVal,
+            nodesHorizontalGapSpaceEstimator
+        ): number {
+            let normal =
+                140 * depthestLevelHorizontalVal +
+                nodesHorizontalGapSpaceEstimator * 140;
+            return normal;
+        }
+        //calculateViewHeight
+        function calculateViewHeight(rectHeight, heightMultiplier): number {
+            return rectHeight * 2 * heightMultiplier;
+        }
+
+        function getBrowserWidth() {
+            return Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth
+            );
+        }
+
+        function getBrowserHeight() {
+            return Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.offsetHeight,
+                document.documentElement.clientHeight
+            );
         }
     }
 }
