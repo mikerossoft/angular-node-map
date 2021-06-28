@@ -259,14 +259,28 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     const item = getItem(d);
                     let returnColor;
                     if (item.enabled !== undefined && !item.enabled) {
-                        //if the item is not enabled, invert style will
-                        //apply for the backgroudn color of the node
-                        // this.style.filter = 'invert(35%)';
+                        //disabled
                         returnColor = classScope.defaultDisabledColor;
                     } else {
-                        returnColor = d.data.bodyColour
-                            ? d.data.bodyColour
-                            : classScope.defaultNodeBgColor;
+                        //eabled
+                        switch (item.type) {
+                            case 'Input':
+                                returnColor =
+                                    item.hasError === true
+                                        ? item.errorColor
+                                        : item.bodyColour;
+                                break;
+                            case 'Output Item':
+                                returnColor =
+                                    item.hasError === true
+                                        ? item.errorColor
+                                        : item.bodyColour;
+                                break;
+                            default:
+                                returnColor = item.bodyColour
+                                    ? item.bodyColour
+                                    : classScope.defaultNodeBgColor;
+                        }
                     }
                     return returnColor;
                 })
@@ -433,16 +447,25 @@ export class NodeMapComponent implements OnInit, OnChanges {
 
                     if (curToggle == classScope.toggleEnableIcon) {
                         this.innerHTML = classScope.toggleDisableIcon;
-                        // nodeContainer.style.filter = 'invert(35%)';
                         nodeContainer.style.fill =
                             classScope.defaultDisabledColor;
                         isEnabled = false;
                     } else {
+                        const item = getItem(d);
                         this.innerHTML = classScope.toggleEnableIcon;
-                        // nodeContainer.style.filter = 'invert(0%)';
-                        nodeContainer.style.fill = d.data.bodyColour
-                            ? d.data.bodyColour
-                            : classScope.defaultNodeBgColor;
+                        let newNodeBGColor;
+                        // nodeContainer.style.filter = 'invert(35%)';
+                        if (item.type == 'Input') {
+                            newNodeBGColor =
+                                item.hasError === true
+                                    ? item.errorColor
+                                    : item.bodyColour;
+                        } else {
+                            newNodeBGColor = item.bodyColour
+                                ? item.bodyColour
+                                : classScope.defaultNodeBgColor;
+                        }
+                        nodeContainer.style.fill = newNodeBGColor;
                         isEnabled = true;
                     }
                     configureToggleIconOnClick(d, isEnabled);
@@ -605,7 +628,7 @@ export class NodeMapComponent implements OnInit, OnChanges {
                         case 'Subscription':
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf0ca';
-                        case 'Subscription Item':
+                        case 'Output Item':
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf08b';
                     }
