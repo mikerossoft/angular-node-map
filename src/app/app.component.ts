@@ -24,8 +24,11 @@ export class AppComponent implements OnInit {
         console.log(`onSelect - item: ${item} uri:${item.uri}`);
     };
 
-    public onToggleCallback = (item?: any, enabled?: boolean): void => {
-        console.log(`onToggleCallback - item: ${item} enabled: ${enabled}}`);
+    public onToggleCallback = (d3DataObj?: any, enabled?: boolean): void => {
+        console.log(
+            `onToggleCallback - item: ${d3DataObj} enabled: ${enabled}}`
+        );
+        console.log(d3DataObj.descendants());
     };
 
     public onShowLatestDataCallack = (item?: any): void => {
@@ -39,400 +42,24 @@ export class AppComponent implements OnInit {
     COL_LEV_5 = '#FF5722';
     COL_LEV_6 = '#ff1744';
     COL_LEV_7 = '#f50057';
+    COL_LEV_1_PRIMARY = '#d4edda';
+    COL_LEV_1_SECONDARY = '#155724';
+    COL_LEV_1_BORDER = '#c3e6cb';
+    COL_LEV_1_BORDER_SELECT = '#155724';
+    COL_LEV_2_PRIMARY = '#d1ecf1';
+    COL_LEV_2_SECONDARY = '#0c5460';
+    COL_LEV_2_BORDER = '#bee5eb';
+    COL_LEV_2_BORDER_SELECT = '#0c5460';
+    COL_LEV_3_PRIMARY = '#fff3cd';
+    COL_LEV_3_SECONDARY = '#856404';
+    COL_LEV_3_BORDER = '#ffeeba';
+    COL_LEV_3_BORDER_SELECT = '#856404';
+    COL_LEV_4_PRIMARY = '#d1ecf1';
+    COL_LEV_4_SECONDARY = '#0c5460';
+    COL_LEV_4_BORDER = '#bee5eb';
+    COL_LEV_4_BORDER_SELECT = '#0c5460';
     ERROR_COLOR = '#f8d7da';
-
-    dataBusScadaDataIssue: object = {
-        root: {
-            uri: 'id-1',
-            name: 'SCADASCADASCADA',
-            description: 'Stuff',
-            plugin: 'OPC HDA',
-            type: 'Connector',
-            typeIcon: '\uf2cd',
-            bodyColour: this.COL_LEV_1,
-            borderColour: '#FFF',
-            canEdit: true,
-            canDelete: true,
-            enabled: true,
-            canAdd: true,
-            canToggle: true,
-            canShowLatest: false,
-            nodes: [
-                {
-                    uri: 'id-1-1',
-                    name: 'POWER',
-                    description: 'Stuff',
-                    type: 'Input',
-                    bodyColour: this.COL_LEV_2,
-                    borderColour: '#EEE',
-                    canEdit: true,
-                    canAdd: false,
-                    canDelete: false,
-                    canToggle: false,
-                    canShowLatest: true,
-                    nodes: [
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'AZURE',
-                            description: 'Stuff',
-                            type: 'SubscriptionSubscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            canAdd: true,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    canAdd: true,
-                                    canDelete: true,
-                                    nodes: [
-                                        {
-                                            uri: 'id-1-1-1',
-                                            name: 'STUFF',
-                                            description: 'Stuff',
-                                            type: 'Subscription',
-                                            bodyColour: this.COL_LEV_5,
-                                            borderColour: '#CCC',
-                                            canEdit: true,
-                                            canAdd: false,
-                                            canDelete: true,
-                                            nodes: [
-                                                {
-                                                    uri: 'id-1-1-1',
-                                                    name: 'STUFF',
-                                                    description: 'Stuff',
-                                                    type: 'Subscription',
-                                                    bodyColour: this.COL_LEV_6,
-                                                    borderColour: '#CCC',
-                                                    canEdit: false,
-                                                    canAdd: false,
-                                                    canDelete: false,
-                                                    nodes: [
-                                                        {
-                                                            uri: 'id-1-1-1',
-                                                            name: 'STUFF',
-                                                            description:
-                                                                'Stuff',
-                                                            type: 'Subscription',
-                                                            bodyColour:
-                                                                this.COL_LEV_7,
-                                                            borderColour:
-                                                                '#CCC',
-                                                            canEdit: false,
-                                                            canAdd: false,
-                                                            canDelete: false,
-                                                        },
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'LOCAL',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: true,
-                            canAdd: true,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'AWS',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: true,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'GCP',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'DIGITAL OCEAN',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: '#CCC',
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: '#CCC',
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    };
-
-    dataBusScadaData: object = {
-        root: {
-            uri: 'id-1',
-            name: 'SCADA Items Connector SCADA Items Connector SCADA Items Connector',
-            description: 'Stuff',
-            plugin: 'OPC HDA',
-            type: 'Connector',
-            bodyColour: this.COL_LEV_1,
-            borderColour: this.COL_LEV_2,
-            canEdit: true,
-            canDelete: true,
-            canAdd: false,
-            nodes: [
-                {
-                    uri: 'id-1-1',
-                    name: 'POWER',
-                    description: 'Stuff',
-                    type: 'Input',
-                    bodyColour: this.COL_LEV_2,
-                    borderColour: this.COL_LEV_3,
-                    canEdit: true,
-                    canAdd: false,
-                    canDelete: false,
-                    nodes: [
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'AZURE',
-                            description: 'Stuff',
-                            type: 'SubscriptionSubscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: this.COL_LEV_4,
-                            canEdit: false,
-                            canAdd: false,
-                            canToggle: true,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: this.COL_LEV_4,
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canToggle: true,
-                                    canDelete: true,
-                                    nodes: [
-                                        {
-                                            uri: 'id-1-1-1',
-                                            name: 'STUFF',
-                                            description: 'Stuff',
-                                            type: 'Subscription',
-                                            bodyColour: this.COL_LEV_5,
-                                            borderColour: this.COL_LEV_6,
-                                            canEdit: true,
-                                            canAdd: false,
-                                            canDelete: true,
-                                            nodes: [
-                                                {
-                                                    uri: 'id-1-1-1',
-                                                    name: 'STUFF',
-                                                    description: 'Stuff',
-                                                    type: 'Subscription',
-                                                    bodyColour: this.COL_LEV_6,
-                                                    borderColour:
-                                                        this.COL_LEV_7,
-                                                    canEdit: false,
-                                                    canAdd: false,
-                                                    canDelete: false,
-                                                    nodes: [
-                                                        {
-                                                            uri: 'id-1-1-1',
-                                                            name: 'STUFF',
-                                                            description:
-                                                                'Stuff',
-                                                            type: 'Subscription',
-                                                            bodyColour:
-                                                                this.COL_LEV_7,
-                                                            borderColour:
-                                                                this.COL_LEV_1,
-                                                            canEdit: false,
-                                                            canAdd: false,
-                                                            canDelete: false,
-                                                        },
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'LOCAL',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: this.COL_LEV_4,
-                            canEdit: true,
-                            canAdd: true,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: this.COL_LEV_5,
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'AWS',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: this.COL_LEV_4,
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: true,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: this.COL_LEV_5,
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'GCP',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: this.COL_LEV_4,
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: this.COL_LEV_5,
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'id-1-1-1',
-                            name: 'DIGITAL OCEAN',
-                            description: 'Stuff',
-                            type: 'Subscription',
-                            bodyColour: this.COL_LEV_3,
-                            borderColour: this.COL_LEV_4,
-                            canEdit: false,
-                            canAdd: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'id-1-1-1',
-                                    name: 'STUFF',
-                                    description: 'Stuff',
-                                    type: 'Subscription',
-                                    bodyColour: this.COL_LEV_4,
-                                    borderColour: this.COL_LEV_5,
-                                    canEdit: false,
-                                    canAdd: false,
-                                    canDelete: false,
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    };
+    ERROR_BORDER = '#721c24';
 
     dataWithIssue: Object = {
         root: {
@@ -441,142 +68,575 @@ export class AppComponent implements OnInit {
             plugin: 'Indicium.DataBus.Plugins.DataSources.RandomPlugin',
             type: 'Connector',
             typeIcon: '',
-            bodyColour: '#1976D2',
-            borderColour: 'red',
-            textColor: '#4CAF50',
-            iconColor: '#4CAF50',
+            bodyColour: '#d4edda',
+            textColor: '#155724',
+            iconColor: '#155724',
+            borderColour: '#c3e6cb',
+            borderSelectColor: '#155724',
+            enabled: true,
             canAdd: false,
             canEdit: false,
             canDelete: false,
+            canToggle: false,
+            canShowLatest: false,
             nodes: [
                 {
-                    uri: 'in-random-random-template',
-                    name: 'Template',
+                    uri: 'in-random-random-log',
+                    name: 'Log',
                     description: 'Input',
+                    source: {
+                        version: 0,
+                        uri: 'in-random-random-log',
+                        dataSourceUri: 'in-random-random',
+                        name: 'Log',
+                        description: 'LogDESC',
+                        lastEventTime: '2021-06-29T12:00:22.6886689+10:00',
+                        lastDataTime: '2021-06-29T12:00:21.0747596+10:00',
+                        hasError: false,
+                        errorCount: 0,
+                        hasSubError: true,
+                        enabled: true,
+                        isTemplate: false,
+                        mode: 'Manual',
+                        autoSizePeriod: false,
+                        autoRunOnWrite: false,
+                        config: [],
+                        metaData: [],
+                        variables: [],
+                        subscriptions: [
+                            {
+                                isTemplate: false,
+                                uri: 'in-random-random-log-log',
+                                sourceUri: 'in-random-random-log',
+                                name: 'Log',
+                                enabled: true,
+                                enforcePersistence: false,
+                                timeout: '00:01:00',
+                                timeoutSeconds: 60,
+                                hasError: false,
+                                infoMessage: 'Pipeline Processed',
+                                errorCount: 0,
+                                lastEventTime:
+                                    '2021-06-29T15:22:16.8254457+10:00',
+                                hasSubError: true,
+                                items: [
+                                    {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-log-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254582+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.825463+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                    {
+                                        name: 'ConsolePipelinePlugin',
+                                        uri: 'in-random-random-log-log-consolepipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254716+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254729+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                    {
+                                        name: 'PythonPlugin',
+                                        uri: 'in-random-random-log-log-pythonplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.IronPython.PythonPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254737+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254764+10:00',
+                                        hasError: true,
+                                        errorMessage: '',
+                                        errorCount: 1,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'ExecuteScript',
+                                                value: 'import api,statefromjnobou System import DateTime,String,Mathfrom System.IO import *from System.Diagnostics import Processfrom Indicium.DataBus.Common.Data import *class Plugin:        def __init__(self):        self.heartbeat = 0    # This function is execute when the plugin is excuted    # @instance - this is the JobInstance object containing details about what is being processed    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed    # return the event object with any changes you have made to it    def execute(self, instance, event):        # put your logic her        self.heartbeat += 1        return event',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'ReadScript',
+                                                value: 'import api,state,logger\r\n\r\nfrom System import DateTime,String,Math\r\nfrom System.IO import *\r\nfrom System.Diagnostics import Process\r\nfrom Indicium.DataBus.Common.Data import *\r\n\r\n\r\nclass Plugin:\r\n    # keep track of how many times the plugin has been invoked\r\n    heartbeat = 0\r\n\r\n    def __init__(self):\r\n        #logger.Info("PythonPlugin Initialised")\r\n        self.heartbeat = 0;\r\n        pass\r\n\r\n    # This function is execute when the plugin is excuted\r\n    # @instance - this is the JobInstance object containing details about what is being processed\r\n    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed\r\n    # return the event object with any changes you have made to it\r\n    def read(self, instance):\r\n        # put your logic here\r\n        self.heartbeat += 1\r\n        return PointEvent(DateTime.Now, self.heartbeat)\r\n',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                    },
+                                    {
+                                        name: 'AXPlusBPlugin',
+                                        uri: 'in-random-random-log-log-axplusbplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254771+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                value: '321',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                value: '44',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                ],
+                            },
+                            {
+                                isTemplate: false,
+                                uri: 'in-random-random-log-clone',
+                                sourceUri: 'in-random-random-log',
+                                name: 'clone',
+                                enabled: true,
+                                enforcePersistence: false,
+                                timeout: '00:01:00',
+                                timeoutSeconds: 60,
+                                hasError: false,
+                                infoMessage: 'Pipeline Processed',
+                                errorCount: 0,
+                                lastEventTime:
+                                    '2021-06-29T15:22:16.8254802+10:00',
+                                hasSubError: false,
+                                items: [
+                                    {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-clone-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254812+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254819+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                    },
+                                    {
+                                        name: 'AXPlusBPlugin',
+                                        uri: 'in-random-random-log-clone-axplusbplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254826+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254833+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                value: '5',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                value: '0',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                    },
+                                    {
+                                        name: 'ConsolePipelinePlugin',
+                                        uri: 'in-random-random-log-clone-consolepipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254839+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254849+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
                     type: 'Input',
                     typeIcon: '',
-                    borderColour: 'red',
-                    errorColor: this.ERROR_COLOR,
+                    bodyColour: '#d1ecf1',
+                    textColor: '#0c5460',
+                    iconColor: '#0c5460',
+                    borderColour: '#bee5eb',
+                    borderSelectColor: '#0c5460',
+                    errorColor: '#f8d7da',
+                    errorBorder: '#491217',
                     enabled: true,
+                    hasError: false,
                     canAdd: false,
-                    canToggle: true,
-                    canShowLatest: false,
                     canEdit: true,
                     canDelete: false,
-                    hasError: true,
+                    canToggle: true,
+                    canShowLatest: false,
                     nodes: [
                         {
-                            uri: 'in-random-random-template-test',
-                            name: 'Test',
+                            uri: 'in-random-random-log-log',
+                            name: 'Log',
                             description: 'Subscription',
+                            source: {
+                                isTemplate: false,
+                                uri: 'in-random-random-log-log',
+                                sourceUri: 'in-random-random-log',
+                                name: 'Log',
+                                enabled: true,
+                                enforcePersistence: false,
+                                timeout: '00:01:00',
+                                timeoutSeconds: 60,
+                                hasError: false,
+                                infoMessage: 'Pipeline Processed',
+                                errorCount: 0,
+                                lastEventTime:
+                                    '2021-06-29T15:22:16.8254457+10:00',
+                                hasSubError: true,
+                                items: [
+                                    {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-log-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254582+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.825463+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                    {
+                                        name: 'ConsolePipelinePlugin',
+                                        uri: 'in-random-random-log-log-consolepipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254716+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254729+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                    {
+                                        name: 'PythonPlugin',
+                                        uri: 'in-random-random-log-log-pythonplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.IronPython.PythonPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254737+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254764+10:00',
+                                        hasError: true,
+                                        errorMessage: '',
+                                        errorCount: 1,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'ExecuteScript',
+                                                value: 'import api,statefromjnobou System import DateTime,String,Mathfrom System.IO import *from System.Diagnostics import Processfrom Indicium.DataBus.Common.Data import *class Plugin:        def __init__(self):        self.heartbeat = 0    # This function is execute when the plugin is excuted    # @instance - this is the JobInstance object containing details about what is being processed    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed    # return the event object with any changes you have made to it    def execute(self, instance, event):        # put your logic her        self.heartbeat += 1        return event',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'ReadScript',
+                                                value: 'import api,state,logger\r\n\r\nfrom System import DateTime,String,Math\r\nfrom System.IO import *\r\nfrom System.Diagnostics import Process\r\nfrom Indicium.DataBus.Common.Data import *\r\n\r\n\r\nclass Plugin:\r\n    # keep track of how many times the plugin has been invoked\r\n    heartbeat = 0\r\n\r\n    def __init__(self):\r\n        #logger.Info("PythonPlugin Initialised")\r\n        self.heartbeat = 0;\r\n        pass\r\n\r\n    # This function is execute when the plugin is excuted\r\n    # @instance - this is the JobInstance object containing details about what is being processed\r\n    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed\r\n    # return the event object with any changes you have made to it\r\n    def read(self, instance):\r\n        # put your logic here\r\n        self.heartbeat += 1\r\n        return PointEvent(DateTime.Now, self.heartbeat)\r\n',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                    },
+                                    {
+                                        name: 'AXPlusBPlugin',
+                                        uri: 'in-random-random-log-log-axplusbplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254771+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                value: '321',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                value: '44',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
+                                ],
+                            },
                             type: 'Subscription',
                             typeIcon: '',
                             bodyColour: '#fff3cd',
-                            borderColour: '#856404',
                             textColor: '#856404',
                             iconColor: '#856404',
-                            enabled: false,
-                            canAdd: false,
-                            canToggle: true,
-                            canShowLatest: true,
-                            canEdit: true,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'in-random-random-template-test-loggingpipelineplugin-0',
-                                    name: 'LoggingPipelinePlugin',
-                                    description: 'Output Item',
-                                    type: 'Output Item',
-                                    typeIcon: '',
-                                    bodyColour: '#FFC107',
-                                    canAdd: false,
-                                    canEdit: false,
-                                    canDelete: false,
-                                    nodes: [],
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    uri: 'in-random-random-test1',
-                    name: 'Test 1',
-                    description: 'Input',
-                    type: 'Input',
-                    typeIcon: '',
-                    bodyColour: '#00BCD4',
-                    borderColour: 'red',
-                    enabled: false,
-                    canToggle: true,
-                    canAdd: false,
-                    canEdit: false,
-                    canDelete: false,
-                    nodes: [
-                        {
-                            uri: 'in-random-random-test1-testimage',
-                            name: 'Test Image',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
+                            borderColour: '#ffeeba',
+                            borderSelectColor: '#856404',
+                            enabled: true,
                             canAdd: false,
                             canEdit: false,
                             canDelete: false,
+                            canToggle: true,
+                            canShowLatest: false,
                             nodes: [
                                 {
-                                    uri: 'in-random-random-test1-testimage-pythonplugin-0',
-                                    name: 'PythonPlugin',
+                                    uri: 'in-random-random-log-log-loggingpipelineplugin-0',
+                                    name: 'LoggingPipelinePlugin',
+                                    source: {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-log-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254582+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.825463+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                        isValid: true,
+                                        errorMessage: '',
+                                    },
                                     description: 'Output Item',
                                     type: 'Output Item',
                                     typeIcon: '',
-                                    bodyColour: '#FFC107',
-                                    borderColour: 'red',
-                                    errorColor: this.ERROR_COLOR,
-                                    hasError: true,
+                                    bodyColour: '#d1ecf1',
+                                    textColor: '#0c5460',
+                                    iconColor: '#0c5460',
+                                    borderColour: '#bee5eb',
+                                    borderSelectColor: '#0c5460',
+                                    errorColor: '#f8d7da',
+                                    errorBorder: '#491217',
+                                    enabled: true,
+                                    hasError: false,
                                     canAdd: false,
-                                    canEdit: false,
+                                    canEdit: true,
                                     canDelete: false,
+                                    canToggle: false,
+                                    canShowLatest: true,
                                     nodes: [
                                         {
-                                            uri: 'in-random-random-test1-testimage-loggingpipelineplugin-0',
-                                            name: 'LoggingPipelinePlugin',
+                                            uri: 'in-random-random-log-log-consolepipelineplugin-0',
+                                            name: 'ConsolePipelinePlugin',
+                                            source: {
+                                                name: 'ConsolePipelinePlugin',
+                                                uri: 'in-random-random-log-log-consolepipelineplugin-0',
+                                                pluginType:
+                                                    'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                                createTime:
+                                                    '2021-06-29T15:22:16.8254716+10:00',
+                                                lastEventTime:
+                                                    '2021-06-29T15:22:16.8254729+10:00',
+                                                hasError: false,
+                                                errorCount: 0,
+                                                infoMessage: 'Execute Called',
+                                                config: [
+                                                    {
+                                                        key: 'A',
+                                                        encrypted: false,
+                                                    },
+                                                    {
+                                                        key: 'B',
+                                                        encrypted: false,
+                                                    },
+                                                ],
+                                                variables: [],
+                                                isValid: true,
+                                                errorMessage: '',
+                                            },
                                             description: 'Output Item',
                                             type: 'Output Item',
                                             typeIcon: '',
-                                            bodyColour: '#FFC107',
-                                            borderColour: 'red',
+                                            bodyColour: '#d1ecf1',
+                                            textColor: '#0c5460',
+                                            iconColor: '#0c5460',
+                                            borderColour: '#bee5eb',
+                                            borderSelectColor: '#0c5460',
+                                            errorColor: '#f8d7da',
+                                            errorBorder: '#491217',
+                                            enabled: true,
+                                            hasError: false,
                                             canAdd: false,
-                                            canEdit: false,
+                                            canEdit: true,
                                             canDelete: false,
+                                            canToggle: false,
+                                            canShowLatest: true,
                                             nodes: [
                                                 {
-                                                    uri: 'in-random-random-test1-testimage-azurecomputervisionplugin-0',
-                                                    name: 'Azure Computer Vision Plugin',
-                                                    description:
-                                                        'Output Item',
+                                                    uri: 'in-random-random-log-log-pythonplugin-0',
+                                                    name: 'PythonPlugin',
+                                                    source: {
+                                                        name: 'PythonPlugin',
+                                                        uri: 'in-random-random-log-log-pythonplugin-0',
+                                                        pluginType:
+                                                            'Indicium.DataBus.IronPython.PythonPlugin',
+                                                        createTime:
+                                                            '2021-06-29T15:22:16.8254737+10:00',
+                                                        lastEventTime:
+                                                            '2021-06-29T15:22:16.8254764+10:00',
+                                                        hasError: true,
+                                                        errorMessage: '',
+                                                        errorCount: 1,
+                                                        infoMessage:
+                                                            'Execute Called',
+                                                        config: [
+                                                            {
+                                                                key: 'ExecuteScript',
+                                                                value: 'import api,statefromjnobou System import DateTime,String,Mathfrom System.IO import *from System.Diagnostics import Processfrom Indicium.DataBus.Common.Data import *class Plugin:        def __init__(self):        self.heartbeat = 0    # This function is execute when the plugin is excuted    # @instance - this is the JobInstance object containing details about what is being processed    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed    # return the event object with any changes you have made to it    def execute(self, instance, event):        # put your logic her        self.heartbeat += 1        return event',
+                                                                encrypted:
+                                                                    false,
+                                                            },
+                                                            {
+                                                                key: 'ReadScript',
+                                                                value: 'import api,state,logger\r\n\r\nfrom System import DateTime,String,Math\r\nfrom System.IO import *\r\nfrom System.Diagnostics import Process\r\nfrom Indicium.DataBus.Common.Data import *\r\n\r\n\r\nclass Plugin:\r\n    # keep track of how many times the plugin has been invoked\r\n    heartbeat = 0\r\n\r\n    def __init__(self):\r\n        #logger.Info("PythonPlugin Initialised")\r\n        self.heartbeat = 0;\r\n        pass\r\n\r\n    # This function is execute when the plugin is excuted\r\n    # @instance - this is the JobInstance object containing details about what is being processed\r\n    # @event -    this is the BaseEvent (PointEvent/SeriesEvent) object containing the data to be processed\r\n    # return the event object with any changes you have made to it\r\n    def read(self, instance):\r\n        # put your logic here\r\n        self.heartbeat += 1\r\n        return PointEvent(DateTime.Now, self.heartbeat)\r\n',
+                                                                encrypted:
+                                                                    false,
+                                                            },
+                                                        ],
+                                                        variables: [],
+                                                        isValid: true,
+                                                    },
+                                                    description: 'Output Item',
                                                     type: 'Output Item',
                                                     typeIcon: '',
-                                                    bodyColour: '#FFC107',
-                                                    borderColour: 'red',
+                                                    bodyColour: '#d1ecf1',
+                                                    textColor: '#0c5460',
+                                                    iconColor: '#0c5460',
+                                                    borderColour: '#bee5eb',
+                                                    borderSelectColor:
+                                                        '#0c5460',
+                                                    errorColor: '#f8d7da',
+                                                    errorBorder: '#491217',
+                                                    enabled: true,
+                                                    hasError: true,
                                                     canAdd: false,
-                                                    canEdit: false,
+                                                    canEdit: true,
                                                     canDelete: false,
+                                                    canToggle: false,
+                                                    canShowLatest: true,
                                                     nodes: [
                                                         {
-                                                            uri: 'in-random-random-test1-testimage-localdbplugin-0',
-                                                            name: 'LocalDbPlugin',
+                                                            uri: 'in-random-random-log-log-axplusbplugin-0',
+                                                            name: 'AXPlusBPlugin',
+                                                            source: {
+                                                                name: 'AXPlusBPlugin',
+                                                                uri: 'in-random-random-log-log-axplusbplugin-0',
+                                                                pluginType:
+                                                                    'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                                                createTime:
+                                                                    '2021-06-29T15:22:16.8254771+10:00',
+                                                                hasError: false,
+                                                                errorCount: 0,
+                                                                config: [
+                                                                    {
+                                                                        key: 'A',
+                                                                        value: '321',
+                                                                        encrypted:
+                                                                            false,
+                                                                    },
+                                                                    {
+                                                                        key: 'B',
+                                                                        value: '44',
+                                                                        encrypted:
+                                                                            false,
+                                                                    },
+                                                                ],
+                                                                variables: [],
+                                                                isValid: true,
+                                                                errorMessage:
+                                                                    '',
+                                                            },
                                                             description:
                                                                 'Output Item',
                                                             type: 'Output Item',
                                                             typeIcon: '',
                                                             bodyColour:
-                                                                '#FFC107',
+                                                                '#d1ecf1',
+                                                            textColor:
+                                                                '#0c5460',
+                                                            iconColor:
+                                                                '#0c5460',
                                                             borderColour:
-                                                                '#FFF',
+                                                                '#bee5eb',
+                                                            borderSelectColor:
+                                                                '#0c5460',
+                                                            errorColor:
+                                                                '#f8d7da',
+                                                            errorBorder:
+                                                                '#491217',
+                                                            enabled: true,
+                                                            hasError: false,
                                                             canAdd: false,
-                                                            canEdit: false,
+                                                            canEdit: true,
                                                             canDelete: false,
+                                                            canToggle: false,
+                                                            canShowLatest: true,
                                                             nodes: [],
                                                         },
                                                     ],
@@ -587,207 +647,223 @@ export class AppComponent implements OnInit {
                                 },
                             ],
                         },
-                    ],
-                },
-                {
-                    uri: 'in-random-random-test2',
-                    name: 'Test 2',
-                    description: 'Input',
-                    type: 'Input',
-                    typeIcon: '',
-                    bodyColour: '#00BCD4',
-                    borderColour: 'red',
-                    canAdd: false,
-                    canEdit: false,
-                    canDelete: false,
-                    nodes: [
                         {
-                            uri: 'in-random-random-test3-test',
-                            name: 'Test',
+                            uri: 'in-random-random-log-clone',
+                            name: 'clone',
                             description: 'Subscription',
+                            source: {
+                                isTemplate: false,
+                                uri: 'in-random-random-log-clone',
+                                sourceUri: 'in-random-random-log',
+                                name: 'clone',
+                                enabled: true,
+                                enforcePersistence: false,
+                                timeout: '00:01:00',
+                                timeoutSeconds: 60,
+                                hasError: false,
+                                infoMessage: 'Pipeline Processed',
+                                errorCount: 0,
+                                lastEventTime:
+                                    '2021-06-29T15:22:16.8254802+10:00',
+                                hasSubError: false,
+                                items: [
+                                    {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-clone-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254812+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254819+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                    },
+                                    {
+                                        name: 'AXPlusBPlugin',
+                                        uri: 'in-random-random-log-clone-axplusbplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254826+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254833+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [
+                                            {
+                                                key: 'A',
+                                                value: '5',
+                                                encrypted: false,
+                                            },
+                                            {
+                                                key: 'B',
+                                                value: '0',
+                                                encrypted: false,
+                                            },
+                                        ],
+                                        variables: [],
+                                    },
+                                    {
+                                        name: 'ConsolePipelinePlugin',
+                                        uri: 'in-random-random-log-clone-consolepipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254839+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254849+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                    },
+                                ],
+                            },
                             type: 'Subscription',
                             typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
+                            bodyColour: '#fff3cd',
+                            textColor: '#856404',
+                            iconColor: '#856404',
+                            borderColour: '#ffeeba',
+                            borderSelectColor: '#856404',
+                            enabled: true,
                             canAdd: false,
                             canEdit: false,
                             canDelete: false,
+                            canToggle: true,
+                            canShowLatest: false,
                             nodes: [
                                 {
-                                    uri: 'in-random-random-test2-test-consolepipelineplugin-0',
-                                    name: 'ConsolePipelinePlugin',
-                                    description: 'Output Item',
-                                    type: 'Output Item',
-                                    typeIcon: '',
-                                    bodyColour: '#FFC107',
-                                    borderColour: 'red',
-                                    canAdd: false,
-                                    canEdit: false,
-                                    canDelete: false,
-                                    nodes: [
-                                        {
-                                            uri: 'in-random-random-test2-test-tablestorageplugin-0',
-                                            name: 'TableStoragePlugin',
-                                            description: 'Output Item',
-                                            type: 'Output Item',
-                                            typeIcon: '',
-                                            bodyColour: '#FFC107',
-                                            borderColour: 'red',
-                                            canAdd: false,
-                                            canEdit: false,
-                                            canDelete: false,
-                                            nodes: [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'in-random-random-test3-test2',
-                            name: 'TEST2',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
-                            nodes: [],
-                        },
-                    ],
-                },
-                {
-                    uri: 'in-random-random-test3',
-                    name: 'Test 3',
-                    description: 'Input',
-                    type: 'Input',
-                    typeIcon: '',
-                    bodyColour: '#00BCD4',
-                    borderColour: 'red',
-                    canAdd: false,
-                    canEdit: false,
-                    canDelete: false,
-                    nodes: [
-                        {
-                            uri: 'in-random-random-test3-test',
-                            name: 'Test',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'in-random-random-test3-test-consolepipelineplugin-0',
-                                    name: 'ConsolePipelinePlugin',
-                                    description: 'Output Item',
-                                    type: 'Output Item',
-                                    typeIcon: '',
-                                    bodyColour: '#FFC107',
-                                    borderColour: 'red',
-                                    canAdd: false,
-                                    canEdit: false,
-                                    canDelete: false,
-                                    nodes: [
-                                        {
-                                            uri: 'in-random-random-test3-test-tablestorageplugin-0',
-                                            name: 'TableStoragePlugin',
-                                            description: 'Output Item',
-                                            type: 'Output Item',
-                                            typeIcon: '',
-                                            bodyColour: '#FFC107',
-                                            borderColour: 'red',
-                                            canAdd: false,
-                                            canEdit: false,
-                                            canDelete: false,
-                                            nodes: [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            uri: 'in-random-random-test3-test2',
-                            name: 'TEST2',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
-                            nodes: [],
-                        },
-                    ],
-                },
-                {
-                    uri: 'in-random-random-test4',
-                    name: 'Test 4',
-                    description: 'Input',
-                    type: 'Input',
-                    typeIcon: '',
-                    bodyColour: '#00BCD4',
-                    borderColour: 'red',
-                    canAdd: false,
-                    canEdit: false,
-                    canDelete: false,
-                    nodes: [
-                        {
-                            uri: 'in-random-random-test4-logger',
-                            name: 'Logger',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
-                            nodes: [],
-                        },
-                    ],
-                },
-                {
-                    uri: 'in-random-random-test5',
-                    name: 'Test 5',
-                    description: 'Input',
-                    type: 'Input',
-                    typeIcon: '',
-                    bodyColour: '#00BCD4',
-                    borderColour: 'red',
-                    canAdd: false,
-                    canEdit: false,
-                    canDelete: false,
-                    nodes: [
-                        {
-                            uri: 'in-random-random-test5-logger',
-                            name: 'Logger',
-                            description: 'Subscription',
-                            type: 'Subscription',
-                            typeIcon: '',
-                            bodyColour: '#4CAF50',
-                            borderColour: 'red',
-                            canAdd: false,
-                            canEdit: false,
-                            canDelete: false,
-                            nodes: [
-                                {
-                                    uri: 'in-random-random-test5-logger-loggingpipelineplugin-0',
+                                    uri: 'in-random-random-log-clone-loggingpipelineplugin-0',
                                     name: 'LoggingPipelinePlugin',
+                                    source: {
+                                        name: 'LoggingPipelinePlugin',
+                                        uri: 'in-random-random-log-clone-loggingpipelineplugin-0',
+                                        pluginType:
+                                            'Indicium.DataBus.Plugins.Pipelines.LoggingPipelinePlugin',
+                                        createTime:
+                                            '2021-06-29T15:22:16.8254812+10:00',
+                                        lastEventTime:
+                                            '2021-06-29T15:22:16.8254819+10:00',
+                                        hasError: false,
+                                        errorCount: 0,
+                                        infoMessage: 'Execute Called',
+                                        config: [],
+                                        variables: [],
+                                    },
                                     description: 'Output Item',
                                     type: 'Output Item',
                                     typeIcon: '',
-                                    bodyColour: '#FFC107',
-                                    borderColour: 'red',
+                                    bodyColour: '#d1ecf1',
+                                    textColor: '#0c5460',
+                                    iconColor: '#0c5460',
+                                    borderColour: '#bee5eb',
+                                    borderSelectColor: '#0c5460',
+                                    errorColor: '#f8d7da',
+                                    errorBorder: '#491217',
+                                    enabled: true,
+                                    hasError: false,
                                     canAdd: false,
-                                    canEdit: false,
+                                    canEdit: true,
                                     canDelete: false,
-                                    nodes: [],
+                                    canToggle: false,
+                                    canShowLatest: true,
+                                    nodes: [
+                                        {
+                                            uri: 'in-random-random-log-clone-axplusbplugin-0',
+                                            name: 'AXPlusBPlugin',
+                                            source: {
+                                                name: 'AXPlusBPlugin',
+                                                uri: 'in-random-random-log-clone-axplusbplugin-0',
+                                                pluginType:
+                                                    'Indicium.DataBus.Plugins.Pipelines.AXPlusBPlugin',
+                                                createTime:
+                                                    '2021-06-29T15:22:16.8254826+10:00',
+                                                lastEventTime:
+                                                    '2021-06-29T15:22:16.8254833+10:00',
+                                                hasError: false,
+                                                errorCount: 0,
+                                                infoMessage: 'Execute Called',
+                                                config: [
+                                                    {
+                                                        key: 'A',
+                                                        value: '5',
+                                                        encrypted: false,
+                                                    },
+                                                    {
+                                                        key: 'B',
+                                                        value: '0',
+                                                        encrypted: false,
+                                                    },
+                                                ],
+                                                variables: [],
+                                            },
+                                            description: 'Output Item',
+                                            type: 'Output Item',
+                                            typeIcon: '',
+                                            bodyColour: '#d1ecf1',
+                                            textColor: '#0c5460',
+                                            iconColor: '#0c5460',
+                                            borderColour: '#bee5eb',
+                                            borderSelectColor: '#0c5460',
+                                            errorColor: '#f8d7da',
+                                            errorBorder: '#491217',
+                                            enabled: true,
+                                            hasError: false,
+                                            canAdd: false,
+                                            canEdit: true,
+                                            canDelete: false,
+                                            canToggle: false,
+                                            canShowLatest: true,
+                                            nodes: [
+                                                {
+                                                    uri: 'in-random-random-log-clone-consolepipelineplugin-0',
+                                                    name: 'ConsolePipelinePlugin',
+                                                    source: {
+                                                        name: 'ConsolePipelinePlugin',
+                                                        uri: 'in-random-random-log-clone-consolepipelineplugin-0',
+                                                        pluginType:
+                                                            'Indicium.DataBus.Plugins.Pipelines.ConsolePipelinePlugin',
+                                                        createTime:
+                                                            '2021-06-29T15:22:16.8254839+10:00',
+                                                        lastEventTime:
+                                                            '2021-06-29T15:22:16.8254849+10:00',
+                                                        hasError: false,
+                                                        errorCount: 0,
+                                                        infoMessage:
+                                                            'Execute Called',
+                                                        config: [],
+                                                        variables: [],
+                                                    },
+                                                    description: 'Output Item',
+                                                    type: 'Output Item',
+                                                    typeIcon: '',
+                                                    bodyColour: '#d1ecf1',
+                                                    textColor: '#0c5460',
+                                                    iconColor: '#0c5460',
+                                                    borderColour: '#bee5eb',
+                                                    borderSelectColor:
+                                                        '#0c5460',
+                                                    errorColor: '#f8d7da',
+                                                    errorBorder: '#491217',
+                                                    enabled: true,
+                                                    hasError: false,
+                                                    canAdd: false,
+                                                    canEdit: true,
+                                                    canDelete: false,
+                                                    canToggle: false,
+                                                    canShowLatest: true,
+                                                    nodes: [],
+                                                },
+                                            ],
+                                        },
+                                    ],
                                 },
                             ],
                         },
@@ -5395,6 +5471,6 @@ export class AppComponent implements OnInit {
     }
 
     private getDataBus2Json(): object {
-        return this.dataBusScadaData;
+        return this.largeJson;
     }
 }

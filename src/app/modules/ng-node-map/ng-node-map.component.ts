@@ -17,6 +17,13 @@ enum IconType {
     ShowLatest,
 }
 
+enum NodeType {
+    Connector = 'Connector',
+    Input = 'Input',
+    Subscription = 'Subscription',
+    OutputItem = 'Output Item',
+}
+
 @Component({
     selector: 'app-node-map',
     templateUrl: './ng-node-map.component.html',
@@ -35,16 +42,19 @@ export class NodeMapComponent implements OnInit, OnChanges {
     rectHeight: number = 0;
     rectWidth: number = 0;
     fontAwesomeClass = 'fa node-icon';
+    fontAwesomeToggleClass = 'fa node-icon toggle-icon';
     hideIconClass = 'hide-icon';
     indiciumPrimaryColor = '#1ab394';
     defaultHightLightColor = this.indiciumPrimaryColor;
     defaultNodeBgColor = '#303F9F';
     defaultTextColor = '#FFF';
     defaultIconColor = '#FFF';
-    defaultDisabledColor = 'grey';
+    defaultDisabledColor = '#f3f3f4';
     typeIconClass = 'fa icon-white not-clickable type-icon';
-    toggleEnableIcon = '\uf204';
-    toggleDisableIcon = '\uf205';
+    highlightClassName = 'node_onselect_highlight';
+    unhighlightClassName = 'node_unselect_highlight';
+    toggleEnableIcon = '\uf205';
+    toggleDisableIcon = '\uf204';
 
     constructor() {
         this.rectHeight = 65;
@@ -236,11 +246,23 @@ export class NodeMapComponent implements OnInit, OnChanges {
             var prevent = false;
             const delay = 200;
             var timer: any;
-            // let rectWidth = 120,
-            //     rectHeight = 65;
             nodeEnter
                 .append('rect')
-                .attr('class', 'node')
+                .attr('class', function (d) {
+                    const item = getItem(d);
+
+                    if (item.enabled) {
+                        this.style.stroke = item.borderSelectColor
+                            ? item.borderSelectColor
+                            : classScope.defaultHightLightColor;
+                    } else {
+                        this.style.stroke = item.borderColor
+                            ? item.borderColor
+                            : classScope.defaultHightLightColor;
+                    }
+
+                    return `node ${classScope.unhighlightClassName}`;
+                })
                 .attr('width', classScope.rectWidth)
                 .attr(
                     'height',
@@ -255,6 +277,10 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 // .attr('y', rectHeight * -1)
                 //add the radius to the node border's edges
                 .attr('rx', '5')
+                .attr('id', function (d) {
+                    const item = getItem(d);
+                    return item.uri ? item.uri : 'unknown';
+                })
                 .style('fill', function (d) {
                     const item = getItem(d);
                     let returnColor;
@@ -264,47 +290,54 @@ export class NodeMapComponent implements OnInit, OnChanges {
                     } else {
                         //eabled
                         switch (item.type) {
-                            case 'Input':
+                            case NodeType.Input:
                                 returnColor =
                                     item.hasError === true
                                         ? item.errorColor
                                         : item.bodyColour;
+
+                                this.style.stroke =
+                                    item.hasError === true
+                                        ? item.errorBorder
+                                        : item.borderColour;
                                 break;
-                            case 'Output Item':
+                            case NodeType.OutputItem:
                                 returnColor =
                                     item.hasError === true
                                         ? item.errorColor
                                         : item.bodyColour;
+                                this.style.stroke =
+                                    item.hasError === true
+                                        ? item.errorBorder
+                                        : item.borderColour;
                                 break;
                             default:
                                 returnColor = item.bodyColour
                                     ? item.bodyColour
                                     : classScope.defaultNodeBgColor;
+                                this.style.stroke = item.borderColour;
                         }
                     }
                     return returnColor;
                 })
                 .on('click', function (d) {
-                    const highlightClassName = 'node_onselect_highlight';
+                    const item = getItem(d);
                     //set a timer for the single click
                     //if double click happens, it will prevent the function inside the timer to be called
                     prevent = false;
                     timer = setTimeout(() => {
                         if (!prevent) {
-                            const borderColour = getItem(d).borderColour
-                                ? getItem(d).borderColour
-                                : classScope.defaultHightLightColor;
-
                             //this block is used for applying a highlight color to the code
-                            this.style.stroke = borderColour;
+                            this.style.stroke = item.borderColour;
 
                             //find the node where it was highlighted previously
                             const highlightedElements: HTMLCollectionOf<Element> =
                                 document.getElementsByClassName(
-                                    highlightClassName
+                                    classScope.highlightClassName
                                 );
-                            //remove the hightlight styling class for the previous selected node
-                            if (highlightedElements) {
+                            console.log(highlightedElements);
+
+                            if (highlightedElements?.length) {
                                 for (
                                     let i = 0;
                                     i < highlightedElements.length;
@@ -312,12 +345,42 @@ export class NodeMapComponent implements OnInit, OnChanges {
                                 ) {
                                     const element: any = highlightedElements[i];
                                     element.classList.remove(
-                                        highlightClassName
+                                        classScope.highlightClassName
                                     );
-                                    element.style.stroke = '';
+                                    element.classList.add(
+                                        classScope.unhighlightClassName
+                                    );
+
+                                    if (
+                                        (item.hasError &&
+                                            item.type == NodeType.Input) ||
+                                        (item.hasError &&
+                                            item.type == NodeType.OutputItem)
+                                    ) {
+                                        element.style.stroke = item.errorBorder;
+                                    } else {
+                                        element.style.stroke =
+                                            item.borderColour;
+                                    }
+                                }
+                            } else {
+                                this.classList.remove(
+                                    classScope.unhighlightClassName
+                                );
+                                this.classList.add(
+                                    classScope.highlightClassName
+                                );
+                                if (
+                                    (item.hasError &&
+                                        item.type == NodeType.Input) ||
+                                    (item.hasError &&
+                                        item.type == NodeType.OutputItem)
+                                ) {
+                                    this.style.stroke = item.errorBorder;
+                                } else {
+                                    this.style.stroke = item.borderSelectColor;
                                 }
                             }
-                            this.classList.add(highlightClassName);
                             //handleOnSelect callback
                             handleOnSelect(d);
                         }
@@ -442,33 +505,51 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 .on('click', function (d) {
                     const curToggle = this.innerHTML;
                     let isEnabled = false;
-                    const nodeContainer =
-                        this.parentNode.querySelector('rect.node');
+                    const descendantList = d.descendants();
 
                     if (curToggle == classScope.toggleEnableIcon) {
-                        this.innerHTML = classScope.toggleDisableIcon;
-                        nodeContainer.style.fill =
-                            classScope.defaultDisabledColor;
                         isEnabled = false;
+                        console.log(isEnabled);
+                        toggleDescendants(d, descendantList, isEnabled, false);
                     } else {
-                        const item = getItem(d);
-                        this.innerHTML = classScope.toggleEnableIcon;
-                        let newNodeBGColor;
-                        // nodeContainer.style.filter = 'invert(35%)';
-                        if (item.type == 'Input') {
-                            newNodeBGColor =
-                                item.hasError === true
-                                    ? item.errorColor
-                                    : item.bodyColour;
-                        } else {
-                            newNodeBGColor = item.bodyColour
-                                ? item.bodyColour
-                                : classScope.defaultNodeBgColor;
-                        }
-                        nodeContainer.style.fill = newNodeBGColor;
                         isEnabled = true;
+                        console.log(isEnabled);
+                        toggleDescendants(d, descendantList, isEnabled, false);
                     }
-                    configureToggleIconOnClick(d, isEnabled);
+                })
+                .each(function (d) {
+                    const item = getItem(d);
+                    //node can be toggled and has been disabled
+                    if (item.canToggle && !item.enabled) {
+                        const descendantList = d.descendants();
+                        const isEnabled = false;
+
+                        if (item.type == NodeType.Input) {
+                            toggleDescendants(
+                                d,
+                                descendantList,
+                                isEnabled,
+                                false
+                            );
+                        } else if (item.type == NodeType.Subscription) {
+                            const ancestorList = d.ancestors();
+                            //ancestorList and ancestorList.length are truthy
+                            if (ancestorList?.length) {
+                                const nearestAncestor = getItem(
+                                    ancestorList[1]
+                                );
+                                //if ancestor is enabled, disable the all the descendants
+                                if (nearestAncestor.enabled) {
+                                    toggleDescendants(
+                                        d,
+                                        descendantList,
+                                        isEnabled,
+                                        false
+                                    );
+                                }
+                            }
+                        }
+                    }
                 });
             //Show Latest Data icon
             nodeEnter
@@ -614,21 +695,80 @@ export class NodeMapComponent implements OnInit, OnChanges {
                 update(d);
             }
 
+            function toggleDescendants(
+                d3DataObj,
+                descendantList,
+                isEnabled,
+                isInit
+            ) {
+                const toggleStyleId = 'text.fa.node-icon.toggle-icon';
+                let newNodeBGColor;
+                let newNodeBorderColor;
+
+                for (const descendant of descendantList) {
+                    const item = getItem(descendant);
+                    item.enabled = isEnabled;
+                    //find node reference
+                    const nodeContainer = document.querySelector<HTMLElement>(
+                        `#${item.uri}`
+                    );
+
+                    //change node bg color
+                    if (isEnabled) {
+                        //apply error color if the node isEnabled and hasError
+                        if (
+                            (item.hasError && item.type == NodeType.Input) ||
+                            (item.hasError && item.type == NodeType.OutputItem)
+                        ) {
+                            newNodeBGColor = item.errorColor;
+                            newNodeBorderColor = item.errorBorder;
+                        } else {
+                            newNodeBGColor = item.bodyColour
+                                ? item.bodyColour
+                                : classScope.defaultNodeBgColor;
+
+                            newNodeBorderColor = item.borderColour;
+                        }
+                        nodeContainer.style.fill = newNodeBGColor;
+                        nodeContainer.style.stroke = newNodeBorderColor;
+                    } else {
+                        nodeContainer.style.fill =
+                            classScope.defaultDisabledColor;
+                    }
+
+                    //find the node's toggle reference
+                    const toggleRef =
+                        nodeContainer.parentNode.querySelector(toggleStyleId);
+
+                    if (toggleRef) {
+                        if (isEnabled)
+                            //toggle enabled icon
+                            toggleRef.innerHTML = classScope.toggleEnableIcon;
+                        //toggle diabled icon
+                        else toggleRef.innerHTML = classScope.toggleDisableIcon;
+                    }
+                }
+                //the onClick function SHOULD not be called during init
+                if (!isInit) {
+                    configureToggleIconOnClick(d3DataObj, isEnabled);
+                }
+            }
+
             function getTypeIcon(d) {
                 const item = getItem(d);
 
                 if (item) {
                     switch (item.type) {
-                        case 'Connector':
+                        case NodeType.Connector:
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf1e6';
-                        case 'Input':
+                        case NodeType.Input:
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf090';
-                        case 'Subscription':
+                        case NodeType.Subscription:
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf0ca';
-                        case 'Output Item':
+                        case NodeType.OutputItem:
                             if (item.typeIcon) return item.typeIcon;
                             return '\uf08b';
                     }
@@ -673,11 +813,10 @@ export class NodeMapComponent implements OnInit, OnChanges {
             }
 
             function handleOnToggle(d, enabled) {
-                const item = getItem(d);
-                if (item) {
-                    classScope.toggleCallback(item, enabled);
+                if (d) {
+                    classScope.toggleCallback(d, enabled);
                 } else {
-                    console.error('handleOnToogle: selected item is null');
+                    console.error('handleOnToggle: selected item is null');
                 }
             }
 
@@ -792,14 +931,14 @@ export class NodeMapComponent implements OnInit, OnChanges {
             function canToggleIconShow(d): any {
                 const canToggle = d?.data?.canToggle;
 
-                if (canToggle) return classScope.fontAwesomeClass;
+                if (canToggle) return classScope.fontAwesomeToggleClass;
                 else return classScope.hideIconClass;
             }
 
             function configureToggleIconOnClick(d, enabled) {
-                const canToggle = d?.data?.canToggle;
+                const canToggle = enabled;
                 if (canToggle) return handleOnToggle(d, enabled);
-                else return handleNothing;
+                else return handleOnToggle(d, enabled);
             }
 
             function canAddIconShow(d): any {

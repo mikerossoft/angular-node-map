@@ -1,5 +1,5 @@
 .node rect {
-    stroke-width: 3px;
+    stroke-linejoin: round;
 }
 
 // .node text {
@@ -32,14 +32,21 @@ svg:not(:root) {
     font: 12px sans-serif;
 }
 
+.node_unselect_highlight {
+    stroke-width: 1px;
+}
+
 .node_onselect_highlight {
     stroke-width: 2px;
-    stroke-linejoin: round;
 }
 
 .node-icon {
     cursor: pointer;
     font-size: small;
+}
+//Empty for toggle icon
+//used for referencing, don't eremove
+.toggle-icon {
 }
 
 .relative {
