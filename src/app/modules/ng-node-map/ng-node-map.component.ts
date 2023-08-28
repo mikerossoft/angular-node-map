@@ -59,6 +59,11 @@ export class NodeMapComponent implements OnInit, OnChanges {
         const classScope = this;
 
         const nodeMapRoot = this.dataSource as NodeMapRoot;
+      
+        if (!(nodeMapRoot && nodeMapRoot.root && nodeMapRoot.root.nodes)){
+          nodeMapRoot.root.nodes = []
+        }
+      
         const nodes = nodeMapRoot.root.nodes;
 
         // Assigns parent, children, height, depth
